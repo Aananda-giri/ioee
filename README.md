@@ -1,6 +1,7 @@
 # ioee
 
 To Do:
+    
     > store username and id of user while activation with code (& display by name who is attended).
     > Personal message (attendance_logs) to each user
     > make bot working in other channels (sending message to channel invoked from)
