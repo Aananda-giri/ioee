@@ -1,0 +1,683 @@
+<!-- Not filtering collage and faculty at the same time -->
+<!-- Feedback, top 100, About Us pages -->
+<!-- faculties list as per collage selected ,Data Url or url from styles, all faculties if no collage selected -->
+<!-- Disable Ctrl + s Keypress -->
+<!-- Each Classroom students image display seperately -->
+
+<!DOCTYPE html>
+<head><title> Ioee  </title>
+<!--{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'hotornot/bootstrap.min.css' %}">-->
+
+
+
+<!--Bootstrap-5 CSS-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+
+<!--#################### Bootstrap-5 JS ###################-->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+<!--#################### Jquery ###################-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<!-- For accesssing Local css and js -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'hotornot/style.css' %}">
+
+<script src="{% static 'hotornot/script.js' %}"></script>
+
+<style>
+
+
+
+.bg {
+  height: 100vh;
+  /* The image used */
+  background-image: url("https://ak.picdn.net/shutterstock/videos/34830622/thumb/1.jpg?ip=x480");
+  /*https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg*/
+  vertical-align: baseline;
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+button {
+  margin: 20px;
+}
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+
+/* 9 */
+.btn-9 {
+  border: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.btn-9:after {
+  position: absolute;
+  content: " ";
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+   background-color: #1fd1f9;
+background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
+  transition: all 0.3s ease;
+}
+.btn-9:hover {
+  background: transparent;
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  color: #fff;
+}
+.btn-9:hover:after {
+  -webkit-transform: scale(2) rotate(180deg);
+  transform: scale(2) rotate(180deg);
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+}
+
+
+
+
+
+
+
+
+
+
+@-webkit-keyframes shiny-btn1 {
+    0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { -webkit-transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { -webkit-transform: scale(50) rotate(45deg); opacity: 0; }
+}
+/* 12 */
+.btn-12{
+  position: relative;
+  right: 20px;
+  bottom: 20px;
+  border:none;
+  box-shadow: none;
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  -webkit-perspective: 230px;
+  perspective: 230px;
+}
+.btn-12 span {
+  background: rgb(0,172,238);
+background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+  display: block;
+  position: absolute;
+  width: 130px;
+  height: 40px;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  border-radius: 5px;
+  margin:0;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+.btn-12 span:nth-child(1) {
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  -webkit-transform: rotateX(90deg);
+  -moz-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12 span:nth-child(2) {
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12:hover span:nth-child(1) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+}
+.btn-12:hover span:nth-child(2) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+ color: transparent;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+
+</style>
+<script>
+
+/*To prevent right click and save image function*/
+
+$('#nearestStaticContainer').on('contextmenu', 'img', function(e){ 
+  return false; 
+});
+</script>
+</head>
+<!-- To disable right click and save image-->
+<body  class="bg" oncontextmenu="return false;">
+<!-- Experimental images
+<div class="col-md-6 img-responsive">
+    <img src="https://i.pinimg.com/564x/b7/d7/1c/b7d71cec933bdee0553f552481f25d02.jpg" style="height:50vh;">
+  </div>
+  <div class="col-md-6 img-responsive">
+    <img src="https://i.pinimg.com/564x/b7/d7/1c/b7d71cec933bdee0553f552481f25d02.jpg" style="height:50vh;" >
+  </div>-->
+
+
+
+
+
+
+<!--{'random_pairs':random_pairs, 'url_base' : url_base, 'ioe_roll_no' : ioe_roll_no, 'round_value':'true', 'round_id':round_id, 'gender':gender}
+
+
+display_pics(random_pairs={{random_pairs}}, url_base={{url_base}},ioe_roll_no={{ioe_roll_no}},round_value={{round_value}}, round_id={{round_id}});-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<img src="getSrc();">--
+
+######################################################  Using Select Form  ##########################################################-->
+
+<div class="row">
+  <div class="col-md-3 bs-linebreak mx-auto d-block mb-1 flex">
+    <select class="form-select-lg " aria-label="Default select example" id="select_gender_options">GGender
+      
+      <option selected >Gender</option>
+      <option onclick="location = '/gender/m';get_gender('m')">Male</option>
+      <option value="/f" onclick="location = '/gender/f';get_gender('f')">Female</option>
+    </select>
+  </div>
+  
+    <div class="col-md-3 bs-linebreak mx-auto mb-1">
+    <select class="form-select-lg " aria-label="Default select example" id="select_collage_options" onClick="getCollages();">
+      <option selected>Collage</option>
+      <!--<option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>-->
+    </select>
+  </div>
+  
+  <div class="col-md-3 mx-auto d-block mb-2">
+    <select class="form-select-lg" aria-label="Default select example" id="select_faculty_options" onClick="getFaculties();">
+      <option selected>Faculty</option disabled>
+    </select>
+  </div>
+  
+</div>
+
+
+<div class="alert alert-success" id="alert-success" role="alert">
+  click on the image to vote
+</div>
+
+
+
+<!--<button onClick="top_hundred()">top_hundred</button>-->
+
+
+
+<script>
+
+document.addEventListener('contextmenu', event => event.preventDefault());
+function fade(element) {
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        if (op>0.5)op -= op * 0.01;
+        else op -= op * 0.1;
+    }, 50);
+}
+fade(document.getElementById("alert-success"));
+  if (typeof id2==undefined){var id1=1;}
+  if (typeof id1==undefined){var id2=1;}
+  if (typeof i==='undefined'){var i=1;}
+
+  var random_pairs ={{random_pairs}};
+  
+  var url_base = "{{url_base}}";
+  var ioe_roll_no = {{ioe_roll_no|safe}};
+  var round_value = {{round_value}};
+  var round_id = {{round_id}};
+  var gender = "{{gender}}";
+  
+function display_image(id){
+
+  //for (i=1; i<=random_pairs.length/2; i++){
+
+  id1 = random_pairs[id]
+
+    img1 = document.getElementById('first_image');
+  if (img1===null){
+    create_image_divs();
+    img1 = document.getElementById('first_image');}
+
+    
+  img1.src = url_base + ioe_roll_no[id];
+
+  id2 = random_pairs[id+1]
+  img2 = document.getElementById('second_image');
+  img2.src = url_base + ioe_roll_no[id+1];
+
+  //wait till image is clicked
+}
+
+
+
+function get_render_image(){
+  
+
+  if (i >= (random_pairs.length)/2 - 1){get_new_images();}
+  else{
+    display_image(i);
+    i+=2
+  }
+}
+get_render_image();
+function get_new_images(){
+window.location.reload(false); /*Simply reloading the page*/
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+}
+
+function vote_image(pos){
+  if (pos==1) voted_id = id1;
+  else if (pos==2) voted_id = id2;
+  console.log('voted_id:'+voted_id + 'id1:'+id1 +'id2'+id2);
+  
+  $.ajax({
+    type: 'POST',
+    url: "{% url 'vote_image' %}",
+    data: {
+      'gender' : gender,
+      'id1' : id1,
+      'id2' : id2,
+      'voted_id':voted_id,
+      'round_id':round_id,
+      'round_value':round_value,
+      'gender' : 'gender',
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+    },
+    
+    success: function(response) {
+    get_render_image();
+    
+      console.log(response);
+    console.log('success');
+    }, error: function (response) {
+         console.log(response);
+         console.log('error');
+       }
+    
+  })
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div onload="console.log('Im activated')">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+function collage_faculty_details(top_hundred=false){
+
+let gender_select = document.getElementById('select_gender_options');
+  let gender = gender_select.options[gender_select.selectedIndex].text;
+  if (gender=='Male')gender='m';
+  else if (gender=='Female')gender='f';
+  console.log('gender: ' + gender);
+  
+  
+  let collage_select = document.getElementById('select_collage_options');
+  let collage = collage_select.options[collage_select.selectedIndex].text;
+  //if (collage=='Collage')faculty=null;
+  console.log('collage: ' + collage);
+  
+  let faculty_select = document.getElementById('select_faculty_options');
+  let faculty = faculty_select.options[faculty_select.selectedIndex].text;
+  //if (faculty=='Faculty')faculty=null;
+  console.log('faculty: ' + faculty);
+  
+   $.ajax({
+    type: 'GET',
+    url: "{% url 'collage' %}",
+    data: {
+      'gender' : gender,
+      'collage' : collage,
+      'faculty' : faculty,
+      'send_via_json' : 'True',
+      'top_hundred' : top_hundred,
+    },
+    
+    success: function(response) {
+      console.log(response['round_value']);
+        var xxxres=response;
+      
+      var random_pairs =response['random_pairs'];
+      console.log('random_pairs:'+random_pairs);
+      
+      ioe_roll_no = response['ioe_roll_no'];
+      console.log('ioe_roll_no:'+ioe_roll_no);
+      
+      round_value = response['round_value'];
+      console.log('round_value:'+round_value);
+      
+      round_id = response['round_id'];
+      console.log('round_id:'+round_id);
+      
+      gender = response['gender'];
+      console.log('gender:'+gender);
+      
+      i=1;
+      if (top_hundred==true){
+        display_top_hundred(ioe_roll_no_s = ioe_roll_no);
+      }  else {
+      get_render_image();
+      }
+      
+      /*// value of search tab=sesarch_query
+      document.getElementById('search_input').value = search_query;
+      console.log('search_query:'+search_query);
+
+      var instance = JSON.parse(response["people"]);
+      //appendSearchResults(instance[0]);
+      console.log('fields');
+      console.log(instance[0].fields);
+      console.log('her');
+      console.log(instance[0].fields[0]);
+      try{
+      for (i=0;i<instance.length;i++){
+
+      appendSearchResults(instance[i]['fields'],i);
+      }} finally{showMessage('No user found');}        
+
+      
+
+    
+     
+console.log('here');
+      try{
+      console.log('in');
+      //To remove extra forms while searching
+      if(document.querySelectorAll('#getprofile')[1]!==undefined){console.log('inside');
+        document.body.removeChild(document.querySelectorAll('#getprofile')[0]);
+      }//try removing profile displaying section
+         document.body.removeChild(document.getElementById("each_profile_display"));
+      } finally{}    
+      
+
+      
+      //console.log('first_name:' + String(instance[0].fields.first_name));
+    
+    
+    */
+    console.log('success');
+    }, error: function (response) {
+        window.location.reload(true);
+         console.log(response);
+         console.log('error');
+       }
+    
+  })
+}
+
+
+
+
+
+
+
+
+
+
+function gender_only(){
+
+let gender_select = document.getElementById('select_gender_options');
+  let gender = gender_select.options[gender_select.selectedIndex].text;
+  if (gender=='Male')gender='m';
+  else if (gender=='Female')gender='f';
+  console.log('gender: ' + gender);
+  
+  
+   $.ajax({
+    type: 'GET',
+    url: "{% url 'collage' %}",
+    data: {
+      'gender' : gender,
+      'send_via_json' : 'True',
+    },
+    
+    success: function(response) {
+      console.log(response['round_value']);
+        
+      random_pairs =response['random_pairs'];
+      console.log('random_pairs:'+random_pairs);
+      
+      ioe_roll_no = response['ioe_roll_no'];
+      console.log('ioe_roll_no:'+ioe_roll_no);
+      
+      
+      gender = response['gender'];
+      console.log('gender:'+gender);
+      
+      get_render_image();
+      i=1;
+      
+      /*// value of search tab=sesarch_query
+      document.getElementById('search_input').value = search_query;
+      console.log('search_query:'+search_query);
+
+      var instance = JSON.parse(response["people"]);
+      //appendSearchResults(instance[0]);
+      console.log('fields');
+      console.log(instance[0].fields);
+      console.log('her');
+      console.log(instance[0].fields[0]);
+      try{
+      for (i=0;i<instance.length;i++){
+
+      appendSearchResults(instance[i]['fields'],i);
+      }} finally{showMessage('No user found');}        
+
+      
+
+    
+     
+console.log('here');
+      try{
+      console.log('in');
+      //To remove extra forms while searching
+      if(document.querySelectorAll('#getprofile')[1]!==undefined){console.log('inside');
+        document.body.removeChild(document.querySelectorAll('#getprofile')[0]);
+      }//try removing profile displaying section
+         document.body.removeChild(document.getElementById("each_profile_display"));
+      } finally{}    
+      
+
+      
+      //console.log('first_name:' + String(instance[0].fields.first_name));
+    
+    
+    */
+    console.log('success');
+    }, error: function (response) {
+        window.location.reload(true);
+         console.log(response);
+         console.log('error');
+       }
+    
+  })
+}
+
+
+function top_hundred(){
+  collage_faculty_details(top_hundred=true);
+
+}
+
+
+function display_top_hundred(ioe_roll_no_s){
+  let image_count = 1
+  let main_div = document.createElement('div');
+  main_div.setAttribute('class', 'row');
+  document.body.appendChild(main_div);
+  
+  for (l=1; l <= (random_pairs.length) / 3; l++){
+  let sub_div = document.createElement('div');
+  sub_div.setAttribute('class', 'col-lg-4 col-md-12 mb-4 mb-lg-0');
+  main_div.appendChild(sub_div);
+  
+    for (count=1; count <= 3; count++){
+      if (image_count>=random_pairs.length) break;
+      
+      img = document.createElement('img');
+      img.setAttribute('class', 'w-100 shadow-1-strong rounded mb-4');
+      img.setAttribute('src', url_base + ioe_roll_no_s[image_count]);
+      
+      sub_div.appendChild(img);
+      image_count +=1;
+      
+    
+    }
+  
+  
+  }
+  
+
+}
+
+</script>
+
+
+<button class="custom-btn btn-9 float-end" onclick="location.href = '/feedback/';"> <span><span>Feedback</span></span> </button>
+<button class="custom-btn btn-12 float-end" onclick="top_hundred();"><span>IMAGES!</span><span> top_100 </span></button>
+
+</body>
+</html>

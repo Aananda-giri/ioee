@@ -1,0 +1,16 @@
+0000000000000000000000000000000000000000 69f4a3aed9dd068ca4aa279300252f1b9526d00b jokeleopedia <jokeleopedia@gmail.com> 1625383527 +0545	commit (initial): selenium test
+69f4a3aed9dd068ca4aa279300252f1b9526d00b d72d1d8d7e7220f73afcba0a0419462106211a71 jokeleopedia <jokeleopedia@gmail.com> 1625384116 +0545	commit: selenium test
+d72d1d8d7e7220f73afcba0a0419462106211a71 16133189c1f2ae42caf55d735b195eaa75ae8cc2 jokeleopedia <jokeleopedia@gmail.com> 1625384271 +0545	commit: added ioestudents.herokuapp.com to allowed hosts
+16133189c1f2ae42caf55d735b195eaa75ae8cc2 cf6f5c8633c76ad72d72959733a1955a1b68e8f7 jokeleopedia <jokeleopedia@gmail.com> 1625384455 +0545	commit: minor debugs
+cf6f5c8633c76ad72d72959733a1955a1b68e8f7 1d7391e508b98d9b25f5215f8ea67355581d6d12 jokeleopedia <jokeleopedia@gmail.com> 1625384733 +0545	commit: minor debugs
+1d7391e508b98d9b25f5215f8ea67355581d6d12 8c19ee7b3c18c7e6df48a73f785a05ff655e3f3e jokeleopedia <jokeleopedia@gmail.com> 1625385426 +0545	commit: minor debugs
+8c19ee7b3c18c7e6df48a73f785a05ff655e3f3e 62274bc210e6aa92e0e98caaff7a2e2bc63d4a46 jokeleopedia <jokeleopedia@gmail.com> 1625387388 +0545	commit: used chromedriver
+62274bc210e6aa92e0e98caaff7a2e2bc63d4a46 17d960d89d614691ea249875308c095f3ad55006 jokeleopedia <jokeleopedia@gmail.com> 1625757925 +0545	commit: improved fuse attendend function
+17d960d89d614691ea249875308c095f3ad55006 65215a49267d496effca838fc849e48bffded850 jokeleopedia <jokeleopedia@gmail.com> 1625828473 +0545	commit: improved fuse_register and attend
+65215a49267d496effca838fc849e48bffded850 6e32e5128a492cc7168b9479f4240b7122b4b702 jokeleopedia <jokeleopedia@gmail.com> 1625831293 +0545	commit: improved
+6e32e5128a492cc7168b9479f4240b7122b4b702 324373a17f5138706b3f2f9ec44b184b60fb0187 jokeleopedia <jokeleopedia@gmail.com> 1625831633 +0545	commit: improved
+324373a17f5138706b3f2f9ec44b184b60fb0187 774b980fced23616fa02d08671629c8bfd0187a1 jokeleopedia <jokeleopedia@gmail.com> 1625836337 +0545	commit: minor debug
+774b980fced23616fa02d08671629c8bfd0187a1 f6291e3f8c47b51ca07cabeb86ad0cc557eac7a9 jokeleopedia <jokeleopedia@gmail.com> 1625991846 +0545	commit: subject in attendance successful message
+f6291e3f8c47b51ca07cabeb86ad0cc557eac7a9 8426eb17e9d68071ab03484d8420b8b26bc75596 jokeleopedia <jokeleopedia@gmail.com> 1625995323 +0545	commit: increased to 12, 5, 5 waiting times
+8426eb17e9d68071ab03484d8420b8b26bc75596 bc4a3cd11b6dc3591bdf520ca1f15dbfba1ee155 jokeleopedia <jokeleopedia@gmail.com> 1626005897 +0545	commit: minor update
+bc4a3cd11b6dc3591bdf520ca1f15dbfba1ee155 9f1a1623a8b34812edc8d44adaaae9a8dc42aeb4 jokeleopedia <jokeleopedia@gmail.com> 1626023756 +0545	commit: reduced time to avoid timeout

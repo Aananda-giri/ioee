@@ -1,0 +1,249 @@
+<html>
+<head>
+<title> Fuse Auto Attend </title>
+</head>
+
+<!-- For bootstrap-5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!-- For jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<!-- For copy to clipboard -->
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+
+<body>
+<script>
+
+function Register(){
+  let username = document.getElementById('username').value;
+
+  let password = document.getElementById('password').value;
+  let login_url = document.getElementById('login_url').value;
+  
+  if (username==''){
+    document.getElementById('usernameHelper').style.display='block';
+    return;
+  } if (password ==''){
+    document.getElementById('passwordHelper').style.display='block';
+    return;
+  } if (login_url == ''){
+    document.getElementById('urlHelper').style.display='block';
+    return;
+  }
+    
+    $.ajax({
+    type:'POST',
+    url:"{% url 'register' %}",
+    data: {
+      'username':username,
+      'password':password,
+      'login_url': login_url,
+      csrfmiddlewaretoken: '{{ csrf_token }}'
+      
+    },
+    
+    // To clear comment form after submission
+    success: function(response) {
+      console.log(response);
+      document.getElementById('discord_code').textContent=response;
+      
+      form = document.getElementById('register_form');
+      form.style.display='none';
+      
+      button = document.getElementById('register_btn');
+      button.style.display='none';
+      
+      reg = document.getElementById('register_message');
+      reg.textContent="Successfully Registered";
+      reg.style.color='green';
+      
+      document.getElementById('Successful_registration').style.display = "block";
+      /*h1=document.createElement('h1');
+      b = document.createElement('b');
+      h1.appendChild(b);
+      b.textContent = "Successfully Registered";
+      reg.appendChild(h1);
+      reg.class = reg.class + ' text-success';*/
+    }, error: function (response) {
+         console.log(response);
+         return 'her';
+       }
+    
+  })
+}
+</script>
+<div class="card border-info mb-3 mx-auto mt-3" style="max-width: 30rem;">
+  <div class="card-header"><h1><b> What is Auto-Attend?</h1></b></div>
+  <div class="card-body">
+    <h5 class="card-title p-2"><b>This is the app/bot that does attendance for you in fuse-classroom so that you don't become disqualified for exams for being absent in class.</b></h5>
+    <p class="card-text"><b><h2></h2><br>
+    
+    
+    </p>
+    <div class="card-footer bg-transparent border-success"> <h2 class='p-2 m-2'><b>How does it Work? </b></h2>
+     well, it logs in with your login information periodically ( in every 30 minutes ), click join_class if any live classes are being conducted and close the page which triggers fuse-classroom to record your attendance.
+     </div>
+    <div class="card-footer bg-transparent border-success mt-5 m-2 p-3"><br>  Logs/records/attendance: <a href="https://discord.com/api/oauth2/authorize?client_id=862191340355715093&permissions=2148002880&scope=bot"> Discord_Bot </a> </div>
+  </div>
+</div><br><br>
+
+<hr class='mt-3'>
+<h1><b><center><p class="mt-2 mx-auto d-block" id="register_message"> Register: </p></center></b></h1>
+<hr>
+
+
+
+
+<form action='' method='POST' id="register_form">
+  {% csrf_token %}
+  
+  
+    <div class="mx-auto d-block form-floating ms-2 me-2 col-md-4">
+    <input type="text" class="form-control" id="username" name="username" placeholder="user" name="username" required>
+    <label for="floatingInput" class="text-secondary"> Username (same as fuse-classroom's) </label>
+    <div id="usernameHelper" class="form-text" style="color:green;display:none;"> Please enter the username above. </div>
+  </div>
+  <br>
+  
+    <div class="form-floating col-md-4 ms-2 me-2 ">
+    <input type="password" class="form-control" id="password" name="password" placeholder="user" name="password" required>
+    <label for="floatingInput" class="text-secondary"> Password (same as fuse-classroom's) </label>
+    <div id="passwordHelper" class="form-text" style="color:green;display:none;"> Please enter the password above. </div>
+  </div><br>
+  
+  </div>
+</div>
+
+
+    <div class="form-floating col-md-4 ms-2 me-2 ">
+    <input type="text" class="form-control" id="login_url" name="login_url" placeholder="user" name="password" value="https://sagarmatha.student.fuseclassroom.com/login/" required>
+    <label for="floatingInput" class="text-secondary"> Fuse classroom login URL </label>
+    <div id="urlHelper" class="form-text" style="color:green;display:none;"> Fuse-classroom login url. </div>
+  </div><br><br>
+  
+  </div>
+</div>
+
+  
+</form>
+
+
+<div class="col-12">
+  <button class="btn btn-primary mt-4 ms-2" id="register_btn" onClick="Register();"> Submit </button>
+</div><br><br>
+
+
+
+
+
+
+
+
+
+
+
+<!-- ---------------- code for copy to clipboard ------------------------ -->
+<script>
+function copyCode(){
+  selectText('discord_code');
+  document.execCommand("copy");
+  
+  btn = document.getElementById("copy_btn");
+  btn.textContent='copied';
+  
+  document.getElementById("copy_btn").title = 'copied';
+  //var tooltip = document.getElementById("myTooltip");
+  //tooltip.innerHTML = "Copied: "
+  
+}
+function selectText(node) {
+    node = document.getElementById(node);
+
+    if (document.body.createTextRange) {
+        const range = document.body.createTextRange();
+        range.moveToElementText(node);
+        range.select();
+    } else if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else {
+        console.warn("Could not select text in node: Unsupported browser.");
+    }
+}
+
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+  console.log('hover_mode');
+}
+</script>
+
+<div id="Successful_registration" style="display:none">
+  <h3><b>Please copy this command :"
+  
+  <span id="discord_code">
+  </span>"
+  
+  <button onclick="copyCode();" id="copy_btn" class="btn-success mx-auto d-block rounded" onmouseout="outFunc();" data-toggle="tooltip" data-placement="top" title="Copy" style="background:'green'"> copy_command </button><br>
+
+  
+   and paste it in <a href="https://discord.gg/puR4jBHd"> Discord_Bot </a>
+  </h3></b>
+  
+
+
+
+</div>
+<br><br>
+
+
+
+
+
+
+</body>
+</html>
