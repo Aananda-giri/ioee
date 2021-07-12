@@ -17,6 +17,7 @@ To Do:
     
     
 Discord_bot_code:https://replit.com/@aries0/Encouragement-Bot#main.py
+
 Discord_bot : https://discord.com/api/oauth2/authorize?client_id=862191340355715093&permissions=2148002880&scope=bot
 
 Live_website : https://replit.com/@aries0/Encouragement-Bot#main.py
