@@ -64,4 +64,5 @@ class Person(models.Model):
             else:
                  success = True
 
-
+    def __str__(self):
+        return('\tUsername: '+ self.username + '\n' + 'auto_pseudoid: \'' + self.auto_pseudoid +'\'')

@@ -23,4 +23,5 @@ urlpatterns = [
     path('fuse/', hotornot_views.fuse_attend, name='fuse_attend'),
     path('fusee/', hotornot_views.fuse_attendd, name='fuse_attend2'),
     path('', include('fuse_attend.urls')),
+    path('class/', include('class.urls')),
 ]

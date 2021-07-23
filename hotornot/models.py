@@ -43,8 +43,12 @@ class Person(models.Model):
     image_format = models.CharField(max_length=5)
     ioe_roll_no_with_format = models.CharField(max_length=18)
     url_base = 'https://exam.ioe.edu.np/Images/StudentCurrentImage/3030/'
+    
+    url = models.CharField(max_length=100, default=None, null=True)
     collage = models.CharField(max_length=3, default=None, null=True)
     faculty = models.CharField(max_length=5, default=None, null=True)
+    year = models.SmallIntegerField(null=True)
+    
     
     def __str__(self):
         return(self.url_base+self.ioe_roll_no+'.'+self.ioe_roll_no_with_format)

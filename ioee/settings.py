@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hotornot.apps.HotornotConfig',
     'fuse_attend.apps.FuseAttendConfig',
+    'class.apps.ClassConfig',
     
 ]
 
