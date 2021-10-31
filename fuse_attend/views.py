@@ -54,7 +54,6 @@ def fuse_attend(request, username):
     assert "Education Platform | Fuse Classroom" in driver.title
     
     
-    
     # Finds element bu name
     username = driver.find_element_by_name("username")
     username.clear()

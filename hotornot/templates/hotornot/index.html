@@ -298,6 +298,18 @@ display_pics(random_pairs={{random_pairs}}, url_base={{url_base}},ioe_roll_no={{
 
 <script>
 
+function getFaculties(){
+  let faculty_div = document.getElementById("select_faculty_options");
+  if(faculty_div.childNodes.length<14){
+    for (faculty of faculties){
+      let faculty_option = document.createElement('option');
+      faculty_option.setAttribute('onClick','collage_faculty_details()');
+      faculty_option.textContent = faculty;
+      faculty_div.appendChild(faculty_option);
+    }
+  }
+}
+
 document.addEventListener('contextmenu', event => event.preventDefault());
 function fade(element) {
     var op = 1;  // initial opacity

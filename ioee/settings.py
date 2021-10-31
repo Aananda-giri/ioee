@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'hotornot.apps.HotornotConfig',
     'fuse_attend.apps.FuseAttendConfig',
     'class.apps.ClassConfig',
+    'person.apps.PersonConfig',
+    'tiktok.apps.TiktokConfig',
     
 ]
 
@@ -93,6 +95,14 @@ DATABASES = {
         'NAME': 'vysbznab',
         'USER': 'vysbznab',
         'PASSWORD': 'x-2Zh_jpzoWLqbolbcaejot5eVByKzqI',
+        'HOST': 'john.db.elephantsql.com',
+        'PORT': '5432',
+    },
+    'brainmap': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ltifidts',
+        'USER': 'ltifidts',
+        'PASSWORD': '7T1hDSqMGc2_iS1cPWwHbo4sZx2UbI_n',
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
