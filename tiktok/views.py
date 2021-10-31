@@ -23,7 +23,7 @@ def get_tiktok_s_v_web_id(request):
     s_v_web_id = None
     driver.get("http://www.tiktok.com")
     print('sleeping 5 seconds')
-    time.sleep(8)
+    time.sleep(10)
     cookies = driver.get_cookies()
     for cookie in cookies:
         if cookie['name']=='s_v_web_id':
