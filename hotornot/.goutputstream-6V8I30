@@ -1,0 +1,291 @@
+from django.shortcuts import render, HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+import base64
+import requests
+from .models import Person, RoundFemale, RoundMale
+
+from django.urls import reverse
+
+import random
+import math
+# Create your views here.
+
+def get_data_urls(urls):
+    data_urls = []
+    for url in urls:
+        response = requests.get(url)
+        content_type = response.headers["content-type"]
+        encoded_body = base64.b64encode(response.content)
+        u = "data:{};base64,{}".format(content_type, encoded_body.decode())
+        data_urls.append(u)
+        
+    return(data_urls)
+
+def get_level(voted_people_of_level, total_people_of_level):
+    #To determine Round_id
+    
+    for l,n in enumerate(total_people_of_level):
+        #print('l:{}  no_of_poople:{} total_people_of_level:{}'.format(l,no_of_poople, type(voted_people_of_level)))
+        
+        try:
+            #print('\ntry\n')
+            #print('\nTrying:{}\n'.format(voted_people_of_level[l] < no_of_people))
+            if(voted_people_of_level[l] < n):level = l
+            #print('level:{}'.format(level))
+        except:
+            break
+    return(level)
+
+
+def createNewRound(total_people, Round, round_id, min_id, max_id):
+    print('\n\n\nCreating new round with Round_id: {} min_id: {} max_id: {}  total_people:{}\n\n'.format(round_id,min_id, max_id, total_people))
+    temp = total_people
+    total_people_of_level = [temp]
+    while(total_people_of_level[-1]!=1):
+        t2=math.ceil(temp/2)
+        total_people_of_level.extend([t2])
+        temp=t2
+    
+    r = Round.objects.using('hotornot').create(id = round_id)
+    r.total_people_of_level = total_people_of_level
+    r.voted_people_of_level = [0]
+    r.unranked_ids = [i for i in range(min_id, max_id+1)]
+    r.ranked_ids = []
+    r.save()
+
+def createNewLevel(Round, round_id, unranked_ids):
+    r= Round.objects.using('hotornot').filter(id=round_id)[0]
+    r.voted_people_of_level.append(0)
+    r.ranked_ids = []
+    r.unranked_ids = unranked_ids
+    r.save()
+
+
+
+def update_data(gender):
+    '''#data=get_data_url(Person.objects.using('hotornot').filter(gender='f')[3].url_base+Person.objects.using('hotornot').all().filter(gender='f')[3].ioe_roll_no+'.'+Person.objects.using('hotornot').all().filter(gender='f')[3].image_format)
+    
+    people = Person.objects.using('hotornot').filter(gender=gender)
+    #max=len(prople)
+    if gender=='f':
+        min_id = 0
+        max_id = 1449
+        total_people = 1450
+        Round = RoundFemale
+        #return HttpResponse('Hello World')        
+    elif gender =='m':
+        min_id = 1450
+        max_id = 8109
+        total_people = 6660
+        Round = RoundMale
+    else:
+        return HttpResponseRedirect(reverse(details,args=('f')))
+        
+    total_ids = [i for i in range(min_id, max_id + 1)]
+    random_pairs = random.sample(total_ids, 2)
+    [total_ids.remove(i) for i in random_pairs]
+    #print(random_pairs)
+    urls=[]
+    for i in random_pairs:
+        urls.append(Person.objects.using('hotornot').filter(id=i)[0].url_base+Person.objects.using('hotornot').all().filter(id=i)[0].ioe_roll_no+'.'+Person.objects.using('hotornot').all().filter(id=i)[0].image_format)
+    round_id=0
+    return render(request, 'hotornot/index.html', {'urls':urls, 'round_id':round_id, 'random_pairs':random_pairs})
+    #return HttpResponse('Hello World'+str(urls))
+    
+    #data_urls = get_data_urls(urls)
+
+    
+#ranked_ids = get_ranked_ids()'''
+
+
+
+
+
+
+
+
+
+
+    if gender=='f':
+        min_id = 0
+        max_id = 1449
+        total_people = 1450
+        Round = RoundFemale
+        #return HttpResponse('Hello World')        
+    elif gender =='m':
+        min_id = 1450
+        max_id = 8109
+        total_people = 6660
+        Round = RoundMale
+    else:
+        return HttpResponseRedirect(reverse(details,args=('f')))
+        
+    
+    round_id = len(Round.objects.using('hotornot').all())-1
+    
+    if(round_id==-1):
+        # Initially At the launch of website
+        createNewRound(total_people, Round, round_id, min_id, max_id)
+        round_id = len(Round.objects.using('hotornot').all()) - 1
+
+    print('\n\nRound_id !={}\n'.format(round_id))
+    #Total no. of people that will vote in each seperate round
+    #female:[1450, 725, 363, 182, 91, 46, 23, 12, 6, 3, 2, 1],male:[6660, 3330, 1665, 833, 417, 209, 105, 53, 27, 14, 7, 4, 2, 1]
+    total_people_of_level = Round.objects.using('hotornot').filter(id=round_id)[0].total_people_of_level
+    print('\ntotal_people_of_level:{}\n'.format(total_people_of_level))
+    
+    #shows progress of current voting
+    #eg. [1450, 102]    102 is currently filling
+    voted_people_of_level = Round.objects.using('hotornot').filter(id=round_id)[0].voted_people_of_level
+    print('\nvoted_people_of_level: {}\n'.format(voted_people_of_level))
+    
+    level = get_level(voted_people_of_level, total_people_of_level)
+    print('\nlevel: {}\n'.format(level))
+    
+    #List of ranked ids
+    ranked_ids = Round.objects.using('hotornot').filter(id=round_id)[0].ranked_ids
+    print('\nranked_ids: {}\n'.format(ranked_ids))
+    
+    #List of unranked ids
+    unranked_ids = Round.objects.using('hotornot').filter(id=round_id)[0].unranked_ids
+    print('\nunranked_ids: {}\n'.format(unranked_ids))
+
+
+
+
+    #Getting all the random unranked ids and storing them to database
+    random_pairs = random.sample(unranked_ids, math.floor(len(unranked_ids)/2))
+    print('\nrandom_pairs: {}\n'.format(random_pairs))
+    
+    r = Round.objects.using('hotornot').get(id=round_id)
+    
+    # first and second elements of random_pair are round_id and level respectively
+    random_pairs.insert(0, round_id)
+    random_pairs.insert(1, level)
+    
+    r.random_pairs = random_pairs
+    r.save()
+    
+    
+    
+    #urls=[]
+    #for i in random_pairs:
+    #    urls.append(Person.objects.using('hotornot').filter(id=i)[0].url_base+Person.objects.using('hotornot').all().filter(id=i)[0].ioe_roll_no+'.'+Person.objects.using('hotornot').all().filter(id=i)[0].image_format)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if len(unranked_ids)<2:
+        # i.e. current level is completed
+        
+        if( len(voted_people_of_level) == len(total_people_of_level)):
+            #i.e.current round is completed
+            createNewRound(total_people, Round, round_id, min_id, max_id)
+        
+        else:
+            #i.e. current level is full
+            unranked_tuples = Person.objects.using('hotornot').filter(gender='gender').order_by('-votes')[:total_people_of_level[level]].values_list('id')
+            
+            unranked_ids=[i[0] for i in unranked_tuples]
+            
+            createNewLevel(Round=Round, round_id=round_id, unranked_ids=unranked_ids)
+
+
+    return(random_pairs)
+    
+    #return render(request, 'hotornot/index.html', {'urls':urls, 'round_id':round_id, 'random_pairs':random_pairs[:2], 'level':level})
+    
+    
+    
+    
+    
+    
+        
+        #data_urls = get_data_urls(urls)
+    #return render(request, 'hotornot/index.html', {'data_urls':data_urls, 'round_id':round_id, 'random_pairs':random_pairs})
+    ''''''
+    
+    
+    
+    '''
+    select = random.sample(unranked_ids,2)
+    ranked_ids.extend(select)
+    [ unranked_ids.remove(i) for i in selected_ids ]
+    
+    temp = total_people
+    total_people_of_level = [temp]
+    while(total_people_of_level[-1]!=1):
+        t2=int(temp/2)
+        total_people_of_level.extend([t2])
+        temp=t2
+    '''
+    '''   try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, 'polls/detail.html', {'question': question})'''
+    #return HttpResponse('Hello World')
+    #return render(request, 'hotornot/index.html', {'data_urls':data_urls})
+
+def get_gender_details(request, gender):
+    
+
+def test(request):
+    return HttpResponseRedirect(reverse('details', args=('f')))
+def collage_details(request, collage):
+    return HttpResponse('Hello World from collage_details')
+    #return render(request, 'hotornot/index.html', {'data_urls':data_urls})
+
+
+def polls(request):
+    formatt=['tif','tiff','gif','eps','raw']
+    rollno = [f'{i:03}' for i in range(1,50)]
+    serial=[i for i in range(3000,3100)]
+    return render(request, 'hotornot/polls.html',{'rollno':rollno,'format':formatt,'serial':serial})
+
+def vote(request):
+    if request.mothod=='POST':
+        id1 =  request.POST.get('id1')
+        id2 =  request.POST.get('id2')
+        voted_id= request.POST.get('voted_id')
+        round_id = request.POST.get('round_id')
+        gender = request.POST.get('gender')
+    
+    if(gender=='f'):
+        Round = RoundFemale
+    elif(gender=='m'):
+        Round = RoundMale
+    else:
+        return HttpResponseRedirect(reverse(details, args=('f')))
+    
+    #Updating votes and views
+    p1 = Person.objects.using('hotornot').get(id=id1)
+    p1.views += 1
+    p1.save()
+    
+    p2 = Person.objects.using('hotornot').get(id=id2)
+    p2.views += 1
+    p2.save()
+    
+    p3 = Person.objects.using('hotornot').get(id=voted_id)
+    p3.votes += 1
+    p3.save()
+    
+    
+    #updating ranked ana unranked_ids
+    r=Round.objects.using('hotornot').get(id=round_id)
+    r.ranked_ids.extend([id1,id2])
+    [r.unranked_ids.remove(i) for i in [id1,id2] ]
+    r.voted_people_of_level[level] += 1
+    r.save()
+    
