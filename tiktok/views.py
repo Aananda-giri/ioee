@@ -22,11 +22,15 @@ def get_tiktok_s_v_web_id(request):
     
     s_v_web_id = None
     driver.get("http://www.tiktok.com")
+    print('sleeping 5 seconds')
+    time.sleep(5)
     cookies = driver.get_cookies()
     for cookie in cookies:
         if cookie['name']=='s_v_web_id':
             s_v_web_id = cookie['value']
     
-    #Sends {'s_v_web_id':s_v_web_id} if unable to get s_v_web_id
-    return JsonResponse({'s_v_web_id':s_v_web_id}, status=200)
-
+    if s_v_web_id != None:
+        #Sends {'s_v_web_id':s_v_web_id} if unable to get s_v_web_id
+        return JsonResponse({'s_v_web_id':s_v_web_id}, status=200)
+    else:
+        return JsonResponse({'cookies':cookies}, status=200)

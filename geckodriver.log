@@ -222,3 +222,18 @@ JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError
 
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1635687189909	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile7Zdj2Y"
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1635687194938	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile7Zdj2Y/search.json.mozlz4", (void 0)))
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+1635687214313	Marionette	INFO	Listening on port 41097
+1635687217848	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+JavaScript error: https://lf16-tiktok-web.ibytedtos.com/obj/tiktok-web/tiktok/web/node/_next/static/chunks/commons.43d2c3787104dc89e031.js, line 10: TypeError: performance.getEntriesByType(...)[0] is undefined
+JavaScript error: https://lf16-tiktok-web.ibytedtos.com/obj/tiktok-web/tiktok/web/node/_next/static/chunks/commons.43d2c3787104dc89e031.js, line 10: Error: timeout of 5000ms exceeded
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
