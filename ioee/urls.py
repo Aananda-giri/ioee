@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from hotornot import views as hotornot_views
 from tiktok import views as toktok_views
+from api import views as api
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
@@ -26,4 +27,5 @@ urlpatterns = [
     path('', include('fuse_attend.urls')),
     path('class/', include('class.urls')),
     path('tiktok_s_v_web_id/', toktok_views.get_tiktok_s_v_web_id, name='get_tiktok_s_v_web_id'),
+    path('api/', include('api.urls')),
 ]
