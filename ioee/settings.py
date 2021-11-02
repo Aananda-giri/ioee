@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'class.apps.ClassConfig',
     'person.apps.PersonConfig',
     'tiktok.apps.TiktokConfig',
+    'api.apps.ApiConfig',
     
 ]
 
