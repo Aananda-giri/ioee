@@ -55,3 +55,13 @@ def get_notifications(what=None):
     if what !=None:print(what)
     print({'topics':new_topics, 'urls':new_urls})
     return({'topics':new_topics, 'urls':new_urls})
+
+def get_saved_notifications(request, how_many:int):
+    if int(how_many>15):
+        how_many = 15
+    with open('api/data/ioe_notices.json', 'r') as file:
+      data = json.load(file)
+    topics = data['topics'][:how_many]
+    urls = data['urls'][:how_many]
+    notifications = {'topics':topics, 'urls':urls}
+    return JsonResponse(notifications, status = 200)
