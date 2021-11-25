@@ -34,19 +34,19 @@ def get_notifications(what=None):
     scraped_urls = new['urls']
 
     #reverse because it would be easier to stack on top of old_data
-    scraped_topics.reverse()
-    scraped_urls.reverse()
+    #scraped_topics.reverse()
+    #scraped_urls.reverse()
     
     new_topics = []
     new_urls = []
 
-    for i, nu in enumerate(scraped_urls):
-      if nu not in old_urls:
-          old_urls.insert(0, nu)
+    for i, index in enumerate(reversed(scraped_urls)):
+      if index not in old_urls:
+          old_urls.insert(0, index)
           old_topics.insert(0, scraped_topics[i])
           new_topics.insert(0, scraped_topics[i])
-          new_urls.insert(0, nu)
-          print('Adding new:\n\t topic {}\n\t url:{}'.format(scraped_topics[i], nu))
+          new_urls.insert(0, index)
+          print('Adding new:\n\t topic {}\n\t url:{}'.format(scraped_topics[i], index))
 
     with open('api/data/ioe_notices.json','w') as file:
       json.dump({'topics':old_topics, 'urls':old_urls}, file, indent = 4)

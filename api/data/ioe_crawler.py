@@ -1,3 +1,7 @@
+# -------------------------------------------------------------------------
+#Change Format To: notices = [{'title':---, 'date':---, 'url':---} ,{...} ]
+# -------------------------------------------------------------------------
+
 import scrapy
 from scrapy.crawler import CrawlerProcess
 import scrapy
@@ -21,6 +25,8 @@ class IoeSpider(scrapy.Spider):
         
         #url of data
         urls=[]
+        
+        
         
         for td in tds:
             if td.css('td::text').get() in i:
