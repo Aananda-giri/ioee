@@ -20,28 +20,22 @@ class IoeSpider(scrapy.Spider):
         tds = response.css('td')
         i=[str(a) for a in range(1,11)]
         
-        #text of data
-        texts=[]
-        
-        #url of data
-        urls=[]
+        notices = []
         
         
         
         for td in tds:
+            # tds[0] -> s.no  ,tds[1] -> title  , tds[2] -> notice date
             if td.css('td::text').get() in i:
-                texts.append(tds[tds.index(td)+1].css('span::text').get())
-                urls.append(str(response.url).split('/?')[0][:-1] + str(tds[tds.index(td)+1].css('a::attr(href)').get()))
+                title = tds[tds.index(td)+1].css('span::text').get()
+                url = str(response.url).split('/?')[0][:-1] + str(tds[tds.index(td)+1].css('a::attr(href)').get())
+                date = tds[tds.index(td)+2].css('td::text').get()
+                notices.append({'title':title, 'url':url, 'date':date})
         
         with open('api/data/new_notices.json','w') as file:
-            json.dump({'topics':texts, 'urls':urls}, file, indent = 4)
-        #break
-        #print('\n\n\n\n\n',{'topics':texts, 'urls':urls})
-        #yield{'topics':texts, 'urls':urls}
+            json.dump(notices, file, indent = 4)
+
         #next_page = response.css('li.PagedList-skipToNext a::attr(href)').get()
-        
-        #with open('data.json','w') as file:
-        #    json.dump({'texts':texts, 'urls':urls}, file, indent = 4)
         
         #if next_page is not None:
         #    yield response.follow(next_page, callback=self.parse)
