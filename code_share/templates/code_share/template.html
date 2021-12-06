@@ -1,0 +1,31 @@
+<form method="post" style="margin-top: 1.3em;" action="/code/">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+        </form>
+
+
+
+        <br><h3>new_comment:<h3><br>
+        {% if new_comment %}
+        <!--<div class="alert alert-success" role="alert">
+          Your comment is awaiting moderation
+        </div>-->
+
+        
+          {{new_comment}}
+        
+          {%endif%}
+        <br><h3>old_comments:</h3><br>
+
+        {% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{ comment.author }}
+            <span class=" text-muted font-weight-normal">
+              {{ comment.created_on }}
+            </span>
+          </p>
+          {{ comment.comment | linebreaks }}
+        </div>
+        {% endfor %}

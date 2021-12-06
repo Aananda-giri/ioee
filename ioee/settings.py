@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'person.apps.PersonConfig',
     'tiktok.apps.TiktokConfig',
     'api.apps.ApiConfig',
-    
+    'code_share.apps.CodeShareConfig',
 ]
 
 MIDDLEWARE = [

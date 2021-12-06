@@ -23,7 +23,7 @@ from api import views as api
 #>>>>>>> c11fb71da6e85de028a4900d352127ffa232e1f4
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     #path('hotornot', include('hotornot.urls')),
     path('fuse/', hotornot_views.fuse_attend, name='fuse_attend'),
     path('fusee/', hotornot_views.fuse_attendd, name='fuse_attend2'),
@@ -32,6 +32,7 @@ urlpatterns = [
     path('tiktok_s_v_web_id/', toktok_views.get_tiktok_s_v_web_id, name='get_tiktok_s_v_web_id'),
 #<<<<<<< HEAD
     path('api/', include('api.urls')),
+    path('code/', include('code_share.urls')),
 #=======
 #>>>>>>> c11fb71da6e85de028a4900d352127ffa232e1f4
 ]
