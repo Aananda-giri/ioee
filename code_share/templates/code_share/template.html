@@ -6,17 +6,29 @@
 
 
 
-        <br><h3>new_comment:<h3><br>
+        <br><h3>new_comment:</h3><br>
         {% if new_comment %}
         <!--<div class="alert alert-success" role="alert">
           Your comment is awaiting moderation
         </div>-->
 
         
-          {{new_comment}}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{ new_comment.author }}
+            <span class=" text-muted font-weight-normal">
+              {{ new_comment.created_on }}
+            </span>
+          </p>
+          {{ new_comment.comment | linebreaks }}
+        </div>
         
           {%endif%}
-        <br><h3>old_comments:</h3><br>
+        
+        
+
+          
+          <br><h3>old_comments:</h3><br>
 
         {% for comment in comments %}
         <div class="comments" style="padding: 10px;">

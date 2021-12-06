@@ -1,7 +1,7 @@
 #database: 'fuse_attend'
 from django.db import models
 from django.utils import timezone
-
+import uuid
 
 #settings.configure()
 class Post(models.Model):
@@ -31,10 +31,14 @@ class Comment(models.Model):
     def __str__(self):
         return 'Comment {} by {}'.format(self.body, self.name)
 
-class ToyComment(models.Model):
+class Code(models.Model):
+    #id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, db_index=True)#(unique=True, default=uuid.uuid4, editable=False, db_index=True)
     comment = models.TextField()
     author = models.CharField(max_length=80)
+    email = models.EmailField(default='')
     created_on = models.DateTimeField(auto_now_add=True)
+    
     class Meta:
         ordering = ['created_on']
 

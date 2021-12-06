@@ -1,10 +1,10 @@
-from .models import ToyComment, Comment
+from .models import Code, Comment
 from django import forms
 
 
-class ToyCommentForm(forms.ModelForm):
+class CodeForm(forms.ModelForm):
     class Meta:
-        model = ToyComment
+        model = Code
         fields = ('author', 'comment')
         #fields = ('name', 'email', 'body')
 
@@ -13,3 +13,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('name', 'email', 'body')
 
+
+class EmailForm(forms.Form):
+    recipient = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)

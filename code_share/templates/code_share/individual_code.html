@@ -1,0 +1,10 @@
+
+<div class="comments" style="padding: 10px;">
+  <p class="font-weight-bold">
+    {{ code.author }}
+    <span class=" text-muted font-weight-normal">
+      {{ code.created_on }}
+    </span>
+  </p>
+  {{ code.comment | linebreaks }}
+</div>
