@@ -1,9 +1,9 @@
 
 <div class="comments" style="padding: 10px;">
   <p class="font-weight-bold">
-    {{ code.author | linebreaks  }}{{ code.title }}
+    <h4>{{ code.author | linebreaks  }}{{ code.title }}
     <span class=" text-muted font-weight-normal">
-      {{ code.created_on }}
+      {{ code.created_on }}</h4>
     </span>
   </p>
   {{ code.code | linebreaks }}

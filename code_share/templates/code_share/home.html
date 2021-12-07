@@ -1,3 +1,4 @@
+
 <form method="post" style="margin-top: 1.3em;" action="/code/">
           {{ code_form.as_p }}
           {% csrf_token %}
@@ -15,7 +16,7 @@
         
         <div class="comments" style="padding: 10px;">
           <p class="font-weight-bold">
-            <h4>{{ code.author | linebreaks  }}{{ new_code.title }}
+            <h4>{{ new_code.author | linebreaks  }}{{ new_code.title }}
             <span class=" text-muted font-weight-normal">
               {{ new_code.created_on }}</h4>
             </span>

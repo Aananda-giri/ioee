@@ -51,3 +51,8 @@ class Code(models.Model):
     def __str__(self):
         return 'Comment {} by {}'.format(self.code, self.author)
 
+
+
+# from code_share.models import Code
+# Code.objects.using('fuse_attend').all()[0].valid_email
+# Code.objects.using('fuse_attend').all()[0].hide_code
