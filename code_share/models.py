@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils import timezone
 import uuid
+from django.contrib.postgres.fields import ArrayField
 
 #settings.configure()
 class Post(models.Model):
@@ -34,14 +35,19 @@ class Comment(models.Model):
 class Code(models.Model):
     #id = models.AutoField(primary_key=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, db_index=True)#(unique=True, default=uuid.uuid4, editable=False, db_index=True)
-    comment = models.TextField()
-    author = models.CharField(max_length=80)
+    code = models.TextField()
+    author = models.CharField(max_length=80, default='')
     email = models.EmailField(default='')
     created_on = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, default='')
+    tags = ArrayField(models.CharField(max_length=150, blank=True), default=None, null=True)
     
+    valid_email = models.BooleanField(default=True)# False if the email is valid (i.e. could not send the mail)
+    hide_code = models.BooleanField(default=False)# To hide the code from home page and search
+
     class Meta:
         ordering = ['created_on']
 
     def __str__(self):
-        return 'Comment {} by {}'.format(self.comment, self.author)
+        return 'Comment {} by {}'.format(self.code, self.author)
 

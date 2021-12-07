@@ -14,31 +14,31 @@
     <div class="col-md-8 card mb-4  mt-3 ">
       <div class="card-body">
         <!-- comments -->
-        <h2>{{ comments.count }} comments</h2>
+        <h2>{{ codes.count }} code</h2>
 
-        {% for comment in comments %}
+        {% for code in codes %}
         <div class="comments" style="padding: 10px;">
           <p class="font-weight-bold">
-            {{ comment.name }}
+            {{ code.name }}
             <span class=" text-muted font-weight-normal">
-              {{ comment.created_on }}
+              {{ code.created_on }}
             </span>
           </p>
-          {{ comment.body | linebreaks }}
+          {{ code.body | linebreaks }}
         </div>
         {% endfor %}
       </div>
     </div>
     <div class="col-md-8 card mb-4  mt-3 ">
       <div class="card-body">
-        {% if new_comment %}
+        {% if new_code %}
         <div class="alert alert-success" role="alert">
-          Your comment is awaiting moderation
+          Your code is awaiting moderation
         </div>
         {% else %}
         <h3>Leave a comment</h3>
         <form method="post" style="margin-top: 1.3em;">
-          {{ comment_form.as_p }}
+          {{ code_form.as_p }}
           {% csrf_token %}
           <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
         </form>

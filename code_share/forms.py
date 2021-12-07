@@ -5,7 +5,7 @@ from django import forms
 class CodeForm(forms.ModelForm):
     class Meta:
         model = Code
-        fields = ('author', 'comment')
+        fields = ('title', 'code', 'author', 'email', 'tags')
         #fields = ('name', 'email', 'body')
 
 class CommentForm(forms.ModelForm):

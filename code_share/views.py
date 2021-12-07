@@ -1,5 +1,5 @@
 from .models import Code
-from .forms import CommentForm
+from .forms import CodeForm
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
 
@@ -8,31 +8,31 @@ from .forms import EmailForm
 from django.conf import settings
 
 
-#source: https://djangocentral.com/creating-comments-system-with-django/
+#source: https://djangocentral.com/creating-codes-system-with-django/
 def post_detail(request, slug):
     template_name = 'post_detail.html'
     post = get_object_or_404(Post, slug=slug)
-    comments = post.comments.filter(active=True)
-    new_comment = None
-    # Comment posted
+    codes = post.codes.filter(active=True)
+    new_code = None
+    # code posted
     if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        if comment_form.is_valid():
+        code_form = CodeForm(data=request.POST)
+        if code_form.is_valid():
 
-            # Create Comment object but don't save to database yet
-            new_comment = comment_form.save(commit=False)
-            # Assign the current post to the comment
-            new_comment.post = post
-            # Save the comment to the database
-            new_comment.save()
+            # Create code object but don't save to database yet
+            new_code = code_form.save(commit=False)
+            # Assign the current post to the code
+            new_code.post = post
+            # Save the code to the database
+            new_code.save()
     else:
-        comment_form = CommentForm()
+        code_form = CodeForm()
 
 
     return render(request, template_name, {'post': post,
-                                           'comments': comments,
-                                           'new_comment': new_comment,
-                                           'comment_form': comment_form})
+                                           'codes': codes,
+                                           'new_code': new_code,
+                                           'code_form': code_form})
 
 def format_email_message_body(uuid):
     message = "Here is your code: https://ioee.herokuapp.com/code/{}/\n\n".format(str(uuid))
@@ -40,46 +40,48 @@ def format_email_message_body(uuid):
     #message += "You can delete this code by verifying this email"
     return(message)
 
-def toy_post(request):
+def home(request):
     template_name = 'post_detail.html'
     #post = get_object_or_404(Post, slug=slug)
-    comments = Code.objects.using('fuse_attend').all().order_by('-created_on')
-    new_comment = None
-    # Comment posted
+    codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    new_code = None
+    # code posted
     if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        if comment_form.is_valid():
-            comment = request.POST.get("body", None);
-            author = request.POST.get("name", None);
-            email = request.POST.get("email", None);
-            print(comment, author, email)
-            # Create Comment object but don't save to database yet
-            new_comment = Code.objects.using('fuse_attend').create(comment=comment, author=author, email=email)
-            # Assign the current post to the comment
-            #new_comment.post = post
-            # Save the comment to the database
-            new_comment.save()
-            print('\n\n {} \n\n'.format(str(new_comment.id)))
+        code_form = CodeForm(data=request.POST)
+        if code_form.is_valid():
+            code = request.POST.get("code", None)
+            title = request.POST.get("title", None)
+            author = request.POST.get("author", None)
+            email = request.POST.get("email", None)
+            tags = request.POST.get("tags", None).split(' ')
+            print(code, title, email)
+            # Create code object but don't save to database yet
+            new_code = Code.objects.using('fuse_attend').create(code=code, email=email, title=title, tags=tags, author=author)
+            # Assign the current post to the code
+            #new_code.post = post
+            # Save the code to the database
+            new_code.save()
+            print('\n\n {} \n\n'.format(str(new_code.id)))
             if email.strip()!='':
-                send_mail_please(recipient= [email], subject="code", message=format_email_message_body(str(new_comment.id)))
+                send_mail_please(recipient= [email], subject="code", message=format_email_message_body(str(new_code.id)))
     else:
-        comment_form = CommentForm()
-    return render(request, 'code_share/template.html', {'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
+        code_form = CodeForm()
+    return render(request, 'code_share/home.html', {'codes': codes, 'new_code': new_code, 'code_form': code_form})
 
 '''
 def Code(request):
     if request.is_ajax and request.method == "POST":
         # get the nick name from the client side.
         #post = request.POST.get("username", None);
-        comment = request.POST.get("comment", None);
+        code = request.POST.get("code", None);
         author = request.POST.get("author", None);
         
-    if not str(comment).strip()=='':
-        Codes.objects.using('fuse_attend').create(comment=str(comment), author = str(author))
-        return HttpResponse('Successfully commented')
+    if not str(code).strip()=='':
+        Codes.objects.using('fuse_attend').create(code=str(code), author = str(author))
+        return HttpResponse('Successfully codeed')
     
     else:
-        return HttpResponse('Comment is empty')
+        return HttpResponse('code is empty')
 
 '''
 

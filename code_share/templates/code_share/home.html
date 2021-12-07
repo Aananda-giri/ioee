@@ -1,5 +1,5 @@
 <form method="post" style="margin-top: 1.3em;" action="/code/">
-          {{ comment_form.as_p }}
+          {{ code_form.as_p }}
           {% csrf_token %}
           <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
         </form>
@@ -7,7 +7,7 @@
 
 
         <br><h3>new_codes:</h3><br>
-        {% if new_comment %}
+        {% if new_code %}
         <!--<div class="alert alert-success" role="alert">
           Your comment is awaiting moderation
         </div>-->
@@ -15,12 +15,12 @@
         
         <div class="comments" style="padding: 10px;">
           <p class="font-weight-bold">
-            {{ new_comment.author }}
+            <h4>{{ code.author | linebreaks  }}{{ new_code.title }}
             <span class=" text-muted font-weight-normal">
-              {{ new_comment.created_on }}
+              {{ new_code.created_on }}</h4>
             </span>
           </p>
-          {{ new_comment.comment | linebreaks }}
+          {{ new_code.code | linebreaks }}
         </div>
         
           {%endif%}
@@ -30,14 +30,14 @@
 
           <br><h3>old_codes:</h3><br>
 
-        {% for comment in comments %}
+        {% for code in codes %}
         <div class="comments" style="padding: 10px;">
           <p class="font-weight-bold">
-            {{ comment.author }}
+          <h4>{{ code.author | linebreaks  }}{{ code.title }}
             <span class=" text-muted font-weight-normal">
-              {{ comment.created_on }}
+              {{ code.created_on }}</h4>
             </span>
           </p>
-          {{ comment.comment | linebreaks }}
+          {{ code.code | linebreaks }}
         </div>
         {% endfor %}
