@@ -43,7 +43,7 @@ def format_email_message_body(uuid):
 def toy_post(request):
     template_name = 'post_detail.html'
     #post = get_object_or_404(Post, slug=slug)
-    comments = Code.objects.using('fuse_attend').all()
+    comments = Code.objects.using('fuse_attend').all().order_by('-created_on')
     new_comment = None
     # Comment posted
     if request.method == 'POST':
