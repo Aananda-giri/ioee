@@ -56,3 +56,8 @@ class Code(models.Model):
 # from code_share.models import Code
 # Code.objects.using('fuse_attend').all()[0].valid_email
 # Code.objects.using('fuse_attend').all()[0].hide_code
+
+# Code.objects.using('fuse_attend').filter(author='anon').delete()
+# Code.objects.using('fuse_attend').filter(author='A').delete()
+# Code.objects.using('fuse_attend').filter(author='Jdkdkend').delete()
+# Code.objects.using('fuse_attend').filter(author='Hmm').delete()
