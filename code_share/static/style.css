@@ -1,0 +1,111 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(120deg, #ee7752, #8974ff, #23a6d5, #36eec3);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.editor {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.editor__code {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* disable tag matching */
+.ace_editor .ace_marker-layer .ace_bracket {
+  display: none;
+}
+.accordion-body {
+  height: 50vh;
+  background-color: #282c34;
+}
+.accordion {
+  margin: auto;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+.accordion-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.accordion-left-title {
+  width: 100%;
+  flex: -1;
+}
+.accordion-right-title {
+  width: 100%;
+  text-align: right;
+  margin-right: 10px;
+}
+.btn {
+  margin: auto;
+  text-align: center;
+  display: flex;
+  margin-top: 10px;
+}
+.editor__code {
+  border: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: rgb(66, 66, 66);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 20px;
+
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+
+  background: rgb(73, 73, 73);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(143, 143, 143);
+}
+@media screen and (max-width: 600px) {
+  .accordion {
+    width: 100%;
+  }
+}

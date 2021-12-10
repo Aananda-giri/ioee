@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render
 from .forms import EmailForm
 from django.conf import settings
+from django.core import serializers
 
 
 #source: https://djangocentral.com/creating-codes-system-with-django/
@@ -43,7 +44,7 @@ def format_email_message_body(uuid):
 def home(request):
     template_name = 'post_detail.html'
     #post = get_object_or_404(Post, slug=slug)
-    codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    
     new_code = None
     # code posted
     if request.method == 'POST':
@@ -64,9 +65,13 @@ def home(request):
             print('\n\n {} \n\n'.format(str(new_code.id)))
             if email.strip()!='':
                 send_mail_please(recipient= [email], subject="code", message=format_email_message_body(str(new_code.id)))
-    else:
-        code_form = CodeForm()
-    return render(request, 'code_share/home.html', {'codes': codes, 'new_code': new_code, 'code_form': code_form})
+    #else:
+    code_form = CodeForm()
+    codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    data = serializers.serialize('json', codes)
+    #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
+        
+    return render(request, 'code_share/index.html', {'data':data, 'new_code': new_code, 'code_form': code_form})
 
 '''
 def Code(request):
@@ -135,4 +140,10 @@ def send_mail_please(recipient, subject="uuid", message='hello World'):
 
 def code_by_uuid(request, uuid):
     code = Code.objects.using('fuse_attend').get(id=uuid)
-    return render(request, 'code_share/individual_code.html', {'code':code})
+    #return render(request, 'code_share/individual_code.html', {'code':code})
+    code_form = CodeForm()
+    #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    data = serializers.serialize('json', [code])
+    #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
+        
+    return render(request, 'code_share/index.html', {'data':data, 'code_form': code_form})
