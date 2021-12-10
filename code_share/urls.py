@@ -8,4 +8,3 @@ urlpatterns = [
     path('code/<str:uuid>/', views.code_by_uuid, name='code_by_uuid'),
     path('mail/', views.sendMail, name='send_mail'),
 ]
-

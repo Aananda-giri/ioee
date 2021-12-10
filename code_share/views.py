@@ -9,7 +9,7 @@ from django.conf import settings
 from django.core import serializers
 
 
-#source: https://djangocentral.com/creating-codes-system-with-django/
+# source: https://djangocentral.com/creating-codes-system-with-django/
 def post_detail(request, slug):
     template_name = 'post_detail.html'
     post = get_object_or_404(Post, slug=slug)
@@ -29,22 +29,24 @@ def post_detail(request, slug):
     else:
         code_form = CodeForm()
 
-
     return render(request, template_name, {'post': post,
                                            'codes': codes,
                                            'new_code': new_code,
                                            'code_form': code_form})
 
+
 def format_email_message_body(uuid):
-    message = "Here is your code: https://ioee.herokuapp.com/code/{}/\n\n".format(str(uuid))
+    message = "Here is your code: https://ioee.herokuapp.com/code/{}/\n\n".format(
+        str(uuid))
     #message += "anyone who has this link has right to delete it?"
     #message += "You can delete this code by verifying this email"
     return(message)
 
+
 def home(request):
     template_name = 'post_detail.html'
     #post = get_object_or_404(Post, slug=slug)
-    
+
     new_code = None
     # code posted
     if request.method == 'POST':
@@ -57,21 +59,24 @@ def home(request):
             tags = request.POST.get("tags", None).split(' ')
             print(code, title, email)
             # Create code object but don't save to database yet
-            new_code = Code.objects.using('fuse_attend').create(code=code, email=email, title=title, tags=tags, author=author)
+            new_code = Code.objects.using('fuse_attend').create(
+                code=code, email=email, title=title, tags=tags, author=author)
             # Assign the current post to the code
             #new_code.post = post
             # Save the code to the database
             new_code.save()
             print('\n\n {} \n\n'.format(str(new_code.id)))
-            if email.strip()!='':
-                send_mail_please(recipient= [email], subject="code", message=format_email_message_body(str(new_code.id)))
-    #else:
+            if email.strip() != '':
+                send_mail_please(recipient=[
+                                 email], subject="code", message=format_email_message_body(str(new_code.id)))
+    # else:
     code_form = CodeForm()
     codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
     data = serializers.serialize('json', codes)
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
-        
-    return render(request, 'code_share/index.html', {'data':data, 'new_code': new_code, 'code_form': code_form})
+
+    return render(request, 'code_share/index.html', {'data': data, 'new_code': new_code, 'code_form': code_form})
+
 
 '''
 def Code(request):
@@ -124,26 +129,28 @@ def sendMail(request):
 
     })
 
+
 def send_mail_please(recipient, subject="uuid", message='hello World'):
-            # create a variable to keep track of the form
-            #messageSent = False
-            #recipient = 'aanandaprashadgiri@gmail.com'
-            #subject = "Sending an email with Django"
-            #message = cd['message']
+    # create a variable to keep track of the form
+    #messageSent = False
+    #recipient = 'aanandaprashadgiri@gmail.com'
+    #subject = "Sending an email with Django"
+    #message = cd['message']
 
-            # send the email to the recipent
-            send_mail(subject, message,
-                      settings.DEFAULT_FROM_EMAIL, recipient)
+    # send the email to the recipent
+    send_mail(subject, message,
+              settings.DEFAULT_FROM_EMAIL, recipient)
 
-            # set the variable initially created to True
-            messageSent = True
+    # set the variable initially created to True
+    messageSent = True
+
 
 def code_by_uuid(request, uuid):
     code = Code.objects.using('fuse_attend').get(id=uuid)
-    #return render(request, 'code_share/individual_code.html', {'code':code})
+    # return render(request, 'code_share/individual_code.html', {'code':code})
     code_form = CodeForm()
     #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
     data = serializers.serialize('json', [code])
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
-        
-    return render(request, 'code_share/index.html', {'data':data, 'code_form': code_form})
+
+    return render(request, 'code_share/index.html', {'data': data, 'code_form': code_form})

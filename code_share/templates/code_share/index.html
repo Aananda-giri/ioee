@@ -82,6 +82,7 @@
                     class="form-control"
                     id="exampleFormControlTitle"
                     name="title"
+                    required
                   />
                 </div>
                 <div class="mb-3">
@@ -93,6 +94,8 @@
                     class="form-control"
                     name="author"
                     id="exampleFormControlAuthor"
+                    required
+
                   />
                 </div>
                 <div class="mb-3">
@@ -115,6 +118,8 @@
                     id="exampleFormControlTextarea1"
                     name="code"
                     rows="50"
+                    required
+
                   ></textarea>
                 </div>
               </div>
@@ -164,6 +169,7 @@
      var dataa={{data|safe}};
      //console.log(dataa);
      okSetupEditor(dataa);
+     setupEditor(dataa)
     </script>
   </body>
 </html>

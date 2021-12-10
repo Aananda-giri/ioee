@@ -1,10 +1,10 @@
 const codecs = [
-    {
-      id: "1",
-      author: "Ritik",
-      title: "Circular Queue",
-      timestamp: "Dec. 8, 2021, 10:34 a.m.",
-      code: `#include<stdio.h>
+  {
+    id: "1",
+    author: "Ritik",
+    title: "Circular Queue",
+    timestamp: "Dec. 8, 2021, 10:34 a.m.",
+    code: `#include<stdio.h>
       #include<stdlib.h>
       #define size 4
       
@@ -91,13 +91,13 @@ const codecs = [
       }
       }
       }`,
-    },
-    {
-      id: "2",
-      author: "Ritik",
-      title: "Secant Method",
-      timestamp: "Dec. 8, 2021, 10:33 a.m.",
-      code: `#include<stdio.h>
+  },
+  {
+    id: "2",
+    author: "Ritik",
+    title: "Secant Method",
+    timestamp: "Dec. 8, 2021, 10:33 a.m.",
+    code: `#include<stdio.h>
       #include<conio.h>
       #include<math.h>
       #define f(x) (x*x*x-2*x-5)
@@ -124,13 +124,13 @@ const codecs = [
       
       
       `,
-    },
-    {
-      id: "3",
-      author: "katrina",
-      title: "Newton Raphson",
-      timestamp: "Dec. 7, 2021, 10:13 a.m.",
-      code: `#include<stdio.h>
+  },
+  {
+    id: "3",
+    author: "katrina",
+    title: "Newton Raphson",
+    timestamp: "Dec. 7, 2021, 10:13 a.m.",
+    code: `#include<stdio.h>
         #include<stdlib.h>
         #define size 4
         
@@ -199,15 +199,13 @@ const codecs = [
         }
       
       `,
-    },
-  ];
+  },
+];
 
-  function createEditor(key, i){
-
-
+function createEditor(key, i) {
   //for (key in codes) {
-    let accordion = document.getElementById("accordionExample");
-    accordion.innerHTML += `<div class="accordion-item my-3">
+  let accordion = document.getElementById("accordionExample");
+  accordion.innerHTML += `<div class="accordion-item my-3">
   <h2 class="accordion-header" id="heading${i}">
   <button
     class="accordion-button"
@@ -232,46 +230,64 @@ const codecs = [
   id="collapse${i}"
   class="accordion-collapse collapse show"
   aria-labelledby="heading${i}"
-  data-bs-parent="#accordionExample"
   >
   <div class="accordion-body editor">
-    <div class='editor__code'id="editor${i}"></div>
+    <div class='editor__code 'id="editor${i}"></div>
   </div>
   </div>
   </div>`;
   //}
-};
-  
-  function setupEditor(key, i) {
-    //for (key in codes) {
-      window.editor = ace.edit(`editor${i}`);
-      editor.setTheme("ace/theme/one_dark");
-      editor.getSession().setMode("ace/mode/c_cpp");
-      editor.setValue(key.code, 1); //1 = moves cursor to end
-  
-      editor.setReadOnly(true);
-      editor.setOptions({
-        fontSize: "16pt",
-        showLineNumbers: true,
-        showGutter: true,
-        // vScrollBarAlwaysVisible: true,
-      });
-    //}
+}
+
+// function setupEditor(codes) {
+//   for (i = 0; i < 10; i++) {
+//     window.editor = ace.edit(`editor${key["id"]}`);
+//     editor.setTheme("ace/theme/one_dark");
+//     editor.getSession().setMode("ace/mode/c_cpp");
+//     editor.setValue(key.code, 1); //1 = moves cursor to end
+
+//     editor.setReadOnly(true);
+//     editor.setOptions({
+//       fontSize: "16pt",
+//       showLineNumbers: true,
+//       showGutter: true,
+//       // vScrollBarAlwaysVisible: true,
+//     });
+//   }
+// }
+
+function setupEditor(codes) {
+  let i = 1;
+  for (key of codes) {
+    window.editor = ace.edit(`editor${i}`);
+    editor.setTheme("ace/theme/one_dark");
+    editor.getSession().setMode("ace/mode/c_cpp");
+    editor.setValue(key["fields"]["code"], 1); //1 = moves cursor to end
+
+    editor.setReadOnly(true);
+    editor.setOptions({
+      fontSize: "16pt",
+      showLineNumbers: true,
+      showGutter: true,
+    });
+
+    i++;
   }
-  
+}
 
 function okSetupEditor(codes) {
-    var i=1;
-    for (code of codes){
-      var well_formatted_code = {
-        id: i,
-        author: code['fields']['author'],
-        title: code['fields']['title'],
-        timestamp: code['fields']['created_on'],
-        code: code['fields']['code'],
-      }
-      createEditor(well_formatted_code, i);
-      setupEditor(well_formatted_code,i);
-      i= i+1;
-    }
+  console.log("codes", codes);
+  var i = 1;
+  for (code of codes) {
+    var well_formatted_code = {
+      id: i,
+      author: code["fields"]["author"],
+      title: code["fields"]["title"],
+      timestamp: code["fields"]["created_on"],
+      code: code["fields"]["code"],
+    };
+    createEditor(well_formatted_code, i);
+    // setupEditor(well_formatted_code);
+    i = i + 1;
+  }
 }
