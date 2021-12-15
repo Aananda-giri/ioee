@@ -1,211 +1,23 @@
-const codecs = [
-  {
-    id: "1",
-    author: "Ritik",
-    title: "Circular Queue",
-    timestamp: "Dec. 8, 2021, 10:34 a.m.",
-    code: `#include<stdio.h>
-      #include<stdlib.h>
-      #define size 4
-      
-      void push();
-      void pop();
-      void show();
-      int rear=-1, front=-1,inp_array[size];
-      int main(){
-      int choice;
-      while(1){
-      printf("operations performed by queue\n");
-      printf("\n1.push\n2.pop\n3.show\n4.end\n\n");
-      scanf("%d", &choice);
-      switch(choice){
-      case 1:
-      push();
-      break;
-      case 2:
-      pop();
-      break;
-      case 3:
-      show();
-      break;
-      case 4:exit(0);
-      default:printf("Invalid Choice\n");
-      
-      }
-      }
-      
-      }
-      void push(){
-      int x,i;
-      if((rear==size-1&& front==0)||(front==rear+1)){
-      printf("\nOverflow\n");
-      }
-      else if(front==-1){
-      front=0;
-      rear=0;
-      }
-      
-      else{
-      printf("print the element to be inserted\n");
-      scanf("%d",&x);
-      rear=(rear+1)%size;
-      printf("rear:%d\t",rear);
-      printf("front:%d",front);
-      inp_array[rear]=x;
-      
-      }
-      }
-      
-      void pop(){
-      if(front==-1){
-      printf("\nUnderflow");
-      }else if(front==rear){
-      front=-1;
-      rear=-1;}
-      else{
-      
-      printf("\npopped element=%d\n",inp_array[front]);
-      front=(front+1)%size;
-      printf("rear:%d\t",rear);
-      printf("front:%d\n",front);
-      }
-      }
-      
-      void show(){
-      int i;
-      if(front==-1){
-      printf("\nUnderflow!!");
-      }else{
-      printf("\nElements present in the stack:\n");
-      if(front>rear){
-      
-      for(i=0;i<=(size-1);i++){
-      printf("show:%d\n",inp_array[i]);
-      
-      }}
-      else{
-      for(i=front;i<=(rear);i++){
-      printf("show:%d\n",inp_array[i]);
-      
-      }
-      }
-      }
-      }`,
-  },
-  {
-    id: "2",
-    author: "Ritik",
-    title: "Secant Method",
-    timestamp: "Dec. 8, 2021, 10:33 a.m.",
-    code: `#include<stdio.h>
-      #include<conio.h>
-      #include<math.h>
-      #define f(x) (x*x*x-2*x-5)
-      int main(){
-      float x0,x1,x2;
-      int i=0;
-      printf("Enter ther value of x0 and x1:\n");
-      scanf("%f%f",&x0,&x1);
-      printf("No.ofsteps\tx0\tx1\tx2\tf(x1)\tf(x2)\tf(x0)\n");
-      printf("%d\t\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\n",i+1,x0,x1,x2,f(x1),f(x2),f(x0));
-      do{
-      
-      x2=(f(x1)*x0-f(x0)*x1)/(f(x1)-f(x0));
-      x0=x1;
-      x1=x2;
-      printf("%d\t\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\n",i+1,x0,x1,x2,f(x1),f(x2),f(x0));
-      i++;
-      
-      }while(fabs(x1-x0)>0.00001);
-      printf("Required root=%f",x2);
-      printf("\n f(x2)=%f",f(x2));
-      
-      }
-      
-      
-      `,
-  },
-  {
-    id: "3",
-    author: "katrina",
-    title: "Newton Raphson",
-    timestamp: "Dec. 7, 2021, 10:13 a.m.",
-    code: `#include<stdio.h>
-        #include<stdlib.h>
-        #define size 4
-        
-        void push();
-        void pop();
-        void show();
-        int rear=-1, front=0,inp_array[size];
-        int main(){
-        int choice;
-        while(1){
-        printf("operations performed by queue");
-        printf("\n1.push\n2.pop\n3.show\n4.end\n\n");
-        scanf("%d", &choice);
-        switch(choice){
-        case 1:
-        push();
-        break;
-        case 2:
-        pop();
-        break;
-        case 3:
-        show();
-        break;
-        case 4:exit(0);
-        default:printf("Invalid Choice");
-        
-        }
-        }
-        
-        }
-        void push(){
-        int x,i;
-        if(rear==size-1){
-        printf("\n Overflow");
-        }
-        else{
-        printf("print the element to be inserted");
-        scanf("%d",&x);
-        rear=rear+1;
-        inp_array[rear]=x;
-        
-        
-        }
-        }
-        
-        void pop(){
-        if(front==-1||front>rear){
-        printf("\n Overflow");
-        }else{
-        printf("\npopped element=%d",inp_array[front]);
-        front++;
-        }
-        }
-        
-        void show(){
-        int i;
-        if(front==-1||front>rear){
-        printf("\nUnderflow!!");
-        }else{
-        printf("\n Elements present in the stack:\n ");
-        for(i=front;i<=rear;i++){
-        printf("show:%d\n",inp_array[i]);
-        
-        }
-        }
-        }
-      
-      `,
-  },
-];
+function copyToClipboard(code_position) {
+  console.log(code_position);
+  var text = dataa[code_position].fields.code;
+  var dummy = document.createElement("textarea");
+  // to avoid breaking orgain page when copying more words
+  // cant copy when adding below this code
+  // dummy.style.display = 'none'
+  document.body.appendChild(dummy);
+  //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+  dummy.value = text;
+  dummy.select();
+  document.execCommand("copy");
+  document.body.removeChild(dummy);
+}
 
 function createEditor(key, i) {
   //for (key in codes) {
   let accordion = document.getElementById("accordionExample");
-  accordion.innerHTML += `<div class="accordion-item my-3">
+  accordion.innerHTML += `
+  <div class="accordion-item my-3">
   <h2 class="accordion-header" id="heading${i}">
   <button
     class="accordion-button"
@@ -217,14 +29,21 @@ function createEditor(key, i) {
   >
     <div class="accordion-title">
       <div class="accordion-left-title">
-        <h4>${key.title}</h4>
+        <h4><b>${key.title}</b></h4>
       </div>
+      </i>
       <div class="accordion-right-title">
-        <h5>${key.author}</h5>
+        <h5><b>${key.author}</b></h5>
         <h5>${key.timestamp}</h5>
       </div>
     </div>
+    
   </button>
+  <i class="accordion-item my-3 position-absolute" id="copy${i}" onClick="copyToClipboard('${i}')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+  <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+  <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+</svg>
+</i>  
   </h2>
   <div
   id="collapse${i}"
@@ -239,22 +58,6 @@ function createEditor(key, i) {
   //}
 }
 
-// function setupEditor(codes) {
-//   for (i = 0; i < 10; i++) {
-//     window.editor = ace.edit(`editor${key["id"]}`);
-//     editor.setTheme("ace/theme/one_dark");
-//     editor.getSession().setMode("ace/mode/c_cpp");
-//     editor.setValue(key.code, 1); //1 = moves cursor to end
-
-//     editor.setReadOnly(true);
-//     editor.setOptions({
-//       fontSize: "16pt",
-//       showLineNumbers: true,
-//       showGutter: true,
-//       // vScrollBarAlwaysVisible: true,
-//     });
-//   }
-// }
 
 function setupEditor(codes) {
   let i = 1;
