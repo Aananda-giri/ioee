@@ -1,6 +1,7 @@
 function copyToClipboard(code_position) {
   console.log(code_position);
   var text = dataa[code_position].fields.code;
+  console.log(text);
   var dummy = document.createElement("textarea");
   // to avoid breaking orgain page when copying more words
   // cant copy when adding below this code

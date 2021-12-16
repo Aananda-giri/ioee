@@ -3,7 +3,7 @@ from .forms import CodeForm
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
 
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from .forms import EmailForm
 from django.conf import settings
 from django.core import serializers
@@ -154,3 +154,6 @@ def code_by_uuid(request, uuid):
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
     return render(request, 'code_share/index.html', {'data': data, 'code_form': code_form})
+
+def ssl_cert(request):
+    return HttpResponse('3ufveaLc9JnIgj9y5-f9jrhb8Vgz2fSAFTbKguBTMYk.s1y7_YhjSk90w1NT8OBQ3LfEfRjn-eWv8R014Xl2Cco')

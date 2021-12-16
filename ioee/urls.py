@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from hotornot import views as hotornot_views
 from tiktok import views as toktok_views
+#from code_share.views import ssl_cert
 #<<<<<<< HEAD
 from api import views as api
 #=======
@@ -34,6 +35,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('', include('code_share.urls')),
     path('code/', include('code_share.urls')),
+    #path('.well-known/acme-challenge/M58vqliMosBAdgOYNx9UW9DlcBQ71UIkaQ0YYWAq_zs', ssl_cert, name = ssl_cert)
 #=======
 #>>>>>>> c11fb71da6e85de028a4900d352127ffa232e1f4
 ]
