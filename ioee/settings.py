@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'fuse_attend.apps.FuseAttendConfig',
     'class.apps.ClassConfig',
     'person.apps.PersonConfig',
-    'tiktok.apps.TiktokConfig',
     'api.apps.ApiConfig',
     'code_share.apps.CodeShareConfig',
 ]
