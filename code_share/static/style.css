@@ -112,3 +112,10 @@ h5 {
     width: 100%;
   }
 }
+
+.copy{
+  cursor: pointer;
+  /* background-color: red; */
+  z-index: 100;
+  margin-left: 6px;
+}
