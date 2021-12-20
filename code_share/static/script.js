@@ -76,7 +76,7 @@ function createEditor(key, i) {
         main
       </div>
       <div style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="editCode('${i-1}')">
-        add_branch
+        edit
       </div>
     </div>
   
