@@ -1,3 +1,11 @@
+function editCode(code_position) {
+  
+  console.log(code_position);
+  var parent_code_id = dataa[code_position].pk;
+  url = window.location.origin + '/edit/'+parent_code_id+'/';
+  window.location.href = url;
+  //onClick="editCode('${i-1}')"
+}
 function copyToClipboard(code_position) {
   console.log(code_position);
   var text = dataa[code_position].fields.code;
@@ -18,27 +26,6 @@ function copyToClipboard(code_position) {
   copy_btn.style.color='white';
 }
 
-function editCode(code_position) {
-  console.log(code_position);
-  var parent_code_id = dataa[code_position].pk;
-  url = window.location.origin + '/edit/'+parent_code_id+'/';
-  window.location.href = url;
-  //   console.log(text);
-//   var dummy = document.createElement("textarea");
-//   // to avoid breaking orgain page when copying more words
-//   // cant copy when adding below this code
-//   // dummy.style.display = 'none'
-//   document.body.appendChild(dummy);
-//   //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
-//   dummy.value = text;
-//   dummy.select();
-//   document.execCommand("copy");
-//   document.body.removeChild(dummy);
-// //.style.backgroundColor='#00FF00'
-//   copy_btn = document.getElementById('copy' + code_position);
-//   copy_btn.style.backgroundColor='#00FF00';
-//   copy_btn.style.color='white';
-}
 
 function createEditor(key, i) {
   //for (key in codes) {
