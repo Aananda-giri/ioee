@@ -129,7 +129,7 @@ def edit_code(request, parent_id=None):
         #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
     code_form = CodeForm()    
-    return render(request, template_name, {'parent_data': data, 'branch':branch, 'code_form': code_form})
+    return render(request, template_name, {'parent_data': data, 'branch':branch, 'code_form': code_form, 'parent_id':parent_id})
 
 ###########################################
 # Unused views
