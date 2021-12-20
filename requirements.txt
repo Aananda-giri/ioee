@@ -12,3 +12,4 @@ whitenoise==5.2.0
 whitenoise==5.2.0
 selenium==4.0.0a1
 django-fernet-fields==0.6
+nepali-datetime==1.0.7

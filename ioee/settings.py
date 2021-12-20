@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'code_share.apps.CodeShareConfig',
     #'fontawesome-free',
+    'nepali_datetime_field',
 ]
 
 MIDDLEWARE = [
