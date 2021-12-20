@@ -99,7 +99,7 @@ def edit_code(request, parent_id=None):
             tags = request.POST.get("tags", None).split(' ')
             print(code, title, email)
             # Create code object but don't save to database yet
-            code = Code.objects.using('fuse_attend').get(id=parent_id)
+            #code = Code.objects.using('fuse_attend').get(id=parent_id)
             branch = Branch.objects.using('fuse_attend').create(originalCode=code, code=code, email=email, title=title, tags=tags, author=author)
             branch.save() # Saves the branch
             #new_code = Code.objects.using('fuse_attend').create(
@@ -121,15 +121,15 @@ def edit_code(request, parent_id=None):
             parent_data=None
             #return render(request, template_name, {'data': data, 'new_code': new_code, 'code_form': code_form})
     else:
-        code = Code.objects.using('fuse_attend').get(id=parent_id)
+        parent_data = Code.objects.using('fuse_attend').get(id=parent_id)
         code_form = CodeForm()
         #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
-        parent_data = serializers.serialize('json', code)
+        #parent_data = serializers.serialize('json', code)
         branch=None
         #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
     code_form = CodeForm()    
-    return render(request, template_name, {'parent_data': data, 'branch':branch, 'code_form': code_form, 'parent_id':parent_id})
+    return render(request, template_name, {'parent_data': parent_data, 'branch':branch, 'code_form': code_form, 'parent_id':parent_id})
 
 ###########################################
 # Unused views

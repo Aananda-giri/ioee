@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'person.apps.PersonConfig',
     'api.apps.ApiConfig',
     'code_share.apps.CodeShareConfig',
+    #'fontawesome-free',
 ]
 
 MIDDLEWARE = [

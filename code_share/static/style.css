@@ -119,3 +119,23 @@ h5 {
   z-index: 100;
   margin-left: 6px;
 }
+
+.footer_div {
+  margin-top: .5rem !important;
+  height: 5vh;
+}
+
+/* <div class="m-2 d-flex" style="color: white; ">
+  <div style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center">
+  main
+    
+  </div>
+    <div style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2">
+  2nd_branch
+    
+  </div>
+  <div style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2">
+  3rd_branch
+  
+  </div>
+</div> */

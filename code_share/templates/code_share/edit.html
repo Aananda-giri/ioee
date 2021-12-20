@@ -50,6 +50,7 @@
               id="exampleFormControlTitle"
               name="title"
               placeholder="stick_man"
+              {{parent_data.fields.title}}
               required
             />
           </div>
@@ -77,6 +78,7 @@
               name="tags"
               id="exampleFormControlTags"
               placeholder="c stick_man  graphics"
+              value={{parent_data.fields.tags}}
             />
           </div>
           <div class="mb-3">
@@ -88,18 +90,18 @@
               id="exampleFormControlTextarea1"
               name="code"
               rows="50"
-              value = {{branch.fields.code}}
               required
 
-            ></textarea>
+            >{{parent_data.fields.code}}</textarea>
           </div>
         </div>
         <input
-              type="email"
+              type="text"
               class="form-control"
-              id="id_email"
+              id="parent_id"
               name="parent_id"
               value={{parent_id}}
+              style="display:none;"
             />
         <div class="modal-footer">
           <button
