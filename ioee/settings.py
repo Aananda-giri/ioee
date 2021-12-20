@@ -61,7 +61,8 @@ ROOT_URLCONF = 'ioee.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        ## To include templates folder for default templates
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,8 +108,14 @@ DATABASES = {
         'PORT': '5432',
     },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lflpirvq',
+        'USER': 'lflpirvq',
+        'PASSWORD': '4EB2sZ6kz3unSepKWt0ame_SPrd3ZVry',
+        'HOST': 'john.db.elephantsql.com',
+        'PORT': '5432',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -165,3 +172,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = EMAIL_HOST_USER = 'amaryesh123456@gmail.com'#'076bei001.aananda@sagarmatha.edu.np'
 EMAIL_HOST_PASSWORD = 'ma ai banauchu9'#'6KBfDiNyJkUg3KP'
+
+
+# Login & Logout URLs
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = '/login/'

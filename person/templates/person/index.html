@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title> A collective memory Autobiography by community </title>
+<title> IOE_students_Images </title>
 <meta name="description"  content="Brain Map, a collective brain, where individuals can share brief profile of people they know.">
 
 <!-- For responsive-website [mobile-friendly website]  -->
@@ -25,6 +25,9 @@
 
 <!-- For floating plus button --> 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></style>
+
+<!-- For google analytics -->
+{% include "google_analytics.html" %}
 
 <style>
 /*############### For floating add person ####################*/
@@ -52,9 +55,6 @@ float1:hover{
 body{
     background: -webkit-linear-gradient(left, #3931af, #00c6ff);
 }
-
-
-
 
 
 /*################# For floating shere to social ###################*/
@@ -188,6 +188,37 @@ a#menu-share:hover > i{
 
 
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/ioe_images/ACE/BEI/76/">Images</a>
+        <!--</li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="floating_spinner" class="spinner_at_top spinner-border text-danger mx-auto" role="status" style="display:none;">
+  <span class="visually-hidden">Loading...</span>
+</div>
+
 <!-- ################## For add jokes ####################### -->
 <div id="add_button" class="menu-add float" onClick="showAddingTab()">
   <a href="#" class="float1" onClick="showAddingTab()">
@@ -223,14 +254,19 @@ a#menu-share:hover > i{
 <!-- ###################### For search icon ###################-->
 
 <!--<form class="form-inline my-2 my-md-0" action="/search/">-->
-  <input class="form-control col-md-6 mx-auto d-block " id="search_input" type="text" placeholder="Search" name="search_query" onkeydown="search()">
+  <input class="form-control col-md-6 mx-auto d-block loading" id="search_input" type="text" placeholder="Search" name="search_query" onkeydown="search()">
+  
 <!--  <input type="submit" value="Submit" style="display:none;" onClick="sayHello()"></submit>-->
 <!--</form>-->
 
+<!-- For spinner at the end --
+<div class="spinner-grow text-secondary mx-auto d-block" id="spinner" style="display:none;width: 3rem; height: 3rem;" role="status">
+  <span class="visually-hidden"></span>
+</div>-->
 
 
-{% for person in people %}
 
+{% for person in people.0 %}
 
 
 
@@ -958,7 +994,7 @@ a#menu-share:hover > i{
                         </div>
                     </div>
                 </div>
-            <input type="submit" value="Submit" class="float-right" style="display:block;" onClick="showAddingTab(false);showMessage('successfully added new user');"></submit><br>
+            <input type="submit" value="Submit" class="float-right" style="display:block;" onClick="showAddingTab(false);console.log('successfully added new user');"></submit><br>
             </form>           
         </div>
 
@@ -968,17 +1004,28 @@ a#menu-share:hover > i{
 
 
 <script>
+
 function sayHello() {
 
 console.log('Hello there')
 console.log(document.getElementById('search_input').value);
 }
+function toggle_spinner(){
+  if (document.getElementById('floating_spinner').style.display=='none'){
+    document.getElementById('floating_spinner').style.display='block';
+  } else{document.getElementById('floating_spinner').style.display='none';}
+  
+}
+function showMessage(message){
+  console.log(message);
+}
 
 function search() {
   if(event.key === 'Enter') {
+  toggle_spinner();
   search_query = document.getElementById('search_input').value;
   console.log('search_query:'+search_query );
-  document.getElementById('search_input').value='';
+  //document.getElementById('search_input').value='';
  $.ajax({
     type: 'GET',
     url: "{% url 'search_me' %}",
@@ -988,7 +1035,8 @@ function search() {
     
     success: function(response) {
       // value of search tab=sesarch_query
-      document.getElementById('search_input').value = search_query;
+      //document.getElementById('search_input').value = search_query;
+      toggle_spinner();
       console.log('search_query:'+search_query);
 
       var instance = JSON.parse(response["people"]);
@@ -997,10 +1045,17 @@ function search() {
       console.log(instance[0].fields);
       console.log('her');
       console.log(instance[0].fields[0]);
+      console.log('profile_pic:');
+      
+      let profile_pic="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog";
+      
+      profile_pic = String(instance[0]['fields']['profile_pic']);
+      profile_pic = profile_pic.substring(2,profile_pic.length-2);
+      console.log(profile_pic);
       try{
       for (i=0;i<instance.length;i++){
-
-      appendSearchResults(instance[i]['fields'],i);
+      
+      appendSearchResults(instance[i]['fields'],i, profile_pic);
       }} finally{showMessage('No user found');}        
 
       

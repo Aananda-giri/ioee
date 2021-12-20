@@ -1,3 +1,13 @@
+var collages = ['PUL', 'THA', 'PAS', 'PUR', 'KAT', 'KAN', 'SEC', 'ACE', 'HCE', 'NCE', 'LEC', 'KIC', 'JAN', 'KEC', 'CHI']
+
+var collage_faculties = [['BCE', 'BCT', 'BEI', 'BEL', 'BAR', 'BCH', 'BME'], ['BCE', 'BCT', 'BEI', 'BAR', 'BME', 'BIE', 'BAM'], ['BCE', 'BCT', 'BEI', 'BEL', 'BAM', 'BME', 'BGE'], ['BCE', 'BCT', 'BEI', 'BEL', 'BAR', 'BME', 'BAG'], ['BCE', 'BCT', 'BEI', 'BEL', 'BAR'], ['BCE', 'BCT', 'BEI'], ['BCE', 'BCT', 'BEI'], ['BCE', 'BCT', 'BEI', 'BEL'], ['BCE', 'BCT', 'BEI', 'BAR'], ['BCE', 'BCT', 'BEI', 'BEL'], ['BCE', 'BCT'], ['BCE', 'BCT', 'BEI'], ['BCE', 'BCT', 'BEI'], ['BCE', 'BCT', 'BEL'], ['BAR']]
+
+var faculties = ['BCE', 'BCT', 'BEI', 'BAR', 'BME', 'BEL', 'BCH', 'BIE', 'BAM', 'BGE', 'BAG',]
+
+var students = [[192, 96, 48, 48, 48, 48, 48], [144, 48, 48, 48, 48, 48, 48], [144, 48, 48, 48, 48, 48, 48], [96, 96, 48, 48, 48, 96, 48], [96, 96, 96, 48, 48], [96, 96, 96], [48, 48, 48], [96, 96, 96, 48], [96, 48, 48, 48], [96, 48, 48, 48], [48, 48], [96, 48, 48], [96, 48, 48], [96, 48, 48], [24]]
+
+year = [73,74,75,76]
+
 /*
 <!-- ############### Redundant Code ####################### -->
 <!-- ############### For getting profile details again ########## -->
@@ -9,7 +19,7 @@
       
     </form>
 */
-function appendSearchResults(person,i){
+function appendSearchResults(person,i, url){
   document.getElementById('adding_form').style.display="none";
   
   let form = document.createElement('form');
@@ -49,7 +59,7 @@ function appendSearchResults(person,i){
   let img = document.createElement('img');
   img.setAttribute('class', 'img-fluid float-left img-responsive mr-2 md-6 rounded-circle');
   img.setAttribute('width', '200');
-  img.setAttribute('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog');
+  img.setAttribute('src', String(url));
   img.setAttribute('alt', '');
   container.appendChild(img);
   
@@ -140,4 +150,46 @@ function showAddingTab(really=true){
 
 function displayPhotos(profile_pic){
   document.getElementById('profile_pic_div').style.display='block';
+}
+
+
+
+function create_collage_dropdowns(){
+  let main_div = document.getElementById('droprignt_collage_div');
+  let br = document.createElement('br');
+  
+  for (const [index, collage] of collages.entries()){
+  
+    let button = document.createElement('button');
+      button.setAttribute("class", "btn btn-success dropdown-toggle");
+      button.setAttribute("type", "button");
+      button.setAttribute("id", "dropdownMenuButton");
+      button.setAttribute("data-toggle", "dropdown");
+      button.setAttribute("aria-haspopup", "true");
+      button.setAttribute("aria-expanded", "false");
+      button.textContent = collage;
+  
+    main_div.appendChild(br);
+    main_div.appendChild(button);
+  
+    let each_collage_div = document.createElement('div');
+      each_collage_div.setAttribute("class", "dropdown-menu");
+      each_collage_div.setAttribute("aria-labelledby", "dropdownMenuButton");
+  
+    for (faculty of faculties[index]){
+  
+    let a = document.createElement('a');
+      a.setAttribute('class', 'dropdown-item');
+      a.setAttribute('href', '/collage/' + collage + '/' + faculty);
+      each_collage_div.appendChild(a);
+  
+  
+  main_div.appendChild(each_collage_div);}}
+}
+
+function toggle_spinner(){
+  if (document.getElementById('floating_spinner').style.display=='none'){
+    document.getElementById('floating_spinner').style.display='block';
+  } else{document.getElementById('floating_spinner').style.display='none';}
+  
 }

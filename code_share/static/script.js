@@ -18,6 +18,28 @@ function copyToClipboard(code_position) {
   copy_btn.style.color='white';
 }
 
+function editCode(code_position) {
+  console.log(code_position);
+  var parent_code_id = dataa[code_position].fields.id;
+  url = window.location.origin + '/edit/'+parent_code_id+'/';
+  window.location.href = url;
+  //   console.log(text);
+//   var dummy = document.createElement("textarea");
+//   // to avoid breaking orgain page when copying more words
+//   // cant copy when adding below this code
+//   // dummy.style.display = 'none'
+//   document.body.appendChild(dummy);
+//   //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+//   dummy.value = text;
+//   dummy.select();
+//   document.execCommand("copy");
+//   document.body.removeChild(dummy);
+// //.style.backgroundColor='#00FF00'
+//   copy_btn = document.getElementById('copy' + code_position);
+//   copy_btn.style.backgroundColor='#00FF00';
+//   copy_btn.style.color='white';
+}
+
 function createEditor(key, i) {
   //for (key in codes) {
   let accordion = document.getElementById("accordionExample");
@@ -48,6 +70,8 @@ function createEditor(key, i) {
   <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
   <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 </svg>
+</i>
+<i class="accordion-item my-3 position-absolute copy mt-2" id="edit${i-1}" onClick="editCode('${i-1}')">
 </i>  
   </h2>
   <div
