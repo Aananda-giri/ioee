@@ -32,7 +32,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('', include('code_share.urls')),
     path('code/', include('code_share.urls')),
-    path('people/', include('person.urls')),
+    path('person/', include('person.urls')),
     #path('.well-known/acme-challenge/M58vqliMosBAdgOYNx9UW9DlcBQ71UIkaQ0YYWAq_zs', ssl_cert, name = ssl_cert)
     
     
