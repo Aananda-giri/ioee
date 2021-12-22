@@ -28,7 +28,7 @@ def home(request):
             print(code, title, email)
             # Create code object but don't save to database yet
             new_code = Code.objects.using('fuse_attend').create(
-                code=code, email=email, title=title, tags=tags, author=author)
+                code=code, email=email, title=title, tags=tags, author=author, stars=0)
             # Assign the current post to the code
             #new_code.post = post
             # Save the code to the database
@@ -213,17 +213,4 @@ def Code(request):
     
     else:
         return HttpResponse('code is empty')
-
 '''
-
-def add_Star(request):
-    if request.is_ajax and request.method == "GET":
-        # get the nick name from the client side.
-        parent_id = request.GET.get("parent_id", None);
-        
-        unique_ip = request.GET.get("unique_ip", None)
-        #implement one computer one vote
-        
-        code = Code.objects.using('fuse_attend').get(id=parent_id)
-        code.stars += 1
-        code.save()
