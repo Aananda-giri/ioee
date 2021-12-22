@@ -28,7 +28,7 @@ def home(request):
             print(code, title, email)
             # Create code object but don't save to database yet
             new_code = Code.objects.using('fuse_attend').create(
-                code=code, email=email, title=title, tags=tags, author=author)
+                code=code, email=email, title=title, tags=tags, author=author, stars=0)
             # Assign the current post to the code
             #new_code.post = post
             # Save the code to the database
