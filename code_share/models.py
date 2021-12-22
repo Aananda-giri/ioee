@@ -23,12 +23,8 @@ class Code(models.Model):
     valid_email = models.BooleanField(default=True)
     # To hide the code from home page and search
     hide_code = models.BooleanField(default=False)
-<<<<<<< HEAD
     stars = models.PositiveIntegerField(default=0)
-
-=======
     stars=models.PositiveIntegerField(default=0)
->>>>>>> 8ad5aed93cdfeb47276976ffb0bd39c1b0153ca9
     class Meta:
         ordering = ['created_on']
 
