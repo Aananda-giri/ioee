@@ -203,7 +203,7 @@
     success: function(response) {
       console.log('Success saving star')
       //updata_Star count
-      document.getElementById("stars"+code_position).textContent="star("+dataa[code_position].fields.stars+1 + ')';
+      document.getElementById("stars"+code_position).textContent="star(" + parseInt(dataa[code_position].fields.stars) + 1 + ')';
     }, error: function (response) {
       console.log('error');
       console.log(response);   
