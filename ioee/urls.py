@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from hotornot import views as hotornot_views
 #from code_share.views import ssl_cert
 from api import views as api
 
@@ -24,17 +23,11 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('hotornot', include('hotornot.urls')),
-    path('fuse/', hotornot_views.fuse_attend, name='fuse_attend'),
-    path('fusee/', hotornot_views.fuse_attendd, name='fuse_attend2'),
-    path('fuse', include('fuse_attend.urls')),
-    path('class/', include('class.urls')),
     path('api/', include('api.urls')),
     path('', include('code_share.urls')),
     path('code/', include('code_share.urls')),
     path('person/', include('person.urls')),
-    #path('.well-known/acme-challenge/M58vqliMosBAdgOYNx9UW9DlcBQ71UIkaQ0YYWAq_zs', ssl_cert, name = ssl_cert)
-    
+
     
     
     

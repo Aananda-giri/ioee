@@ -18,6 +18,11 @@
     {% load static %}
     <!--<script src="./js/index.js"></script>-->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    
+    <!-- fontawsome -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+    <!-- jquery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- for fontaesome icons -->
     <!-- <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script> -->
 </head>
@@ -179,6 +184,30 @@
      //console.log(dataa);
      okSetupEditor(dataa);
      setupEditor(dataa)
+     function starCode(code_position) {
+  
+        console.log(code_position);
+        var parent_code_id = dataa[code_position].pk;
+  $.ajax({
+    type:'POST',
+    url:"{% url 'add_star' %}",
+    data: {
+      'unique_ip':'ip',
+      'parent_id':parent_code_id,
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      
+    },
+    success: function(response) {
+      console.log('Success saving star')
+      //updata_Star count
+    }, error: function (response) {
+      console.log('error');
+      console.log(response);   
+       }
+    
+  })
+      }
+
     </script>
   </body>
 </html>

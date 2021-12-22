@@ -37,11 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hotornot.apps.HotornotConfig',
-    'fuse_attend.apps.FuseAttendConfig',
-    'class.apps.ClassConfig',
-    'person.apps.PersonConfig',
     'api.apps.ApiConfig',
+    'person.apps.PersonConfig',
     'code_share.apps.CodeShareConfig',
     'nepali_datetime_field',
 ]

@@ -23,6 +23,7 @@ class Code(models.Model):
     valid_email = models.BooleanField(default=True)
     # To hide the code from home page and search
     hide_code = models.BooleanField(default=False)
+    stars = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['created_on']
@@ -47,7 +48,8 @@ class Branch(models.Model):
     valid_email = models.BooleanField(default=True)
     # To hide the code from home page and search
     hide_code = models.BooleanField(default=False)
-
+    star = models.PositiveIntegerField(default=0)
+    
     class Meta:
         ordering = ['created_on'] #to order based on created_date
 
