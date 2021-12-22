@@ -216,14 +216,18 @@ def Code(request):
 
 '''
 
-def add_Star(request):
-    if request.is_ajax and request.method == "GET":
+def add_star(request):
+    if request.is_ajax and request.method == "POST":
         # get the nick name from the client side.
-        parent_id = request.GET.get("parent_id", None);
+        parent_id = request.POST.get("parent_id", None);
         
-        unique_ip = request.GET.get("unique_ip", None)
+        unique_ip = request.POST.get("unique_ip", None)
+        print('\nparent_id:{}, unique_ip:{}\n'.format(parent_id, unique_ip))
         #implement one computer one vote
         
         code = Code.objects.using('fuse_attend').get(id=parent_id)
         code.stars += 1
         code.save()
+    else:
+        print('fucking else')
+    return HttpResponse('Done')

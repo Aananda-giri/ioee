@@ -82,8 +82,8 @@ function createEditor(key, i) {
         edit
       </div>
       
-      <div style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode('${i-1}')">
-        star(${key.stars})
+      <div id="star${i-1}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode('${i-1}')">
+        stars(${key.stars})
       </div>
 
     </div>

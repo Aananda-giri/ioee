@@ -184,10 +184,13 @@
      //console.log(dataa);
      okSetupEditor(dataa);
      setupEditor(dataa)
+
+
      function starCode(code_position) {
   
         console.log(code_position);
         var parent_code_id = dataa[code_position].pk;
+        console.log('parent_code_id',parent_code_id);
   $.ajax({
     type:'POST',
     url:"{% url 'add_star' %}",
@@ -200,6 +203,7 @@
     success: function(response) {
       console.log('Success saving star')
       //updata_Star count
+      document.getElementById("stars"+code_position).textContent="star("+dataa[code_position].fields.stars+1 + ')';
     }, error: function (response) {
       console.log('error');
       console.log(response);   
