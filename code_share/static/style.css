@@ -113,14 +113,22 @@ h5 {
   }
 }
 
-.copy{
+.copy {
   cursor: pointer;
-  /* background-color: red; */
   z-index: 100;
   margin-left: 6px;
 }
+.copy:visited {
+  background-color: blue !important;
+}
+.copy:active {
+  background-color: green !important;
+}
 
 .footer_div {
-  margin-top: .5rem !important;
+  margin-top: 0.5rem !important;
   height: 5vh;
+}
+.save {
+  display: none;
 }

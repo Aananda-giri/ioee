@@ -1,14 +1,12 @@
 function editCode(code_position) {
-  
   console.log(code_position);
   var parent_code_id = dataa[code_position].pk;
-  url = window.location.origin + '/edit/'+parent_code_id+'/';
+  url = window.location.origin + "/edit/" + parent_code_id + "/";
   window.location.href = url;
   // onClick="editCode('${i-1}')"
   // <input type="text" placeholder="title"></input>
   // <input type="text" placeholder="author"></input>
 }
-
 
 function copyToClipboard(code_position) {
   console.log(code_position);
@@ -24,74 +22,86 @@ function copyToClipboard(code_position) {
   dummy.select();
   document.execCommand("copy");
   document.body.removeChild(dummy);
-//.style.backgroundColor='#00FF00'
-  copy_btn = document.getElementById('copy' + code_position);
-  copy_btn.style.backgroundColor='#00FF00';
-  copy_btn.style.color='white';
+  //.style.backgroundColor='#00FF00'
+  copy_btn = document.getElementById("copy" + code_position);
+  copy_btn.style.backgroundColor = "#00FF00";
+  copy_btn.style.color = "white";
 }
-
 
 function createEditor(key, i) {
   //for (key in codes) {
+
   let accordion = document.getElementById("accordionExample");
   accordion.innerHTML += `
-  <div class="accordion-item my-3">
+<div class="accordion-item my-3">
   <h2 class="accordion-header" id="heading${i}">
-  <button
-    class="accordion-button"
-    type="button"
-    data-bs-target="#collapse${i}"
-    aria-expanded="true"
-    aria-controls="collapse${i}"
-  >
+    <button
+      class="accordion-button"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapse${i}"
+      aria-expanded="true"
+      aria-controls="collapse${i}"
+    >
     <div class="accordion-title">
       <div class="accordion-left-title">
-        <h4><b>${key.title}</b></h4>
+        <h4>${key.title}</h4>
       </div>
-      </i>
       <div class="accordion-right-title">
-        <h5><b>${key.author}</b></h5>
+        <h5>${key.author}</h5>
         <h5>${key.timestamp}</h5>
       </div>
     </div>
+    </button>
+    <i
+    id="collapse${i}"
     
-  </button>
-  <i class="accordion-item my-3 position-absolute copy far fa-copy" id="copy${i-1}" onClick="copyToClipboard('${i-1}')">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
-  <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-  <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-</svg> 
-</i>
+    class="accordion-item my-3 position-absolute  collapse show copy far fa-copy" id="copy${
+      i - 1
+    }" onClick="copyToClipboard('${i - 1}')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+      </svg>
+      </i>
   </h2>
+
   <div
-  id="collapse${i}"
-  class="accordion-collapse collapse show"
-  aria-labelledby="heading${i}"
-  >
-  <div class="accordion-body editor">
-    <div class='editor__code 'id="editor${i}"></div>
-  </div>
-  </div>
-
-    <!-- For Edit code footer-->
-    <div class="m-2 d-flex" style="color: white; ">
-      <div style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center">
-        main
-      </div>
-      <div style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="editCode('${i-1}')">
-        edit
-      </div>
-      
-      <div id="star${i-1}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode('${i-1}')">
-        stars(${key.stars})
-      </div>
-
-    </div>
+    id="collapse${i}"
+    class="accordion-collapse collapse show"
+    aria-labelledby="heading${i}"
   
-  </div>`;
+    >
+    <div class="accordion-body editor">
+      <div class='editor__code'id="editor${i}">
+      </div>
+    </div> 
+    <!-- For Edit code footer-->
+      <div class="m-2 d-flex" style="color: white; ">
+        <div style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center">
+          main
+        </div>
+        <div id="edit${i}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2"
+        onClick="editCoder(${i})"
+        >
+          edit
+        </div>
+
+        <div id="star${
+          i - 1
+        }" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode(${
+    i - 1
+  })">
+          stars(${key.stars})
+        </div>
+        <div id="save${i}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="save fw-bold rounded text-center ms-2" onClick="save(${i})">
+          Save
+        </div>
+
+      </div>
+</div>`;
   //}
 }
-
 
 function setupEditor(codes) {
   let i = 1;
@@ -129,12 +139,43 @@ function okSetupEditor(codes) {
     i = i + 1;
   }
 }
+function editCoder(i) {
+  window.editor = ace.edit(`editor${i}`);
+  editor.getValue();
+  editor.setReadOnly(false);
+  let saveCode = document.getElementById(`save${i}`);
+  saveCode.style.display = "block";
+}
+function save(i) {
+  window.editor = ace.edit(`editor${i}`);
+  let getCode = editor.getValue();
+  console.log(getCode);
+  editor.setReadOnly(true);
+  let saveCode = document.getElementById(`save${i}`);
+  saveCode.style.display = "none";
 
-
-
-
-
-
+  //sending to the backend
+  async function postSaveCode() {
+    const response = await fetch("{% url 'edit_code' %}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/text",
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        credentials: "same-origin",
+        mode: "same-origin",
+      },
+      body: JSON.stringify(getCode),
+    });
+    return response.json;
+  }
+  postSaveCode()
+    .then((data) => {
+      console.log("Success", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 
 //readonly=""
 // read only
@@ -145,19 +186,19 @@ function okSetupEditor(codes) {
 //       <div class="accordion-left-title">
 //         <h4><b>stick</b></h4>
 //       </div>
-      
+
 //       <div class="accordion-right-title">
 //         <h5><b>me</b></h5>
 //         <h5>2021-12-20T13:14:17.088Z</h5>
 //       </div>
 //     </div>
-    
+
 //   </button>
 //   <i class="accordion-item my-3 position-absolute copy far fa-copy" id="copy0" onclick="copyToClipboard('0')">
 //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
 //   <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
 //   <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
-// </svg> 
+// </svg>
 // </i>
 //   </h2>
 //   <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1">
@@ -175,11 +216,8 @@ function okSetupEditor(codes) {
 //         edit
 //       </div>
 //     </div>
-  
+
 //   </div>
-
-
-
 
 // editable
 // <div class="accordion-item my-3">
@@ -189,19 +227,19 @@ function okSetupEditor(codes) {
 //       <div class="accordion-left-title">
 //         <h4><b>PLUTO</b></h4>
 //       </div>
-      
+
 //       <div class="accordion-right-title">
 //         <h5><b>PLUTO</b></h5>
 //         <h5>2021-12-15T10:16:51.047Z</h5>
 //       </div>
 //     </div>
-    
+
 //   </button>
 //   <i class="accordion-item my-3 position-absolute copy far fa-copy" id="copy1" onclick="copyToClipboard('1')">
 //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
 //   <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
 //   <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
-// </svg> 
+// </svg>
 // </i>
 //   </h2>
 //   <div id="collapse2" class="accordion-collapse collapse show" aria-labelledby="heading2">
@@ -219,5 +257,5 @@ function okSetupEditor(codes) {
 //         edit
 //       </div>
 //     </div>
-  
+
 //   </div>
