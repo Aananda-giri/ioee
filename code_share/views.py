@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
 
 from django.shortcuts import render, HttpResponse
+from django.http import HttpResponseRedirect
 from .forms import EmailForm
 from django.conf import settings
 from django.core import serializers
@@ -39,9 +40,11 @@ def home(request):
     code_form = CodeForm()
     codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
     data = serializers.serialize('json', codes)
+    branches = Branch.objects.using('fuse_attend').all().order_by('-created_on')
+    branches = serializers.serialize('json', branches)
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
-    return render(request, 'code_share/home.html', {'data': data, 'new_code': new_code, 'code_form': code_form})
+    return render(request, 'code_share/home.html', {'data': data, 'new_code': new_code, 'code_form': code_form, 'branches':branches})
 
 
 def format_email_message_body(uuid):
@@ -77,34 +80,24 @@ def code_by_uuid(request, uuid):
 
     return render(request, 'code_share/home.html', {'data': data, 'code_form': code_form})
 
-
 def edit_code(request, parent_id=None):
-    template_name = 'code_share/edit.html'
-    #post = get_object_or_404(Post, slug=slug)
-
-    new_code = None
-    # code posted
-    if request.method == 'POST' and parent_id == None:
-        #code_form = CodeForm(data=request.POST)
-        # if code_form.is_valid():
-        #id = request.POST.get("id", None)
-        parent_id = request.POST.get("parent_id", None)
+    print('\n\n inside edit code \n\n')
+    
+    if request.method == 'POST' and request.is_ajax:
         code = request.POST.get("code", None)
-        title = request.POST.get("title", None)
-        author = request.POST.get("author", None)
-        email = request.POST.get("email", None)
-        tags = request.POST.get("tags", None).split(' ')
-        print(code, title, email)
+        code = code[1:-1] # front_end sending code with quotes before and after the code
+        parent_id = request.POST.get("parent_id", None)
+        print(code, parent_id)
         # Create code object but don't save to database yet
-        #code = Code.objects.using('fuse_attend').get(id=parent_id)
+        original_code = Code.objects.using('fuse_attend').get(id=parent_id)
         branch = Branch.objects.using('fuse_attend').create(
-            originalCode=code, code=code, email=email, title=title, tags=tags, author=author)
+            Parent=original_code, code=code, email=original_code.email, title=original_code.title, tags=original_code.tags, author=original_code.author)
         branch.save()  # Saves the branch
         # new_code = Code.objects.using('fuse_attend').create(
         # code=code, email=email, title=title, tags=tags, author=author)
         # Assign the current post to the code
 
-        print('\n\n {} \n\n'.format(str(new_code.id)))
+        print('\n\n {} \n\n'.format(str(branch.id)))
         if email.strip() != '':
             send_mail_please(recipient=[
                              email], subject="code", message=format_email_message_body(str(new_code.id)))
@@ -123,7 +116,57 @@ def edit_code(request, parent_id=None):
         #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
     code_form = CodeForm()
-    return render(request, template_name, {'parent_data': parent_data, 'branch': branch, 'code_form': code_form, 'parent_id': parent_id})
+    HttpResponseRedirect(home)
+
+# def edit_code(request, parent_id=None):
+#     template_name = 'code_share/edit.html'
+#     print('\n\n inside edit code \n\n')
+#     #post = get_object_or_404(Post, slug=slug)
+
+#     new_code = None
+#     # # code posted
+#     if request.method == 'POST' and parent_id == None:
+#          data = request.POST.get("data", None)
+#          print(data)
+    #     #code_form = CodeForm(data=request.POST)
+    #     # if code_form.is_valid():
+    #     #id = request.POST.get("id", None)
+    #     parent_id = request.POST.get("parent_id", None)
+    #     code = request.POST.get("code", None)
+    #     title = request.POST.get("title", None)
+    #     author = request.POST.get("author", None)
+    #     email = request.POST.get("email", None)
+    #     tags = request.POST.get("tags", None).split(' ')
+    #     print(code, title, email)
+    #     # Create code object but don't save to database yet
+    #     #code = Code.objects.using('fuse_attend').get(id=parent_id)
+    #     branch = Branch.objects.using('fuse_attend').create(
+    #         originalCode=code, code=code, email=email, title=title, tags=tags, author=author)
+    #     branch.save()  # Saves the branch
+    #     # new_code = Code.objects.using('fuse_attend').create(
+    #     # code=code, email=email, title=title, tags=tags, author=author)
+    #     # Assign the current post to the code
+
+    #     print('\n\n {} \n\n'.format(str(new_code.id)))
+    #     if email.strip() != '':
+    #         send_mail_please(recipient=[
+    #                          email], subject="code", message=format_email_message_body(str(new_code.id)))
+
+    #     #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    #     #data = serializers.serialize('json', codes)
+    #     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
+    #     parent_data = None
+    #     # return render(request, template_name, {'data': data, 'new_code': new_code, 'code_form': code_form})
+    # else:
+    #     parent_data = Code.objects.using('fuse_attend').get(id=parent_id)
+    #     code_form = CodeForm()
+    #     #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    #     #parent_data = serializers.serialize('json', code)
+    #     branch = None
+    #     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
+
+    # code_form = CodeForm()
+    # return render(request, template_name, {'parent_data': parent_data, 'branch': branch, 'code_form': code_form, 'parent_id': parent_id})
 
 ###########################################
 # Unused views
