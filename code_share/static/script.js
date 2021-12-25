@@ -68,24 +68,23 @@ function createEditor(key, i) {
     </div> 
     <!-- For Edit code footer-->
       <div id = "branches_${key.pk}" class="m-2 d-flex" style="color: white; ">
-        
-        <div id="main${i}" style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center" onClick="toggleCodeView(${i},${-1});">
-          main
-        </div>
-
-        <div id="edit${i}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2"
-        onClick="editCoder(${i})"
-        >
+      
+        <div id="edit${i}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2"onClick="editCoder(${i})">
           edit
         </div>
 
-        <div id="star${
-          i - 1
-        }" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode(${
-    i - 1
-  })">
+        <div id="star${i - 1}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode(${i - 1})">
           stars(${key.stars})
         </div>
+
+        <div id="delete${i}" style="width: 6vw;cursor: pointer;background-color: red;" class="fw-bold rounded text-center ms-2"onClick="deleteCode(${i})">
+          delete
+        </div>
+        
+        <div id="main${i}" style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center ms-2" onClick="toggleCodeView(${i},${-1});">
+          main
+        </div>
+
         <div id="save${i}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="save fw-bold rounded text-center ms-2" onClick="save(${i})">
           Save
         </div>
@@ -183,4 +182,11 @@ function distributeBranch(branch_data, branch_index){
   branches_div.setAttribute('onClick', `toggleCodeView(${parseInt(p)}, ${branch_index} )`);
   branches_div.textContent = `branch(${branch_index})`;
   branches_parent_div.appendChild(branches_div);
+}
+
+function notify(notice){
+  // to be implemented .........
+  // to show toast notifications
+  // reference: https://getbootstrap.com/docs/5.1/components/toasts/
+
 }

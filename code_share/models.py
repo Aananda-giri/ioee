@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 import uuid
 from django.contrib.postgres.fields import ArrayField
-
+from django.contrib.auth.models import User
 # settings.configure()
 
 
@@ -24,7 +24,6 @@ class Code(models.Model):
     # To hide the code from home page and search
     hide_code = models.BooleanField(default=False)
     stars = models.PositiveIntegerField(default=0)
-    stars=models.PositiveIntegerField(default=0)
     class Meta:
         ordering = ['created_on']
 
@@ -88,11 +87,4 @@ class Comment(models.Model):
     def __str__(self):
         return 'Comment {} by {}'.format(self.body, self.name)
 
-# from code_share.models import Code, Branch
-# Code.objects.using('fuse_attend').all()[0].valid_email
-# Code.objects.using('fuse_attend').all()[0].hide_code
 
-# Code.objects.using('fuse_attend').filter(author='3e27eff7-7e8b-4a3d-9f1c-0344a4583177').delete()
-# Code.objects.using('fuse_attend').filter(author='A').delete()
-# Code.objects.using('fuse_attend').filter(author='Jdkdkend').delete()
-# Code.objects.using('fuse_attend').filter(author='Hmm').delete()

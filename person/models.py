@@ -1,11 +1,13 @@
-from django.db import models
+#database='brainmap'
+
 
 # Create your models here.
 
-import datetime
+
 #from dateutil.relativedelta import relativedelta
 import uuid
-
+import datetime
+from django.db import models
 from django.utils import timezone
 from nepali_datetime_field.models import NepaliDateField
 
@@ -16,22 +18,25 @@ from nepali_datetime_field.models import NepaliDateField
 # python3 manaeg.py migrate --fake
 
 
-#database='brainmap'
+
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 
+
 #default/unseen data storage model
 class Person(models.Model):
+    #user having login credentials
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     ioe_roll_no = models.CharField(max_length = 30, default=None, null=True, db_index=True, unique=True)
     
-    empty_profile = models.BooleanField(default = False, db_index=True)
+    # empty_profile => non_empty_profile=False
+    non_empty_profile = models.BooleanField(default = False, db_index=True)
     nick_name = models.CharField(max_length = 30, default='')
-    first_name = models.CharField(max_length = 30)#, db_index=True)
+    first_name = models.CharField(max_length = 30, default='', db_index=True)#, db_index=True)
     
-    middle_name = models.CharField(max_length = 30, db_index=True)
+    middle_name = models.CharField(max_length = 30, default='', db_index=True)
     
-    last_name = models.CharField(max_length = 30, db_index=True)
+    last_name = models.CharField(max_length = 30, default='', db_index=True)
     
     dob_bs = NepaliDateField(default='2058-12-28')
     dob_ad = models.DateField(default=None, null=True)
@@ -39,7 +44,7 @@ class Person(models.Model):
     
     profession = ArrayField(models.CharField(max_length=250, blank=True), default=None, null=True, db_index=True)
     
-    personality =  models.CharField(max_length = 30)
+    personality =  models.CharField(max_length = 30, default='')
     sources = ArrayField(models.CharField(max_length=250, blank=True), default=None, null=True)
     post_box = models.IntegerField(default=None, null=True)
     permanent_address = ArrayField(models.CharField(max_length=250, blank=True), default=None, null=True)
@@ -67,7 +72,7 @@ class Person(models.Model):
     location = ArrayField(models.CharField(max_length=100, blank=True), default=None, null=True)
     
     phone_number = ArrayField(models.DecimalField(max_digits=10, decimal_places=0, default=0), default=None, null=True, db_index=True)
-    
+    email = models.EmailField(default='')
     emails = ArrayField(models.CharField(max_length=250, blank=True), default=None, null=True, db_index=True)
     
     adress = ArrayField(models.CharField(max_length=300, blank=True), default=None, null=True)
@@ -290,10 +295,12 @@ class test_model(models.Model):
     def set_name(self, name):
         self.name = name
 
-#database='brainmap'
-#additional data for django User model
-class Data(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+#database=default
+#additional data for django User model (***not_required**)
+# default user fields: date_joined, email, first_name, groups, id, is_active, is_staff, is_superuser, last_login, last_name, logentry, password, user_permissions, userdata, username
+class UserData(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     is_verified = models.BooleanField(default = False, db_index=True)
+    email = models.EmailField(default='')
     #college = models.CharField(max_length=30)
     #major = models.CharField(max_length=30)

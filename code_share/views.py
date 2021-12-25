@@ -8,7 +8,8 @@ from django.http import HttpResponseRedirect
 from .forms import EmailForm
 from django.conf import settings
 from django.core import serializers
-
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     template_name = 'code_share/home.html'
@@ -44,7 +45,7 @@ def home(request):
     branches = serializers.serialize('json', branches)
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
-    return render(request, 'code_share/home.html', {'data': data, 'new_code': new_code, 'code_form': code_form, 'branches':branches})
+    return render(request, 'code_share/home.html', {'data': data, 'new_code': new_code, 'code_form': code_form, 'branches':branches, 'search_term':''})
 
 
 def format_email_message_body(uuid):
@@ -272,3 +273,45 @@ def add_star(request):
     else:
         print('fucking else')
     return HttpResponse('Done')
+
+def search_code(request):
+    if request.method == "GET":
+        # get the nick name from the client side.
+        search_term = request.GET.get("search_query", None)
+        print(search_term)
+        codes_list = Code.objects.using('fuse_attend').annotate(
+        search=SearchVector('title','author','email','tags', 'code')).filter(search=search_term)
+        
+        codes=[]
+        for code in codes_list:
+            codes.append(code)
+        codes = serializers.serialize('json', codes, )
+        print(codes)
+        #print('peoples_list:\n\n'+str(peoples_list))
+    else:
+        print('\nfucking request not get\n')
+    return render(request, 'code_share/home.html', {'data': codes, 'new_code': [], 'code_form': CodeForm(), 'branches':[], 'search_term':search_term})
+    #  {'people':people}, status = 200)
+
+@login_required
+def delete_code(request, parent_id=None):
+    print('\n\n inside delete code \n\n')
+    
+    if request.method == 'POST' and request.is_ajax:
+        code_id = request.POST.get("code_id", None)
+        if request.user.is_authenticated:
+            print('user logged in')
+            print(request.user.email)
+        
+        code = Code.objects.using('fuse_attend').get(id=code_id)
+        print(code_id)
+        print(code.email)
+        if code.email == request.user.email:
+            code.delete()
+        # return render(request, template_name, {'data': data, 'new_code': new_code, 'code_form': code_form})
+        response = "Succesfully deleted!!! \n please reload to view the effect"
+    else:
+        response = "your email doesn't match with author\'s email address.....\n Only author can delete the code"
+        # print("\n\n not request.method == 'POST' and request.is_ajax \n\n")
+    return HttpResponse(response)
+    #HttpResponseRedirect(home)

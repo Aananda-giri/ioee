@@ -12,4 +12,6 @@ urlpatterns = [
     path('.well-known/acme-challenge/3ufveaLc9JnIgj9y5-f9jrhb8Vgz2fSAFTbKguBTMYk', views.ssl_cert, name = 'ssl_cert'),
 
     path('add_star/', views.add_star, name='add_star'),
+    path('search/', views.search_code, name='search_code'),
+    path('delete/', views.delete_code, name='delete_code'),
 ]
