@@ -23,16 +23,11 @@ from django.contrib.auth.models import User
 
 UserData.objects.using('brainmap').create(email='test@gmail.com', user=User.objects.using('brainmap').get(username='her'))
 
-# add email while registering user
-# @is_verified
-# verify email upon registration
-# Update code_share.views to delete only if verified email matches to email of author
-# set email as username
-##################################
-# add email while registering user
-# Update code_share.views to delete only if verified email matches to email of author
+
+
 
 # verify email
-# email as username
+# @is_verified before deletation
+# email as username/remove_username
 # redirect & complete previous task on login
-
+# merge code_branch to main

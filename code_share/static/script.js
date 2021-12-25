@@ -184,9 +184,3 @@ function distributeBranch(branch_data, branch_index){
   branches_parent_div.appendChild(branches_div);
 }
 
-function notify(notice){
-  // to be implemented .........
-  // to show toast notifications
-  // reference: https://getbootstrap.com/docs/5.1/components/toasts/
-
-}

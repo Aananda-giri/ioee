@@ -197,7 +197,9 @@
      okSetupEditor(dataa);
      setupEditor(dataa)
 
+  // --------------------
   //to save edited code
+  // --------------------
   function save(i) {
   window.editor = ace.edit(`editor${i}`);
   let getCode = editor.getValue();
@@ -248,6 +250,14 @@
     
   })
 }
+
+function notify(notice){
+  // to be implemented .........
+  // to show toast notifications
+  // reference: https://getbootstrap.com/docs/5.1/components/toasts/
+
+}
+
 // -----------------
 // To delete code
 // -----------------
@@ -263,7 +273,7 @@ function deleteCode(index){
     success: function(response) {
       //Successfully saved code
       console.log(response); 
-      displayMessage(response);
+      notify(response);
     }, error: function (response) {
       console.log('error');
       console.log(response);
@@ -271,7 +281,9 @@ function deleteCode(index){
     
   })
 }
-     // To add star
+// --------------------     
+// To add star
+// --------------------
      function starCode(code_position) {
   
         console.log(code_position);
@@ -305,7 +317,9 @@ function deleteCode(index){
       //for loading branches to any code that have brance
       branch_count+=1;
      }
-
+// --------------------
+// For search
+// --------------------
 function search() {
   if(event.key === 'Enter') {
   toggle_spinner();
