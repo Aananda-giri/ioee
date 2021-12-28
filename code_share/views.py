@@ -98,7 +98,7 @@ def edit_code(request, parent_id=None):
         # Create code object but don't save to database yet
         original_code = Code.objects.using('fuse_attend').get(id=parent_id)
         branch = Branch.objects.using('fuse_attend').create(
-            Parent=original_code, code=code, email=original_code.email, title=original_code.title, tags=original_code.tags, author=original_code.author)
+            Parent=original_code, code=code, email=original_code.email, title=original_code.title, tags=original_code.tags, author=original_code.author, private_code=original_code.private_code)
         branch.save()  # Saves the branch
         # new_code = Code.objects.using('fuse_attend').create(
         # code=code, email=email, title=title, tags=tags, author=author)

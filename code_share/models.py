@@ -46,7 +46,7 @@ class Branch(models.Model):
     # False if the email is valid (i.e. could not send the mail)
     valid_email = models.BooleanField(default=True)
     # To hide the code from home page and search
-    hide_code = models.BooleanField(default=False)
+    private_code = models.BooleanField(default=False)
     star = models.PositiveIntegerField(default=0)
     
     class Meta:
