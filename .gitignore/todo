@@ -25,9 +25,20 @@ UserData.objects.using('brainmap').create(email='test@gmail.com', user=User.obje
 
 
 
-
+######################################## 
+################# ToDo #################
+########################################
 # verify email
 # @is_verified before deletation
 # email as username/remove_username
 # redirect & complete previous task on login
 # merge code_branch to main
+
+ ######################################## 
+############## Debug/Err. ################
+ ########################################
+
+- delete_code not redirecting to login
+- code_deletd notification: code_share/templates/home.html function:`notify()`
+- notification page
+- naigation bar

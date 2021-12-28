@@ -11,6 +11,7 @@ from django.core import serializers
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.contrib.auth.decorators import login_required
 
+#@login_required
 def home(request):
     template_name = 'code_share/home.html'
     #post = get_object_or_404(Post, slug=slug)
@@ -25,10 +26,15 @@ def home(request):
             author = request.POST.get("author", None)
             email = request.POST.get("email", None)
             tags = request.POST.get("tags", None).split(' ')
+            
+            private_code = request.POST.get("private_code", None)
+            private_code = (False, True) [private_code=="on"]       #To hide the private code
+
+            print(private_code)
             print(code, title, email)
             # Create code object but don't save to database yet
             new_code = Code.objects.using('fuse_attend').create(
-                code=code, email=email, title=title, tags=tags, author=author, stars=0)
+                code=code, email=email, title=title, tags=tags, author=author, stars=0, private_code=private_code)
             # Assign the current post to the code
             #new_code.post = post
             # Save the code to the database
@@ -39,9 +45,9 @@ def home(request):
                                  email], subject="code", message=format_email_message_body(str(new_code.id)))
     # else:
     code_form = CodeForm()
-    codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    codes = Code.objects.using('fuse_attend').filter(private_code=False).order_by('-created_on')
     data = serializers.serialize('json', codes)
-    branches = Branch.objects.using('fuse_attend').all().order_by('-created_on')
+    branches = Branch.objects.using('fuse_attend').filter(private_code=False).order_by('-created_on')
     branches = serializers.serialize('json', branches)
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
@@ -79,7 +85,7 @@ def code_by_uuid(request, uuid):
     data = serializers.serialize('json', [code])
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
-    return render(request, 'code_share/home.html', {'data': data, 'code_form': code_form})
+    return render(request, 'code_share/home.html', {'data': data, 'code_form': code_form, 'branches':[]})
 
 def edit_code(request, parent_id=None):
     print('\n\n inside edit code \n\n')
@@ -293,8 +299,9 @@ def search_code(request):
     return render(request, 'code_share/home.html', {'data': codes, 'new_code': [], 'code_form': CodeForm(), 'branches':[], 'search_term':search_term})
     #  {'people':people}, status = 200)
 
-@login_required
+@login_required()
 def delete_code(request, parent_id=None):
+    # return render(request, 'code_share/home.html', {})
     print('\n\n inside delete code \n\n')
     
     if request.method == 'POST' and request.is_ajax:
@@ -313,5 +320,5 @@ def delete_code(request, parent_id=None):
         else:
             response = "your email doesn't match with author\'s email address.....\n Only author can delete the code"
         # print("\n\n not request.method == 'POST' and request.is_ajax \n\n")
-    return HttpResponse(response)
-    #HttpResponseRedirect(home)
+    #return HttpResponse(response)
+    return HttpResponseRedirect(home)

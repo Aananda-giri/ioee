@@ -22,7 +22,7 @@ class Code(models.Model):
     # False if the email is valid (i.e. could not send the mail)
     valid_email = models.BooleanField(default=True)
     # To hide the code from home page and search
-    hide_code = models.BooleanField(default=False)
+    private_code = models.BooleanField(default=False) #hide the private code from home_page
     stars = models.PositiveIntegerField(default=0)
     class Meta:
         ordering = ['created_on']
