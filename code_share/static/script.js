@@ -1,3 +1,13 @@
+function editCode(code_position) {
+  console.log(code_position);
+  var parent_code_id = dataa[code_position].pk;
+  url = window.location.origin + "/edit/" + parent_code_id + "/";
+  window.location.href = url;
+  // onClick="editCode('${i-1}')"
+  // <input type="text" placeholder="title"></input>
+  // <input type="text" placeholder="author"></input>
+}
+
 function copyToClipboard(code_position) {
   console.log(code_position);
   var text = dataa[code_position].fields.code;
@@ -16,6 +26,84 @@ function copyToClipboard(code_position) {
   copy_btn = document.getElementById("copy" + code_position);
   copy_btn.style.backgroundColor = "#00FF00";
   copy_btn.style.color = "white";
+}
+function addCode() {
+  i = 150;
+  let accordion = document.getElementById("accordionExample");
+  let accordion_initial = `
+  <form id="upload_form form(${i})" method="post"  action="">
+  
+  <div class="accordion-item">
+  <h2 class="accordion-header" id="heading${i}">
+    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="true" aria-controls="collapseOne">
+
+    <div class="accordion-title">
+      <div class="accordion-left-title">
+      <input type='text'
+      name="title"
+
+      />
+      <input
+      type="email"
+      class="form-control"
+      id="id_email"
+      name="email"
+      placeholder="email"
+    />
+      </div>
+      <div class="accordion-right-title">
+      <input 
+      name="author"
+      type='text'/>
+      <input
+      type="text"
+      class="form-control"
+      name="tags"
+      id="exampleFormControlTags"
+      placeholder="tags"
+    />
+
+      </div>
+    </div>
+    </button>
+  </h2>
+  <div id="collapse${i}" class="accordion-collapse collapse show" aria-labelledby="heading${i}" data-bs-parent="#accordionExample">
+    <div class="accordion-body editor">
+    <div class='editor__code'id="editor${i}">
+     
+    </div>
+  </div>
+  <!-- For Edit code footer-->
+  <div class="m-2 d-flex" style="color: white; ">
+    <div style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center">
+      main
+    </div>
+
+
+   
+    <button id="save${i}" type="submit" style="width: 6vw;color:"white"; cursor: pointer;background-color: #282C34;"  fw-bold rounded text-center ms-2" onClick="save(${i})">
+      Save
+    </button>
+
+  </div>
+</div>
+</form>`;
+  //}
+  accordion.insertAdjacentHTML("afterbegin", accordion_initial);
+
+  console.log("Add to Code");
+  window.editor = ace.edit(`editor${150}`);
+  editor.setTheme("ace/theme/one_dark");
+  editor.getSession().setMode("ace/mode/c_cpp");
+  editor.setValue(" ", 1); //1 = moves cursor to end
+  editor.setReadOnly(false);
+  editor.setOptions({
+    fontSize: "16pt",
+    showLineNumbers: true,
+    showGutter: true,
+  });
+  i++;
+  console.log(accordion);
 }
 
 function createEditor(key, i) {
@@ -73,7 +161,11 @@ function createEditor(key, i) {
           edit
         </div>
 
-        <div id="star${i - 1}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode(${i - 1})">
+        <div id="star${
+          i - 1
+        }" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode(${
+    i - 1
+  })">
           stars(${key.stars})
         </div>
 
@@ -139,48 +231,51 @@ function editCoder(i) {
   saveCode.style.display = "block";
 }
 
-function displayCode(i){
+function displayCode(i) {
   window.editor = ace.edit(`editor${i}`);
-  if (what=='main')
-    editor.setValue(dataa[i-1]["fields"]["code"], 1); 
-    //get branch_datas
-    else{
-    editor.setValue(dataa[i-1]["fields"]["code"], 1); 
+  if (what == "main") editor.setValue(dataa[i - 1]["fields"]["code"], 1);
+  //get branch_datas
+  else {
+    editor.setValue(dataa[i - 1]["fields"]["code"], 1);
   }
 }
 
-function toggleCodeView(code_index, branch_index){
+function toggleCodeView(code_index, branch_index) {
   console.log(code_index);
-  console.log('branch_index:');
+  console.log("branch_index:");
   console.log(branch_index);
   window.editor = ace.edit(`editor${code_index}`);
-  if (branch_index==-1){
+  if (branch_index == -1) {
     //for main branch: branch_index=-1
-    console.log('\nbranch-1\n');
-    editor.setValue(dataa[code_index-1].fields.code, 1); //1 = moves cursor to end
+    console.log("\nbranch-1\n");
+    editor.setValue(dataa[code_index - 1].fields.code, 1); //1 = moves cursor to end
   } else {
     //branch code to be displayed
     editor.setValue(branches[branch_index].fields.code, 1); //1 = moves cursor to end
   }
-
-
-
 }
 
-function distributeBranch(branch_data, branch_index){
+function distributeBranch(branch_data, branch_index) {
   console.log(branch_data);
-  let branches_parent_div = document.getElementById('branches_' + branch_data.Parent);
-  
-  let branches_div = document.createElement('div');
-  let p = parseInt(branches_parent_div.parentNode.id.split('collapse')[1]); //position count of div within page
+  let branches_parent_div = document.getElementById(
+    "branches_" + branch_data.Parent
+  );
 
-  branches_div.setAttribute('class', 'fw-bold rounded text-center ms-2');
-  
-  branches_div.setAttribute('id', 'branch' + p);
-  branches_div.setAttribute('style', 'width: 6vw;cursor: pointer;background-color: #282C34;');
-  branches_div.setAttribute('class', 'fw-bold rounded text-center ms-2');
-  branches_div.setAttribute('onClick', `toggleCodeView(${parseInt(p)}, ${branch_index} )`);
+  let branches_div = document.createElement("div");
+  let p = parseInt(branches_parent_div.parentNode.id.split("collapse")[1]); //position count of div within page
+
+  branches_div.setAttribute("class", "fw-bold rounded text-center ms-2");
+
+  branches_div.setAttribute("id", "branch" + p);
+  branches_div.setAttribute(
+    "style",
+    "width: 6vw;cursor: pointer;background-color: #282C34;"
+  );
+  branches_div.setAttribute("class", "fw-bold rounded text-center ms-2");
+  branches_div.setAttribute(
+    "onClick",
+    `toggleCodeView(${parseInt(p)}, ${branch_index} )`
+  );
   branches_div.textContent = `branch(${branch_index})`;
   branches_parent_div.appendChild(branches_div);
 }
-

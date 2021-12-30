@@ -37,7 +37,7 @@
     <div id="container" class="container-fluid">
       <!-- Modal starts here -->
       <!-- Button trigger modal -->
-      <div class="btn_pos">
+       {% comment %}<div class="btn_pos">
         <button
           type="button"
           class="btn btn-primary btn-position"
@@ -165,9 +165,10 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>{% endcomment %}
 
       <!-- accordian starts here -->
+      <button class="btn_pos btn btn-primary" onClick='addCode()'>Add to List </button>
 
       <div class="accordion" id="accordionExample"></div>
 
@@ -205,7 +206,9 @@
   // --------------------
   //to save edited code
   // --------------------
+  
   function save(i) {
+
   window.editor = ace.edit(`editor${i}`);
   let getCode = editor.getValue();
   console.log(getCode);
@@ -235,7 +238,10 @@
   //     console.error("Error:", error);
   //   });
   //sending to backend
-  $.ajax({
+  let edit_code=document.getElementById(`edit${i}`)
+
+  if(edit_code)
+  {$.ajax({
     type:'POST',
     url:"{% url 'edit_code' %}",
     data: {
@@ -253,7 +259,34 @@
       console.log(response);   
        }
     
-  })
+  })}
+  else{
+    /*form=document.getElementById(`form${i}`);
+    form.insertAdjacentHTML("afterbegin", {{csrf_token}});
+    console.log(form);
+    */
+    $.ajax({
+      type:'POST',
+      url:"{% url 'toy_post' %}",
+      data: {
+        
+        'code':JSON.stringify(getCode).substring(1,JSON.stringify(getCode).length-1),
+        
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        
+      },
+      success: function(response) {
+        console.log('Success saving code')
+        //Successfully saved code_branch
+      }, error: function (response) {
+        console.log('error');
+        console.log(response);   
+         }
+      
+    })
+    console.log("HEre is add kist");
+  }
+  i.preventDefault();
 }
 
 function notify(notice){
