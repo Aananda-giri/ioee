@@ -1,0 +1,239 @@
+1625384426261	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilejwjc5A"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625384428182	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilejwjc5A/search.json.mozlz4", (void 0)))
+1625384434443	Marionette	INFO	Listening on port 33139
+1625384434656	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1625384648904	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile65Gpx3"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625384651633	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile65Gpx3/search.json.mozlz4", (void 0)))
+1625384657113	Marionette	INFO	Listening on port 45811
+1625384657404	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1625752479101	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilePnoTUB"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625752480662	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilePnoTUB/search.json.mozlz4", (void 0)))
+1625752486993	Marionette	INFO	Listening on port 34643
+1625752487093	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+1625752689212	Marionette	INFO	Stopped listening on port 34643
+1625752755363	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileyy60sQ"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625752756367	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileyy60sQ/search.json.mozlz4", (void 0)))
+1625752759418	Marionette	INFO	Listening on port 40673
+1625752759700	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1625753254449	Marionette	INFO	Stopped listening on port 40673
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625753268551	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileMyu6UC"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625753269239	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileMyu6UC/search.json.mozlz4", (void 0)))
+1625753271785	Marionette	INFO	Listening on port 46511
+1625753272095	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://sagarmatha.student.fuseclassroom.com/static/js/main.c452f669.chunk.js, line 1: TypeError: e is undefined
+JavaScript error: https://sagarmatha.student.fuseclassroom.com/static/js/16.2b1265a2.chunk.js, line 2: Error: Request aborted
+JavaScript error: https://sagarmatha.student.fuseclassroom.com/static/js/16.2b1265a2.chunk.js, line 2: Error: Request aborted
+JavaScript error: https://sagarmatha.student.fuseclassroom.com/static/js/16.2b1265a2.chunk.js, line 2: Error: Request aborted
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1625753684760	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+1625753933303	Marionette	INFO	Stopped listening on port 46511
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625753991981	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileTVONzv"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625753995621	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileTVONzv/search.json.mozlz4", (void 0)))
+1625754001336	Marionette	INFO	Listening on port 41779
+1625754001410	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+1625754245291	Marionette	INFO	Stopped listening on port 41779
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625754292895	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileNxJ41B"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625754293449	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileNxJ41B/search.json.mozlz4", (void 0)))
+1625754296021	Marionette	INFO	Listening on port 34417
+1625754296323	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+1625754762384	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+1625755684026	Marionette	INFO	Stopped listening on port 34417
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625812022373	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilegWeYuA"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625812024440	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilegWeYuA/search.json.mozlz4", (void 0)))
+1625812031369	Marionette	INFO	Listening on port 46303
+1625812031877	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+JavaScript error: resource://pdf.js/PdfStreamConverter.jsm, line 801: TypeError: this.dataListener is null
+JavaScript error: https://sagarmatha.student.fuseclassroom.com/static/js/19.19d5612b.chunk.js, line 2: TypeError: this.paintedViewportMap.get(...) is undefined
+JavaScript error: https://sagarmatha.student.fuseclassroom.com/static/js/19.19d5612b.chunk.js, line 2: TypeError: this.paintedViewportMap.get(...) is undefined
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1625813274065	Marionette	INFO	Stopped listening on port 46303
+1625991130616	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileS9ZhnN"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625991134502	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileS9ZhnN/search.json.mozlz4", (void 0)))
+1625991140505	Marionette	INFO	Listening on port 44593
+1625991140813	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+1625991526050	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+SourceActor threw an exception: Error: Failed to fetch https://polyfill.io/v3/polyfill.min.js?features=es6. Code 2152398878.
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:556:16
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 556, column: 16
+console.error: (new Error("Failed to fetch https://polyfill.io/v3/polyfill.min.js?features=es6. Code 2152398878.", "resource://devtools/shared/DevToolsUtils.js", 556))
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 556: Error: Failed to fetch https://polyfill.io/v3/polyfill.min.js?features=es6. Code 2152398878.
+1625992815110	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilev0r7Dw"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625992817939	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilev0r7Dw/search.json.mozlz4", (void 0)))
+1625992824885	Marionette	INFO	Listening on port 44289
+1625992825486	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: Region.jsm: "Error fetching region" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+console.log: "RemoteSettingsWorker error: Error: Can't import when we've started shutting down."
+console.log: "RemoteSettingsWorker error: Error: Can't import when we've started shutting down."
+console.log: "RemoteSettingsWorker error: Error: Can't import when we've started shutting down."
+JavaScript error: resource://gre/modules/Sqlite.jsm, line 1170: TypeError: connection not specified in clone options.
+1625992826410	Marionette	INFO	Stopped listening on port 44289
+1625993206081	Marionette	INFO	Stopped listening on port 44593
+1625993242006	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilebT1DzD"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625993242649	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilebT1DzD/search.json.mozlz4", (void 0)))
+1625993245224	Marionette	INFO	Listening on port 40725
+console.error: Region.jsm: "Error fetching region" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+JavaScript error: resource://gre/modules/NewTabUtils.jsm, line 674: NS_ERROR_UNEXPECTED: Component returned failure code: 0x8000ffff (NS_ERROR_UNEXPECTED) [nsINavHistoryService.asyncExecuteLegacyQuery]
+console.error: "Could not load engine google@search.mozilla.org: [Exception... \"AddonManager is not initialized\"  nsresult: \"0xc1f30001 (NS_ERROR_NOT_INITIALIZED)\"  location: \"JS frame :: resource://gre/modules/AddonManager.jsm :: installBuiltinAddon :: line 2536\"  data: no]"
+console.error: "Could not load engine amazondotcom@search.mozilla.org: [Exception... \"AddonManager is not initialized\"  nsresult: \"0xc1f30001 (NS_ERROR_NOT_INITIALIZED)\"  location: \"JS frame :: resource://gre/modules/AddonManager.jsm :: installBuiltinAddon :: line 2536\"  data: no]"
+console.error: "Could not load engine wikipedia@search.mozilla.org: [Exception... \"AddonManager is not initialized\"  nsresult: \"0xc1f30001 (NS_ERROR_NOT_INITIALIZED)\"  location: \"JS frame :: resource://gre/modules/AddonManager.jsm :: installBuiltinAddon :: line 2536\"  data: no]"
+console.error: "Could not load engine bing@search.mozilla.org: [Exception... \"AddonManager is not initialized\"  nsresult: \"0xc1f30001 (NS_ERROR_NOT_INITIALIZED)\"  location: \"JS frame :: resource://gre/modules/AddonManager.jsm :: installBuiltinAddon :: line 2536\"  data: no]"
+console.error: "Could not load engine ddg@search.mozilla.org: [Exception... \"AddonManager is not initialized\"  nsresult: \"0xc1f30001 (NS_ERROR_NOT_INITIALIZED)\"  location: \"JS frame :: resource://gre/modules/AddonManager.jsm :: installBuiltinAddon :: line 2536\"  data: no]"
+console.warn: SearchService: "_init: abandoning init due to shutting down"
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: uncaught exception: 2147500036
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: uncaught exception: 2147500036
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: uncaught exception: 2147500036
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: uncaught exception: 2147500036
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: uncaught exception: 2147500036
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: uncaught exception: 2147500036
+1625993246359	Marionette	INFO	Stopped listening on port 40725
+1625994108292	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilex4t2ma"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625994109326	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilex4t2ma/search.json.mozlz4", (void 0)))
+1625994114603	Marionette	INFO	Listening on port 32995
+1625994114909	Marionette	WARN	TLS certificate errors will be ignored for this session
+1625994160877	Marionette	INFO	Stopped listening on port 32995
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625994164899	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileTI9cV0"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625994165684	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileTI9cV0/search.json.mozlz4", (void 0)))
+1625994168972	Marionette	INFO	Listening on port 46233
+1625994169431	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+1625994209011	Marionette	INFO	Stopped listening on port 46233
+1625994212538	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileK27zy7"
+/usr/lib/firefox/browser/defaults/preferences/00parrot.js:30: prefs parse error: unexpected character
+/usr/lib/firefox/browser/defaults/syspref/00parrot.js:30: prefs parse error: unexpected character
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1625994213395	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileK27zy7/search.json.mozlz4", (void 0)))
+1625994216288	Marionette	INFO	Listening on port 33041
+1625994216541	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+1625994242201	Marionette	INFO	Stopped listening on port 33041
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1635687189909	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile7Zdj2Y"
+console.error: Enterprise Policies: 
+  Error parsing JSON file
+1635687194938	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile7Zdj2Y/search.json.mozlz4", (void 0)))
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+1635687214313	Marionette	INFO	Listening on port 41097
+1635687217848	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+JavaScript error: https://lf16-tiktok-web.ibytedtos.com/obj/tiktok-web/tiktok/web/node/_next/static/chunks/commons.43d2c3787104dc89e031.js, line 10: TypeError: performance.getEntriesByType(...)[0] is undefined
+JavaScript error: https://lf16-tiktok-web.ibytedtos.com/obj/tiktok-web/tiktok/web/node/_next/static/chunks/commons.43d2c3787104dc89e031.js, line 10: Error: timeout of 5000ms exceeded
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
