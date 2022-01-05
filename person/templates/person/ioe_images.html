@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> A collective memory Autobiography by community </title>
+
+<!--Bootstrap-5 CSS-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+
+<!--#################### Bootstrap-5 JS ###################-->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+<!-- For jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- For accesssing Local css and js -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'hotornot/style.css' %}">
+
+<script src="{% static 'hotornot/script.js' %}"></script>
+
+<!-- For google analytics -->
+{% include "google_analytics.html" %}
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Images</a>
+        <!--</li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<script>
+var collages = ['PUL', 'THA', 'PAS', 'PUR', 'KAT', 'KAN', 'SEC', 'ACE', 'HCE', 'NCE', 'LEC', 'KIC', 'JAN', 'KEC', 'CHI']
+
+var collage_faculties = [['BCE', 'BCT', 'BEI', 'BEL', 'BAR', 'BCH', 'BME'], ['BCE', 'BCT', 'BEI', 'BAR', 'BME', 'BIE', 'BAM'], ['BCE', 'BCT', 'BEI', 'BEL', 'BAM', 'BME', 'BGE'], ['BCE', 'BCT', 'BEI', 'BEL', 'BAR', 'BME', 'BAG'], ['BCE', 'BCT', 'BEI', 'BEL', 'BAR'], ['BCE', 'BCT', 'BEI'], ['BCE', 'BCT', 'BEI'], ['BCE', 'BCT', 'BEI', 'BEL'], ['BCE', 'BCT', 'BEI', 'BAR'], ['BCE', 'BCT', 'BEI', 'BEL'], ['BCE', 'BCT'], ['BCE', 'BCT', 'BEI'], ['BCE', 'BCT', 'BEI'], ['BCE', 'BCT', 'BEL'], ['BAR']]
+
+var collage_faculties = {'PUL': ['BCE', 'BCT', 'BEI', 'BEL', 'BAR', 'BCH', 'BME'], 'THA': ['BCE', 'BCT', 'BEI', 'BAR', 'BME', 'BIE', 'BAM'], 'PAS': ['BCE', 'BCT', 'BEI', 'BEL', 'BAM', 'BME', 'BGE'], 'PUR': ['BCE', 'BCT', 'BEI', 'BEL', 'BAR', 'BME', 'BAG'], 'KAT': ['BCE', 'BCT', 'BEI', 'BEL', 'BAR'], 'KAN': ['BCE', 'BCT', 'BEI'], 'SEC': ['BCE', 'BCT', 'BEI'], 'ACE': ['BCE', 'BCT', 'BEI', 'BEL'], 'HCE': ['BCE', 'BCT', 'BEI', 'BAR'], 'NCE': ['BCE', 'BCT', 'BEI', 'BEL'], 'LEC': ['BCE', 'BCT'], 'KIC': ['BCE', 'BCT', 'BEI'], 'JAN': ['BCE', 'BCT', 'BEI'], 'KEC': ['BCE', 'BCT', 'BEL'], 'CHI': ['BAR']}
+
+var faculties = ['BCE', 'BCT', 'BEI', 'BAR', 'BME', 'BEL', 'BCH', 'BIE', 'BAM', 'BGE', 'BAG',]
+
+var students = [[192, 96, 48, 48, 48, 48, 48], [144, 48, 48, 48, 48, 48, 48], [144, 48, 48, 48, 48, 48, 48], [96, 96, 48, 48, 48, 96, 48], [96, 96, 96, 48, 48], [96, 96, 96], [48, 48, 48], [96, 96, 96, 48], [96, 48, 48, 48], [96, 48, 48, 48], [48, 48], [96, 48, 48], [96, 48, 48], [96, 48, 48], [24]]
+
+year = [73,74,75,76]
+
+function getCollages(){
+  let collage_div = document.getElementById("select_collage_options");
+  if(collage_div.childNodes.length<20){
+    for (collage of collages.sort().reverse()){
+      let collage_option = document.createElement('option');
+      //collage_option.setAttribute('onClick', 'collage_faculty_details()');
+      collage_option.textContent = collage;
+      collage_div.appendChild(collage_option);
+    }
+  }
+}
+
+function getFaculties(){
+  let faculty_div = document.getElementById("select_faculty_options");
+  //faculty_div.id = "select_faculty_options";
+  //let faculty_div = document.getElementById("select_faculty_options");
+  //if(faculty_div.childNodes.length<14){
+  
+  //for (i=0;i<faculty_div.childNodes.length-1;i++){
+  //  faculty_div.removeChild(faculty_div.lastChild);
+  //}
+    collage = document.getElementById('select_collage_options').value;
+    collage_faculty = collage_faculties[collage];
+    /*for (faculty of collage_faculty){
+      console.log(faculty);
+      let faculty_option = document.createElement('option');
+      //faculty_option.setAttribute('onClick','collage_faculty_details()');
+      faculty_option.textContent = faculty;
+      faculty_div.appendChild(faculty_option);
+    }
+    try{
+      document.getElementById('select_faculty_options').remove();
+    } catch{}
+    document.getElementById('faculty_container').appendChild(faculty_div);
+    
+  //}*/
+  for (faculty of faculty_div.childNodes){
+    if(collage_faculty.includes(faculty.textContent)){
+      faculty.style.display='block';
+      
+    } else{
+      try{faculty.style.display='none';
+      } catch{}
+    }
+    console.log(faculty.textContent)
+  }
+}
+
+function save_image_url(url) {
+ $.ajax({
+    type: 'POST',
+    url: "{% url 'save_image_url' %}",
+    
+    data: {
+      'url' : url,
+      'csrfmiddlewaretoken': '{{ csrf_token }}',  
+    },
+    
+    
+    success: function(response) {
+        console.log('\nSuccess \t response:\n'+response);
+        
+    }, error: function (response) {
+         console.log('\nImg Not Send \t response:\n' + response);
+         
+    }
+    
+
+
+
+})
+}
+
+function change_url(){
+  collage = document.getElementById('select_collage_options').value
+  faculty = document.getElementById('select_faculty_options').value
+  id = document.getElementById('select_gender_options').value
+  $(location).attr('href', '/ioe_images/'+ collage + '/' + faculty + '/' + id + '/')
+}
+</script>
+
+    <div class="col-md-3 bs-linebreak mx-auto mb-1">
+    <select class="form-select-lg " aria-label="select example" id="select_collage_options" onClick="getCollages();">
+      <option selected>Collage</option>
+      <!--<option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>-->
+    </select>
+  </div>
+
+  <div class="col-md-3 mx-auto d-block mb-2"  id="faculty_container" style="display:none">
+    <select class="form-select-lg" aria-label="Default select example" id="select_faculty_options" onClick="getFaculties();">
+      <option selected>Faculty</option>
+      <option style="display:none">BCE</option>
+      <option style="display:none">BCT</option>
+      <option style="display:none">BEI</option>
+      <option style="display:none">BAR</option>
+      <option style="display:none">BME</option>
+      <option style="display:none">BEL</option>
+      <option style="display:none">BCH</option>
+      <option style="display:none">BIE</option>
+      <option style="display:none">BAM</option>
+      <option style="display:none">BGE</option>
+      <option style="display:none">BAG</option>
+    </select>
+  </div>
+
+<div class="row">
+  <div class="col-md-3 bs-linebreak mx-auto d-block mb-1 flex">
+    <select class="form-select-lg " aria-label="Default select example" id="select_gender_options">year
+      
+      <option selected >year</option>
+      <option onclick="get_data('m';console.log('Hello World')">71</option>
+<option onclick="change_url();">72</option>
+<option onclick="change_url();">73</option>
+<option onclick="change_url();">74</option>
+<option onclick="change_url();">75</option>
+      <option onclick="change_url()">76</option>
+      <option onclick="change_url()">77</option>
+    </select>
+  </div>
+
+  
+</div>
+<center><button class="btn btn-secondary btn-lg" onclick="change_url()"><b><h1>ok</h1></button></div></center>
+<br><br>
+
+<div class="row mx-auto d-flex">
+  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+
+
+{% for url in urls %}
+<!--<img src={{url}} style="height:25px;width:25px;" onload="save_image_url(this.src)" onerror="this.style.display='none'"></img>-->
+    <img
+      src={{url}}
+      class="w-100 shadow-1-strong mx-auto d-block rounded mb-4"
+      onload="save_image_url(this.src)"
+      alt=""/>
+{% endfor %}
+
+<!--
+<center>
+<div class="row mx-auto d-flex">
+  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+    <img
+      src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg"
+      class="w-100 shadow-1-strong rounded mb-4"
+      alt=""
+    />
+
+    <img
+      src="https://mdbootstrap.com/img/Photos/Vertical/mountain1.jpg"
+      class="w-100 shadow-1-strong rounded mb-4"
+      alt=""
+    />
+  </div>
+
+  <div class="col-lg-4 mb-4 mb-lg-0">
+    <img
+      src="https://mdbootstrap.com/img/Photos/Vertical/mountain2.jpg"
+      class="w-100 shadow-1-strong rounded mb-4"
+      alt=""
+    />
+
+    <img
+      src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg"
+      class="w-100 shadow-1-strong rounded mb-4"
+      alt=""
+    />
+  </div>
+
+  <div class="col-lg-4 mb-4 mb-lg-0">
+    <img
+      src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
+      class="w-100 shadow-1-strong rounded mb-4"
+      alt=""
+    />
+
+    <img
+      src="https://mdbootstrap.com/img/Photos/Vertical/mountain3.jpg"
+      class="w-100 shadow-1-strong rounded mb-4"
+      alt=""
+    />
+  </div>
+</div></center>
+-->
+</body>
+</html>

@@ -1,0 +1,44 @@
+# class UserEmail(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     email = models.EmailField(default='');
+
+
+# from code_share.models import Code, Branch
+# Code.objects.using('fuse_attend').all()[0].valid_email
+# Code.objects.using('fuse_attend').all()[0].hide_code
+
+# Code.objects.using('fuse_attend').filter(id='73e63928-2305-49d8-a0e0-410756bfa9ac')
+# Code.objects.using('fuse_attend').filter(author='A').delete()
+# Code.objects.using('fuse_attend').filter(author='Jdkdkend').delete()
+# Code.objects.using('fuse_attend').filter(author='Hmm').delete()
+
+
+python3 manage.py makemigraions
+python3 manage.py migrate --database=brainmap
+
+python3 manage.py shell
+
+from person.models import Person, UserData
+from django.contrib.auth.models import User
+
+UserData.objects.using('brainmap').create(email='test@gmail.com', user=User.objects.using('brainmap').get(username='her'))
+
+
+
+######################################## 
+################# ToDo #################
+########################################
+# verify email
+# @is_verified before deletation
+# email as username/remove_username
+# redirect & complete previous task on login
+# merge code_branch to main
+
+ ######################################## 
+############## Debug/Err. ################
+ ########################################
+
+- delete_code not redirecting to login
+- code_deletd notification: code_share/templates/home.html function:`notify()`
+- notification page
+- naigation bar
