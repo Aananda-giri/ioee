@@ -13,22 +13,26 @@ from django.contrib.auth.decorators import login_required
 
 #@login_required
 def home(request):
+    print('\n In home \n')
     template_name = 'code_share/home.html'
     #post = get_object_or_404(Post, slug=slug)
 
     new_code = None
     # code posted
-    if request.method == 'POST':
-        code_form = CodeForm(data=request.POST)
-        if code_form.is_valid():
+    if request.method == 'POST' and request.is_ajax:
             code = request.POST.get("code", None)
+            code = code[1:-1] # front_end sending code with quotes before and after the code
+            #code_form = CodeForm(data=request.GET)
+            #if code_form.is_valid():
+            # code = request.GET.get("code", None)
             title = request.POST.get("title", None)
             author = request.POST.get("author", None)
             email = request.POST.get("email", None)
             tags = request.POST.get("tags", None).split(' ')
             
             private_code = request.POST.get("private_code", None)
-            private_code = (False, True) [private_code=="on"]       #To hide the private code
+            print('\n\nprivate_code:\'{}\' Type:{}'.format(private_code, type(private_code)))
+            private_code = (False, True) [private_code=="true"]       #To hide the private code
 
             print(private_code)
             print(code, title, email)
@@ -43,6 +47,7 @@ def home(request):
             if email.strip() != '':
                 send_mail_please(recipient=[
                                  email], subject="code", message=format_email_message_body(str(new_code.id)))
+            return HttpResponse('reload')
     # else:
     code_form = CodeForm()
     codes = Code.objects.using('fuse_attend').filter(private_code=False).order_by('-created_on')

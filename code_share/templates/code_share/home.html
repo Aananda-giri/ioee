@@ -25,6 +25,17 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- for fontaesome icons -->
     <!-- <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script> -->
+
+<!-- for google analytics_ioee -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1H145N2CV1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1H145N2CV1');
+</script>
 </head>
 
   <body>
@@ -289,7 +300,49 @@
   i.preventDefault();
 }
 
+
+function save_new_code(i) {
+
+window.editor = ace.edit(`editor${i}`);
+let getCode = editor.getValue();
+//console.log(getCode);
+editor.setReadOnly(true);
+let saveCode = document.getElementById(`save${i}`);
+saveCode.style.display = "none";
+
+let edit_code=document.getElementById(`edit${i}`)
+
+$.ajax({
+  type:'POST',
+  url:"{% url 'home' %}",
+  data: {
+            'title' : document.getElementById("title").value,
+            'author' : document.getElementById("author").value,
+            'email' : document.getElementById("email").value,
+            'tags' : document.getElementById("tags").value,
+            'private_code' : document.getElementById('private_code').checked,
+            'code':JSON.stringify(getCode),
+
+    
+    csrfmiddlewaretoken: '{{ csrf_token }}',
+    
+  },
+  success: function(response) {
+    console.log('Success saving code')
+    location.reload();
+    //Successfully saved code_branch
+  }, error: function (response) {
+    console.log('error');
+    console.log(response);   
+     }
+  
+})
+
+}
+
 function notify(notice){
+  console.log("\nNotice!!");
+  console.log(notice);
   // to be implemented .........
   // to show toast notifications
   // reference: https://getbootstrap.com/docs/5.1/components/toasts/
@@ -423,6 +476,99 @@ console.log('here');
     
   })
 }}    
+function addCode() {
+  i = 150;
+  let accordion = document.getElementById("accordionExample");
+  let accordion_initial = `
+  
+  
+  <div class="accordion-item">
+  <h2 class="accordion-header" id="heading${i}">
+    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="true" aria-controls="collapseOne">
+
+    <div class="accordion-title">
+      <div class="accordion-left-title">
+      <input type='text'
+      name="title"
+      id="title"
+      placeholder="title"
+      />
+
+      <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      placeholder="email"
+    />
+
+      </div>
+      <div class="accordion-right-title">
+      <input 
+      name="author"
+      placeholder="author"
+      id="author"
+      type='text'/>
+
+      <input
+      type="text"
+      class="form-control"
+      name="tags"
+      id="tags"
+      placeholder="tags"
+    />
+
+    <div class="mb-3">
+                  <input class="form-check-input" type="checkbox" name="private_code" id="private_code">
+                  <label for="exampleFormControlTags" class="form-label"
+                    >Private Code?</label>
+                </div>
+
+      </div>
+    </div>
+    </button>
+  </h2>
+  <div id="collapse${i}" class="accordion-collapse collapse show" aria-labelledby="heading${i}" data-bs-parent="#accordionExample">
+    <div class="accordion-body editor">
+    <div class='editor__code'id="editor${i}">
+     
+    </div>
+  </div>
+  <!-- For Edit code footer-->
+  <div class="m-2 d-flex" style="color: white; ">
+    <div style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center">
+      main
+    </div>
+    <div onClick="save_new_code(${i})" style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center">
+      save
+    </div>
+
+   
+    <div id="save${i}" style="width: 6vw;color:"white"; cursor: pointer;background-color: #282C34;"  fw-bold rounded text-center ms-2" onClick="save(${i})">
+      Save
+    </div>
+
+  </div>
+</div>
+`;
+  //}
+  accordion.insertAdjacentHTML("afterbegin", accordion_initial);
+
+  console.log("Add to Code");
+  window.editor = ace.edit(`editor${150}`);
+  editor.setTheme("ace/theme/one_dark");
+  editor.getSession().setMode("ace/mode/c_cpp");
+  editor.setValue(" ", 1); //1 = moves cursor to end
+  editor.setReadOnly(false);
+  editor.setOptions({
+    fontSize: "16pt",
+    showLineNumbers: true,
+    showGutter: true,
+  });
+  i++;
+  console.log(accordion);
+}
+
 
     </script>
   </body>

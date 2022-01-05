@@ -256,7 +256,7 @@ function toggleCodeView(code_index, branch_index) {
 }
 
 function distributeBranch(branch_data, branch_index) {
-  console.log(branch_data);
+  //console.log(branch_data);
   let branches_parent_div = document.getElementById(
     "branches_" + branch_data.Parent
   );
