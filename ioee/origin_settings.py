@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!5n6(ph#g120o!xm-fq-zcc&2#83m(b$4s!qr3ti@_2$^)e^^w'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'uegbcxiy',
         'USER': 'uegbcxiy',
-        'PASSWORD': 'Z8RJEf1RcSNk029GD6JG--Mpmu6Fo9O2',
+        'PASSWORD': os.environ.get('hotornot_db_password'),
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'vysbznab',
         'USER': 'vysbznab',
-        'PASSWORD': 'x-2Zh_jpzoWLqbolbcaejot5eVByKzqI',
+        'PASSWORD': os.environ.get('FUSE_ATTEND_DB_PASSWORD'),
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
@@ -102,7 +102,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ltifidts',
         'USER': 'ltifidts',
-        'PASSWORD': '7T1hDSqMGc2_iS1cPWwHbo4sZx2UbI_n',
+        'PASSWORD': os.environ.get('BRAINMAP_DB_PASSWORD'),
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
@@ -110,7 +110,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'lflpirvq',
         'USER': 'lflpirvq',
-        'PASSWORD': '4EB2sZ6kz3unSepKWt0ame_SPrd3ZVry',
+        'PASSWORD': os.environ.get('DEFAULT_DB_PASSWORD'),
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
         # 'ENGINE': 'django.db.backends.sqlite3',
@@ -169,8 +169,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = EMAIL_HOST_USER = 'pdits.076@gmail.com'
-EMAIL_HOST_PASSWORD = 'LKJ9DtZLjnL6CQx'
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = EMAIL_HOST_USER = os.environ.get('gmail')
+EMAIL_HOST_PASSWORD = os.environ.get('gmail_password')
+
 
 # Login & Logout URLs
 LOGIN_URL = '/login/'
