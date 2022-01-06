@@ -24,27 +24,13 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-<<<<<<< HEAD
-    path('', include('code_share.urls')),
-    path('code/', include('code_share.urls')),
-    path('person/', include('person.urls')),
-
-    
-    
-    
-=======
     # path('code/', include('code_share.urls')),
     path('person/', include('person.urls')),
 
->>>>>>> 80276f3bb66368e80981733940434f1dcf611866
     # for login and logout
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('home/', views.home, name='home'),
     path('register/', views.register, name='register'),
-<<<<<<< HEAD
-]
-=======
     path('', include('code_share.urls')),
 ]
->>>>>>> 80276f3bb66368e80981733940434f1dcf611866

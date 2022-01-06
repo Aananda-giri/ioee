@@ -11,69 +11,59 @@ from django.core import serializers
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.contrib.auth.decorators import login_required
 
-#@login_required
+# @login_required
+
+
 def home(request):
-<<<<<<< HEAD
-=======
     print('\n In home \n')
->>>>>>> 80276f3bb66368e80981733940434f1dcf611866
     template_name = 'code_share/home.html'
     #post = get_object_or_404(Post, slug=slug)
 
     new_code = None
     # code posted
-<<<<<<< HEAD
-    if request.method == 'POST':
-        code_form = CodeForm(data=request.POST)
-        if code_form.is_valid():
-            code = request.POST.get("code", None)
-=======
     if request.method == 'POST' and request.is_ajax:
-            code = request.POST.get("code", None)
-            code = code[1:-1] # front_end sending code with quotes before and after the code
-            #code_form = CodeForm(data=request.GET)
-            #if code_form.is_valid():
-            # code = request.GET.get("code", None)
->>>>>>> 80276f3bb66368e80981733940434f1dcf611866
-            title = request.POST.get("title", None)
-            author = request.POST.get("author", None)
-            email = request.POST.get("email", None)
-            tags = request.POST.get("tags", None).split(' ')
-            
-            private_code = request.POST.get("private_code", None)
-<<<<<<< HEAD
-            private_code = (False, True) [private_code=="on"]       #To hide the private code
-=======
-            print('\n\nprivate_code:\'{}\' Type:{}'.format(private_code, type(private_code)))
-            private_code = (False, True) [private_code=="true"]       #To hide the private code
->>>>>>> 80276f3bb66368e80981733940434f1dcf611866
+        code = request.POST.get("code", None)
+        # front_end sending code with quotes before and after the code
+        code = code[1:-1]
+        #code_form = CodeForm(data=request.GET)
+        # if code_form.is_valid():
+        # code = request.GET.get("code", None)
+        title = request.POST.get("title", None)
+        author = request.POST.get("author", None)
+        email = request.POST.get("email", None)
+        tags = request.POST.get("tags", None).split(' ')
 
-            print(private_code)
-            print(code, title, email)
-            # Create code object but don't save to database yet
-            new_code = Code.objects.using('fuse_attend').create(
-                code=code, email=email, title=title, tags=tags, author=author, stars=0, private_code=private_code)
-            # Assign the current post to the code
-            #new_code.post = post
-            # Save the code to the database
-            new_code.save()
-            print('\n\n {} \n\n'.format(str(new_code.id)))
-            if email.strip() != '':
-                send_mail_please(recipient=[
-                                 email], subject="code", message=format_email_message_body(str(new_code.id)))
-<<<<<<< HEAD
-=======
-            return HttpResponse('reload')
->>>>>>> 80276f3bb66368e80981733940434f1dcf611866
+        private_code = request.POST.get("private_code", None)
+        print('\n\nprivate_code:\'{}\' Type:{}'.format(
+            private_code, type(private_code)))
+        # To hide the private code
+        private_code = (False, True)[private_code == "true"]
+
+        print(private_code)
+        print(code, title, email)
+        # Create code object but don't save to database yet
+        new_code = Code.objects.using('fuse_attend').create(
+            code=code, email=email, title=title, tags=tags, author=author, stars=0, private_code=private_code)
+        # Assign the current post to the code
+        #new_code.post = post
+        # Save the code to the database
+        new_code.save()
+        print('\n\n {} \n\n'.format(str(new_code.id)))
+        if email.strip() != '':
+            send_mail_please(recipient=[
+                             email], subject="code", message=format_email_message_body(str(new_code.id)))
+        return HttpResponse('reload')
     # else:
     code_form = CodeForm()
-    codes = Code.objects.using('fuse_attend').filter(private_code=False).order_by('-created_on')
+    codes = Code.objects.using('fuse_attend').filter(
+        private_code=False).order_by('-created_on')
     data = serializers.serialize('json', codes)
-    branches = Branch.objects.using('fuse_attend').filter(private_code=False).order_by('-created_on')
+    branches = Branch.objects.using('fuse_attend').filter(
+        private_code=False).order_by('-created_on')
     branches = serializers.serialize('json', branches)
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
-    return render(request, 'code_share/home.html', {'data': data, 'new_code': new_code, 'code_form': code_form, 'branches':branches, 'search_term':''})
+    return render(request, 'code_share/home.html', {'data': data, 'new_code': new_code, 'code_form': code_form, 'branches': branches, 'search_term': ''})
 
 
 def format_email_message_body(uuid):
@@ -107,14 +97,16 @@ def code_by_uuid(request, uuid):
     data = serializers.serialize('json', [code])
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
-    return render(request, 'code_share/home.html', {'data': data, 'code_form': code_form, 'branches':[]})
+    return render(request, 'code_share/home.html', {'data': data, 'code_form': code_form, 'branches': []})
+
 
 def edit_code(request, parent_id=None):
     print('\n\n inside edit code \n\n')
-    
+
     if request.method == 'POST' and request.is_ajax:
         code = request.POST.get("code", None)
-        code = code[1:-1] # front_end sending code with quotes before and after the code
+        # front_end sending code with quotes before and after the code
+        code = code[1:-1]
         parent_id = request.POST.get("parent_id", None)
         print(code, parent_id)
         # Create code object but don't save to database yet
@@ -302,36 +294,38 @@ def add_star(request):
         print('fucking else')
     return HttpResponse('Done')
 
+
 def search_code(request):
     if request.method == "GET":
         # get the nick name from the client side.
         search_term = request.GET.get("search_query", None)
         print(search_term)
         codes_list = Code.objects.using('fuse_attend').annotate(
-        search=SearchVector('title','author','email','tags', 'code')).filter(search=search_term)
-        
-        codes=[]
+            search=SearchVector('title', 'author', 'email', 'tags', 'code')).filter(search=search_term)
+
+        codes = []
         for code in codes_list:
             codes.append(code)
         codes = serializers.serialize('json', codes, )
         print(codes)
-        #print('peoples_list:\n\n'+str(peoples_list))
+        # print('peoples_list:\n\n'+str(peoples_list))
     else:
         print('\nfucking request not get\n')
-    return render(request, 'code_share/home.html', {'data': codes, 'new_code': [], 'code_form': CodeForm(), 'branches':[], 'search_term':search_term})
+    return render(request, 'code_share/home.html', {'data': codes, 'new_code': [], 'code_form': CodeForm(), 'branches': [], 'search_term': search_term})
     #  {'people':people}, status = 200)
+
 
 @login_required()
 def delete_code(request, parent_id=None):
     # return render(request, 'code_share/home.html', {})
     print('\n\n inside delete code \n\n')
-    
+
     if request.method == 'POST' and request.is_ajax:
         code_id = request.POST.get("code_id", None)
         if request.user.is_authenticated:
             print('user logged in')
             print(request.user.email)
-        
+
         code = Code.objects.using('fuse_attend').get(id=code_id)
         print(code_id)
         print(code.email)
@@ -342,5 +336,5 @@ def delete_code(request, parent_id=None):
         else:
             response = "your email doesn't match with author\'s email address.....\n Only author can delete the code"
         # print("\n\n not request.method == 'POST' and request.is_ajax \n\n")
-    #return HttpResponse(response)
+    # return HttpResponse(response)
     return HttpResponseRedirect(home)

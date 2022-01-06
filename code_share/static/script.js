@@ -256,11 +256,7 @@ function toggleCodeView(code_index, branch_index) {
 }
 
 function distributeBranch(branch_data, branch_index) {
-<<<<<<< HEAD
-  console.log(branch_data);
-=======
   //console.log(branch_data);
->>>>>>> 80276f3bb66368e80981733940434f1dcf611866
   let branches_parent_div = document.getElementById(
     "branches_" + branch_data.Parent
   );
