@@ -132,3 +132,11 @@ h5 {
 .save {
   display: none;
 }
+.footer_code {
+  overflow-x: scroll;
+  height: 50px;
+  padding: 4px;
+}
+.accordion-button::after {
+  display: none;
+}

@@ -27,84 +27,6 @@ function copyToClipboard(code_position) {
   copy_btn.style.backgroundColor = "#00FF00";
   copy_btn.style.color = "white";
 }
-function addCode() {
-  i = 150;
-  let accordion = document.getElementById("accordionExample");
-  let accordion_initial = `
-  <form id="upload_form form(${i})" method="post"  action="">
-  
-  <div class="accordion-item">
-  <h2 class="accordion-header" id="heading${i}">
-    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="true" aria-controls="collapseOne">
-
-    <div class="accordion-title">
-      <div class="accordion-left-title">
-      <input type='text'
-      name="title"
-
-      />
-      <input
-      type="email"
-      class="form-control"
-      id="id_email"
-      name="email"
-      placeholder="email"
-    />
-      </div>
-      <div class="accordion-right-title">
-      <input 
-      name="author"
-      type='text'/>
-      <input
-      type="text"
-      class="form-control"
-      name="tags"
-      id="exampleFormControlTags"
-      placeholder="tags"
-    />
-
-      </div>
-    </div>
-    </button>
-  </h2>
-  <div id="collapse${i}" class="accordion-collapse collapse show" aria-labelledby="heading${i}" data-bs-parent="#accordionExample">
-    <div class="accordion-body editor">
-    <div class='editor__code'id="editor${i}">
-     
-    </div>
-  </div>
-  <!-- For Edit code footer-->
-  <div class="m-2 d-flex" style="color: white; ">
-    <div style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center">
-      main
-    </div>
-
-
-   
-    <button id="save${i}" type="submit" style="width: 6vw;color:"white"; cursor: pointer;background-color: #282C34;"  fw-bold rounded text-center ms-2" onClick="save(${i})">
-      Save
-    </button>
-
-  </div>
-</div>
-</form>`;
-  //}
-  accordion.insertAdjacentHTML("afterbegin", accordion_initial);
-
-  console.log("Add to Code");
-  window.editor = ace.edit(`editor${150}`);
-  editor.setTheme("ace/theme/one_dark");
-  editor.getSession().setMode("ace/mode/c_cpp");
-  editor.setValue(" ", 1); //1 = moves cursor to end
-  editor.setReadOnly(false);
-  editor.setOptions({
-    fontSize: "16pt",
-    showLineNumbers: true,
-    showGutter: true,
-  });
-  i++;
-  console.log(accordion);
-}
 
 function createEditor(key, i) {
   //for (key in codes) {
@@ -116,10 +38,8 @@ function createEditor(key, i) {
     <button
       class="accordion-button"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#collapse${i}"
-      aria-expanded="true"
-      aria-controls="collapse${i}"
+ 
+    
     >
     <div class="accordion-title">
       <div class="accordion-left-title">
@@ -134,7 +54,7 @@ function createEditor(key, i) {
     <i
     id="collapse${i}"
     
-    class="accordion-item my-3 position-absolute  collapse show copy far fa-copy" id="copy${
+    class="accordion-item my-3 position-absolute   show copy" id="copy${
       i - 1
     }" onClick="copyToClipboard('${i - 1}')">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
@@ -146,7 +66,7 @@ function createEditor(key, i) {
 
   <div
     id="collapse${i}"
-    class="accordion-collapse collapse show"
+    class=" show"
     aria-labelledby="heading${i}"
   
     >
@@ -155,29 +75,38 @@ function createEditor(key, i) {
       </div>
     </div> 
     <!-- For Edit code footer-->
-      <div id = "branches_${key.pk}" class="m-2 d-flex" style="color: white; ">
+      <div id = "branches_${
+        key.pk
+      }" class="m-2 footer_code d-flex" style="color: white; ">
       
-        <div id="edit${i}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2"onClick="editCoder(${i})">
+        <div id="edit${i}" style="width: 100%;padding:5px; cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2"onClick="editCoder(${i})">
           edit
         </div>
 
         <div id="star${
           i - 1
-        }" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode(${
+        }" style="width: 100%;padding:9px; display:flex; justify-content:space-evenly; cursor: pointer;background-color: #282C34;" class="fw-bold rounded text-center ms-2" onClick="starCode(${
     i - 1
-  })">
-          stars(${key.stars})
+  },${key.stars})">
+         ${Array(key.stars)
+           .join(0)
+           .split(0)
+           .map(
+             () => `<i class="fa-solid fa-star" style="margin-right:4px;"></i>
+         `
+           )
+           .join("")}
         </div>
 
-        <div id="delete${i}" style="width: 6vw;cursor: pointer;background-color: red;" class="fw-bold rounded text-center ms-2"onClick="deleteCode(${i})">
+        <div id="delete${i}" style="width: 100%;padding:5px; cursor: pointer;background-color: red;" class="fw-bold rounded text-center ms-2"onClick="deleteCode(${i})">
           delete
         </div>
         
-        <div id="main${i}" style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center ms-2" onClick="toggleCodeView(${i},${-1});">
+        <div id="main${i}" style="width: 100%;padding:5px; cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center ms-2" onClick="toggleCodeView(${i},${-1});">
           main
         </div>
 
-        <div id="save${i}" style="width: 6vw;cursor: pointer;background-color: #282C34;" class="save fw-bold rounded text-center ms-2" onClick="save(${i})">
+        <div id="save${i}" style="width: 100%;padding:5px; cursor: pointer;background-color: #282C34;" class="save fw-bold rounded text-center ms-2" onClick="save(${i})">
           Save
         </div>
 
@@ -269,7 +198,7 @@ function distributeBranch(branch_data, branch_index) {
   branches_div.setAttribute("id", "branch" + p);
   branches_div.setAttribute(
     "style",
-    "width: 6vw;cursor: pointer;background-color: #282C34;"
+    "width: 100%; padding:4px;cursor: pointer;background-color: #282C34;"
   );
   branches_div.setAttribute("class", "fw-bold rounded text-center ms-2");
   branches_div.setAttribute(
