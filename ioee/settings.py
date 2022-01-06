@@ -20,7 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< HEAD
 SECRET_KEY = '!5n6(ph#g120o!xm-fq-zcc&2#83m(b$4s!qr3ti@_2$^)e^^w'
+=======
+SECRET_KEY = os.environ.get('SECRET_KEY')
+>>>>>>> 80276f3bb66368e80981733940434f1dcf611866
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,7 +89,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'uegbcxiy',
         'USER': 'uegbcxiy',
+<<<<<<< HEAD
         'PASSWORD': 'Z8RJEf1RcSNk029GD6JG--Mpmu6Fo9O2',
+=======
+        'PASSWORD': os.environ.get('hotornot_db_password'),
+>>>>>>> 80276f3bb66368e80981733940434f1dcf611866
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
@@ -94,7 +102,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'vysbznab',
         'USER': 'vysbznab',
+<<<<<<< HEAD
         'PASSWORD': 'x-2Zh_jpzoWLqbolbcaejot5eVByKzqI',
+=======
+        'PASSWORD': os.environ.get('FUSE_ATTEND_DB_PASSWORD'),
+>>>>>>> 80276f3bb66368e80981733940434f1dcf611866
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
@@ -102,7 +114,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ltifidts',
         'USER': 'ltifidts',
+<<<<<<< HEAD
         'PASSWORD': '7T1hDSqMGc2_iS1cPWwHbo4sZx2UbI_n',
+=======
+        'PASSWORD': os.environ.get('BRAINMAP_DB_PASSWORD'),
+>>>>>>> 80276f3bb66368e80981733940434f1dcf611866
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
@@ -110,7 +126,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'lflpirvq',
         'USER': 'lflpirvq',
+<<<<<<< HEAD
         'PASSWORD': '4EB2sZ6kz3unSepKWt0ame_SPrd3ZVry',
+=======
+        'PASSWORD': os.environ.get('DEFAULT_DB_PASSWORD'),
+>>>>>>> 80276f3bb66368e80981733940434f1dcf611866
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
         # 'ENGINE': 'django.db.backends.sqlite3',
@@ -169,8 +189,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+<<<<<<< HEAD
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = EMAIL_HOST_USER = 'amaryesh123456@gmail.com'#'076bei001.aananda@sagarmatha.edu.np'
 EMAIL_HOST_PASSWORD = 'ma ai banauchu9'#'6KBfDiNyJkUg3KP'
+=======
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = EMAIL_HOST_USER = os.environ.get('gmail')
+EMAIL_HOST_PASSWORD = os.environ.get('gmail_password')
+>>>>>>> 80276f3bb66368e80981733940434f1dcf611866
 
 
 # Login & Logout URLs
