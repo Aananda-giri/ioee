@@ -96,12 +96,80 @@ max_students = {'PUL':{'BCE':192, 'BCT':96, 'BEI':48, 'BEL':48, 'BAR':48,'BCH':4
 'KEC' : {'BCE':96, 'BCT':48, 'BEL':48},
 'CHI' : {'BAR':24}}
 
-def get_ioe_photos(request, collage, faculty, year_code):
+# def get_ioe_photos(request, collage, faculty, year_code):
+#     formats = ['jpg', 'jpeg', 'png']
+#     urls=[]
+#     if faculty.upper() =="BEI" and year<=74:
+#         faculty="BEX"       # bei was bex before 74
+#     for format in formats:
+#         urls.extend(['https://exam.ioe.edu.np/Images/StudentCurrentImage/3036/{}0{}{}{}.{}'.format(collage, year_code, faculty, f'{i:03}', format) for i in range(1,max_students[collage][faculty])])
+#     return render(request, 'person/ioe_images.html', {'urls':urls})
+
+def get_ioe_photos(request, collage, faculty, year):
+    print('\n '+collage, faculty, year)
+    formats = ['jpg']#, 'jpeg', 'png']
+    urls=[]
+    faculty_key=faculty   # was giving keyerror on line 130 for BEX
+    if int(year)<=74:
+        if faculty.upper() =="BEI":
+            faculty = 'BEX'
+                   # bei was bex before 74
+        
+        year_codes = [3020]#[3016, 3017, 3018, 3020, 3023, 3024, 3026, 3033, 3036, 3039, 3040]
+    else:
+        year_codes = [3036]
+        # if int(year)==77:
+        #     year_codes = [3036]
+        # elif int(year)==76:
+        #     year_codes = [3024, 3030, 3036, 3038, 3040]
+        # elif int(year)==75:
+        #     year_codes = [3020, 3022, 3024, 3026, 3030, 3036, 3036, 3038, 3040, 3042]
+
+    
+    for year_code in year_codes:
+        for format in formats:
+            urls.extend(['https://exam.ioe.edu.np/Images/StudentCurrentImage/{}/{}0{}{}{}.{}'.format(year_code, collage, year, faculty, f'{i:03}', format) for i in range(1,max_students[collage][faculty_key])])
+    print('\n no. of urls: {}\n'.format(len(urls)))
+    return render(request, 'person/ioe_images.html', {'urls':urls})
+
+def get_student_photos(request, ioe_roll_no):
+    #print('\n '+collage, faculty, year)
+    formats = ['jpg', 'jpeg', 'png']
+    urls=[]
+    #faculty_key=faculty   # was giving keyerror on line 130 for BEX
+    
+    year = ioe_roll_no[3:6]
+    faculty = ioe_roll_no[6:9]
+    if int(year)<=74:
+        if faculty.upper() =="BEI":
+            faculty = 'BEX'
+            # bei was bex before 74
+        
+        year_codes = [3016, 3017, 3018, 3020, 3023, 3024, 3026, 3033, 3036, 3039, 3040]
+    else:
+
+        if int(year)==77:
+            year_codes = [3036, 3038]
+        elif int(year)==76:
+            year_codes = [3024, 3030, 3036, 3038, 3040]
+        elif int(year)==75:
+            year_codes = [3020, 3022, 3024, 3026, 3030, 3036, 3038, 3040, 3042]
+
+    
+    for year_code in year_codes:
+        for format in formats:
+            urls.append('https://exam.ioe.edu.np/Images/StudentCurrentImage/{}/{}.{}'.format(year_code, ioe_roll_no, format))
+    print('\n no. of urls: {}\n'.format(len(urls)))
+    return render(request, 'person/ioe_images.html', {'urls':urls})
+
+def test_photos(request):
     formats = ['jpg', 'jpeg', 'png']
     urls=[]
     for format in formats:
-        urls.extend(['https://exam.ioe.edu.np/Images/StudentCurrentImage/3036/{}0{}{}{}.{}'.format(collage, year_code, faculty, f'{i:03}', format) for i in range(1,max_students[collage][faculty])])
-    return render(request, 'person/ioe_images.html', {'urls':urls})
+        for year_code in range(3000,3050):
+            urls.append('https://exam.ioe.edu.np/Images/StudentCurrentImage/{}/SEC072BEX003.{}'.format(year_code, format))
+    print(urls)
+    return render(request, 'person/test.html', {'urls':urls})
 
 def get_ioe_photos_api(request, collage, faculty, year_code):
     formats = ['jpg', 'jpeg', 'png']

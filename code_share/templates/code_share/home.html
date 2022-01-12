@@ -38,6 +38,19 @@
 
   gtag('config', 'G-1H145N2CV1');
 </script>
+
+<!-- For https -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1H145N2CV1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1H145N2CV1');
+</script>
+
+
 </head>
 
   <body>
@@ -50,14 +63,20 @@
     <div id="container" class="container-fluid">
       <!-- Modal starts here -->
       <!-- Button trigger modal -->
-      <div class="btn_pos">
+      <div class="d-flex">
         <button
           type="button"
-          class="btn btn-primary btn-position"
+          class="btn btn-primary btn-position me-2"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
           Add Code
+        </button>
+        <!--<button type="button" class="btn btn-primary btn-position" data-bs-toggle="modal" onclick="location.replace('/community/')">
+          Community
+        </button>-->
+        <button type="button" class="btn btn-primary btn-position ms-2" data-bs-toggle="modal" onclick="location.replace('/community/ioe_images/ACE/BEI/76/')">
+          Images
         </button>
 
         <!-- Modal -->
@@ -260,7 +279,8 @@
     },
     success: function(response) {
       console.log('Success saving code')
-      console.log(response);
+      location.reload();  //reloads the page on saving new branch
+      //console.log(response);
       //Successfully saved code_branch
     }, error: function (response) {
       console.log('error');
@@ -293,6 +313,7 @@ function deleteCode(index){
       //Successfully saved code
       console.log(response); 
       notify(response);
+      location.reload();  //reloads the page on deleting code
     }, error: function (response) {
       console.log('error');
       console.log(response);

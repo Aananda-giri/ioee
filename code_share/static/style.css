@@ -74,7 +74,6 @@ body {
   margin: auto;
   text-align: center;
   display: flex;
-  margin-top: 10px;
 }
 .editor__code {
   border: none;

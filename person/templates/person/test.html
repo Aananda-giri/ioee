@@ -96,6 +96,11 @@ li {
 </style>
 </head>
 <body>
+  {% for url in urls %}
+<!--<img src={{url}} style="height:25px;width:25px;" onload="save_image_url(this.src)" onerror="this.style.display='none'"></img>-->
+    <img
+      src={{url}}>
+{% endfor %}
 <h1>FADE</h1>
 <ul>
   <li class="tooltip fade" data-title="Hypertext Markup Language">HTML

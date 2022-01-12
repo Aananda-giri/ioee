@@ -14,7 +14,10 @@ urlpatterns = [
     path('add_people/', views.add_people, name='add_people'),
     path('updateprofile/', views.update_profile, name='updateprofile'),
     
-    path('ioe_images/<str:collage>/<str:faculty>/<str:year_code>/', views.get_ioe_photos, name='ioe_images'),
+    path('ioe_images/<str:collage>/<str:faculty>/<str:year>/', views.get_ioe_photos, name='ioe_images'),
+    path('ioe_images/<str:ioe_roll_no>/', views.get_student_photos, name='student_photos'),
+
+    path('test/', views.test_photos, name='test_photos'),
     path('save_image_url/',views.save_image_url,name = 'save_image_url'),
     path('flush/', views.flush, name = 'flush'),
     path('.well-known/acme-challenge/M58vqliMosBAdgOYNx9UW9DlcBQ71UIkaQ0YYWAq_zs', views.ssl_cert, name = 'ssl_cert'),

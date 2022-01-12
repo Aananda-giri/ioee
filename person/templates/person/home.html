@@ -267,7 +267,7 @@ console.log('here');
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/ioe_images/ACE/BEI/76/">IOE_Images</a>
+    <a class="navbar-brand" href="ioe_images/ACE/BEI/76/">IOE_Images</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -296,7 +296,7 @@ Hello World
   <input class="form-control col-md-6 mx-auto d-block loading" id="search_input" type="text" placeholder="Search" name="search_query" onkeydown="search()">
 {%for person in people.0%}
 
-<a href="/uid/{{person.id}}">
+<a href="uid/{{person.id}}/">
 <div class = "md-2 bg-white ms-2 me-5 rounded" style="margin: 20px;">
 <img class="img-fluid img-responsive mr-2 md-6 rounded-circle" src="{{person.profile_pic.0}}" alt="" width="200"><h3>{{person.first_name}} {{person.middle_name}} {{person.last_name}}</h3><strong>Proefession : {{person.profession}}<br></strong><strong>Education : {{person.education}}</strong>
 

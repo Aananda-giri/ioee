@@ -112,7 +112,7 @@ def edit_code(request, parent_id=None):
         
         # To pass if main_code == branch_code
         if code == original_code:
-            HttpResponseRedirect(home)
+            HttpResponse('pass')
 
         branch = Branch.objects.using('fuse_attend').create(
             Parent=original_code, code=code, email=original_code.email, title=original_code.title, tags=original_code.tags, author=original_code.author, private_code=original_code.private_code)
@@ -140,7 +140,7 @@ def edit_code(request, parent_id=None):
         #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
         print('\n\n edit_code not POST\n\n')
     code_form = CodeForm()
-    HttpResponseRedirect(home)
+    HttpResponse('reload')
 
 # def edit_code(request, parent_id=None):
 #     template_name = 'code_share/edit.html'
@@ -349,7 +349,7 @@ def delete_code(request, parent_id=None):
         else:
             response = "your email doesn't match with author\'s email address.....\n Only author can delete the code"
         # print("\n\n not request.method == 'POST' and request.is_ajax \n\n")
-    #return HttpResponse(response)
+    return HttpResponse(response)
     #return HttpResponseRedirect(home)
 
 def imagepage(request):

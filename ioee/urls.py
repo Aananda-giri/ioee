@@ -25,8 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     # path('code/', include('code_share.urls')),
-    path('person/', include('person.urls')),
-    path('community/', include('community.urls')),
+    path('community/', include('person.urls')),
+    #path('community/', include('community.urls')),
     
     # for login and logout
     path('login/', auth_views.LoginView.as_view(), name='login'),

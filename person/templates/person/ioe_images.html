@@ -142,8 +142,14 @@ function save_image_url(url) {
 function change_url(){
   collage = document.getElementById('select_collage_options').value
   faculty = document.getElementById('select_faculty_options').value
-  id = document.getElementById('select_gender_options').value
-  $(location).attr('href', '/person/ioe_images/'+ collage + '/' + faculty + '/' + id + '/')
+  id = document.getElementById('select_year_options').value
+  $(location).attr('href', '/community/ioe_images/'+ collage + '/' + faculty + '/' + id + '/')
+}
+
+function get_individual(url='Fuck'){
+  //console.log(url);
+  let ioe_roll_no = url.split('\/')[6].split('.')[0];
+  location.replace('/community/ioe_images/'+ioe_roll_no+'/');
 }
 </script>
 
@@ -175,7 +181,7 @@ function change_url(){
 
 <div class="row">
   <div class="col-md-3 bs-linebreak mx-auto d-block mb-1 flex">
-    <select class="form-select-lg " aria-label="Default select example" id="select_gender_options">year
+    <select class="form-select-lg " aria-label="Default select example" id="select_year_options">year
       
       <option selected >year</option>
       <option onclick="get_data('m';console.log('Hello World')">71</option>
@@ -193,64 +199,20 @@ function change_url(){
 <center><button class="btn btn-secondary btn-lg" onclick="change_url()"><b><h1>ok</h1></button></div></center>
 <br><br>
 
-<div class="row mx-auto d-flex">
+<div class="row mx-auto d-block">
   <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
 
 
 {% for url in urls %}
 <!--<img src={{url}} style="height:25px;width:25px;" onload="save_image_url(this.src)" onerror="this.style.display='none'"></img>-->
-    <img
+<img
       src={{url}}
       class="w-100 shadow-1-strong mx-auto d-block rounded mb-4"
       onload="save_image_url(this.src)"
+      onclick="get_individual('{{url}}')"
       alt=""/>
-{% endfor %}
+{% endfor %}</div>
+</div>
 
-<!--
-<center>
-<div class="row mx-auto d-flex">
-  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-    <img
-      src="//mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg"
-      class="w-100 shadow-1-strong rounded mb-4"
-      alt=""
-    />
-
-    <img
-      src="//mdbootstrap.com/img/Photos/Vertical/mountain1.jpg"
-      class="w-100 shadow-1-strong rounded mb-4"
-      alt=""
-    />
-  </div>
-
-  <div class="col-lg-4 mb-4 mb-lg-0">
-    <img
-      src="//mdbootstrap.com/img/Photos/Vertical/mountain2.jpg"
-      class="w-100 shadow-1-strong rounded mb-4"
-      alt=""
-    />
-
-    <img
-      src="//mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg"
-      class="w-100 shadow-1-strong rounded mb-4"
-      alt=""
-    />
-  </div>
-
-  <div class="col-lg-4 mb-4 mb-lg-0">
-    <img
-      src="//mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-      class="w-100 shadow-1-strong rounded mb-4"
-      alt=""
-    />
-
-    <img
-      src="//mdbootstrap.com/img/Photos/Vertical/mountain3.jpg"
-      class="w-100 shadow-1-strong rounded mb-4"
-      alt=""
-    />
-  </div>
-</div></center>
--->
 </body>
 </html>
