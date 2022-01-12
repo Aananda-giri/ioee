@@ -143,13 +143,13 @@ function change_url(){
   collage = document.getElementById('select_collage_options').value
   faculty = document.getElementById('select_faculty_options').value
   id = document.getElementById('select_year_options').value
-  $(location).attr('href', '/community/ioe_images/'+ collage + '/' + faculty + '/' + id + '/')
+  $(location).attr('href', '/community/images/'+ collage + '/' + faculty + '/' + id + '/')
 }
 
 function get_individual(url='Fuck'){
   //console.log(url);
   let ioe_roll_no = url.split('\/')[6].split('.')[0];
-  location.replace('/community/ioe_images/'+ioe_roll_no+'/');
+  location.replace('/community/images/'+ioe_roll_no+'/');
 }
 </script>
 

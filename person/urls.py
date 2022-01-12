@@ -14,8 +14,8 @@ urlpatterns = [
     path('add_people/', views.add_people, name='add_people'),
     path('updateprofile/', views.update_profile, name='updateprofile'),
     
-    path('ioe_images/<str:collage>/<str:faculty>/<str:year>/', views.get_ioe_photos, name='ioe_images'),
-    path('ioe_images/<str:ioe_roll_no>/', views.get_student_photos, name='student_photos'),
+    path('images/<str:collage>/<str:faculty>/<str:year>/', views.get_ioe_photos, name='ioe_images'),
+    path('images/<str:ioe_roll_no>/', views.get_student_photos, name='student_photos'),
 
     path('test/', views.test_photos, name='test_photos'),
     path('save_image_url/',views.save_image_url,name = 'save_image_url'),
