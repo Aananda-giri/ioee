@@ -140,7 +140,7 @@ def edit_code(request, parent_id=None):
         #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
         print('\n\n edit_code not POST\n\n')
     code_form = CodeForm()
-    HttpResponse('reload')
+    return HttpResponse('reload')
 
 # def edit_code(request, parent_id=None):
 #     template_name = 'code_share/edit.html'

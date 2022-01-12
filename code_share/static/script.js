@@ -87,7 +87,7 @@ function createEditor(key, i) {
                     value = "${dataa[i-1].pk}"
                     required
                   />
-        <button type="submit" style="width: 6vw;cursor: pointer;background-color: red, color: white;" class="fw-bold rounded text-center ms-2">delete</button></form>
+        <button type="submit" style="width: 6vw;cursor: pointer; color: white;background-color: red;" class="fw-bold rounded text-center ms-2">delete</button></form>
         
         <div id="delete${i}" style="style="display:"none", width: 6vw;cursor: pointer;background-color: red;" class="fw-bold rounded text-center ms-2"onClick="deleteCode(${i})">
           
