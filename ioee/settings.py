@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'person.apps.PersonConfig',
     'code_share.apps.CodeShareConfig',
+    'images.apps.ImagesConfig',
     'nepali_datetime_field',
 ]
 #'fontawesome-free',

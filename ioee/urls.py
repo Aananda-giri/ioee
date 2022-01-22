@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
     # path('code/', include('code_share.urls')),
     path('community/', include('person.urls')),
+    path('images/', include('images.urls')),
     #path('community/', include('community.urls')),
     
     # for login and logout
