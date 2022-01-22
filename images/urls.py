@@ -8,6 +8,6 @@ from . import views
 urlpatterns = [
     # ex: /polls/
     
-    path('random/', views.random_person, name='random'),
+    #path('random/', views.random_person, name='random'),
     path('', views.ImagesHome, name='images_home'),
 ]

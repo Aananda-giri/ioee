@@ -1,13 +1,13 @@
 #source: https://github.com/divanov11/photo-album-app
 
-from .models import Code, Branch, Images
-from .forms import CodeForm
+#from .models import Code, Branch, Images
+#from .forms import CodeForm
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
 
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import EmailForm
+#from .forms import EmailForm
 from django.conf import settings
 from django.core import serializers
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
