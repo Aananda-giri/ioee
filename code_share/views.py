@@ -349,7 +349,7 @@ def delete_code(request, parent_id=None):
         else:
             response = "your email doesn't match with author\'s email address.....\n Only author can delete the code"
         # print("\n\n not request.method == 'POST' and request.is_ajax \n\n")
-    return HttpResponse(response)
+    return HttpResponseRedirect('/')
     #return HttpResponseRedirect(home)
 
 def imagepage(request):
@@ -374,4 +374,4 @@ def imagepage(request):
         return HttpResponseRedirect('/')
 
 def refresh(request):
-    return HttpResponseRedirect('/imagepage/')
+    return HttpResponseRedirect('/')

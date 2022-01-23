@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'code_share.apps.CodeShareConfig',
     'images.apps.ImagesConfig',
     'nepali_datetime_field',
+    'rest_framework',
 ]
 #'fontawesome-free',
 
@@ -80,6 +81,8 @@ WSGI_APPLICATION = 'ioee.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+DATABASE_ROUTERS = ('ioee.dbrouters.MyDBRouter',)
 
 DATABASES = {
     'hotornot': {
@@ -175,5 +178,4 @@ EMAIL_HOST_PASSWORD = 'LKJ9DtZLjnL6CQx'
 
 # Login & Logout URLs
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = '/login/'
