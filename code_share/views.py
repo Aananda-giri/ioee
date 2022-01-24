@@ -44,7 +44,7 @@ def home(request):
             print(private_code)
             print(code, title, email)
             # Create code object but don't save to database yet
-            new_code = Code.objects.using('fuse_attend').create(
+            new_code = Code.objects.create(
                 code=code, email=email, title=title, tags=tags, author=author, stars=0, private_code=private_code, author_ip = get_client_ip(request))
             # Assign the current post to the code
             #new_code.post = post
@@ -56,9 +56,9 @@ def home(request):
                                  email], subject="code", message=format_email_message_body(str(new_code.id)))
     # else:
     code_form = CodeForm()
-    codes = Code.objects.using('fuse_attend').filter(private_code=False).order_by('-created_on')
+    codes = Code.objects.filter(private_code=False).order_by('-created_on')
     data = serializers.serialize('json', codes)
-    branches = Branch.objects.using('fuse_attend').filter(private_code=False).order_by('-created_on')
+    branches = Branch.objects.filter(private_code=False).order_by('-created_on')
     branches = serializers.serialize('json', branches)
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
@@ -89,10 +89,10 @@ def send_mail_please(recipient, subject="uuid", message='hello World'):
 
 
 def code_by_uuid(request, uuid):
-    code = Code.objects.using('fuse_attend').get(id=uuid)
+    code = Code.objects.get(id=uuid)
     # return render(request, 'code_share/individual_code.html', {'code':code})
     code_form = CodeForm()
-    #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    #codes = Code.objects.all().order_by('-created_on')
     data = serializers.serialize('json', [code])
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
@@ -107,17 +107,17 @@ def edit_code(request, parent_id=None):
         parent_id = request.POST.get("parent_id", None)
         print(code, parent_id)
         # Create code object but don't save to database yet
-        original_code = Code.objects.using('fuse_attend').get(id=parent_id)
+        original_code = Code.objects.get(id=parent_id)
         email = original_code.email
         
         # To pass if main_code == branch_code
         if code == original_code:
             HttpResponse('pass')
 
-        branch = Branch.objects.using('fuse_attend').create(
+        branch = Branch.objects.create(
             Parent=original_code, code=code, email=original_code.email, title=original_code.title, tags=original_code.tags, author=original_code.author, private_code=original_code.private_code)
         branch.save()  # Saves the branch
-        # new_code = Code.objects.using('fuse_attend').create(
+        # new_code = Code.objects.create(
         # code=code, email=email, title=title, tags=tags, author=author)
         # Assign the current post to the code
 
@@ -126,15 +126,15 @@ def edit_code(request, parent_id=None):
             send_mail_please(recipient=[
                              email], subject="code", message=format_email_message_body(str(branch.id)))
 
-        #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+        #codes = Code.objects.all().order_by('-created_on')
         #data = serializers.serialize('json', codes)
         #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
         parent_data = None
         # return render(request, template_name, {'data': data, 'new_code': new_code, 'code_form': code_form})
     else:
-        parent_data = Code.objects.using('fuse_attend').get(id=parent_id)
+        parent_data = Code.objects.get(id=parent_id)
         code_form = CodeForm()
-        #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+        #codes = Code.objects.all().order_by('-created_on')
         #parent_data = serializers.serialize('json', code)
         branch = None
         #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
@@ -163,11 +163,11 @@ def edit_code(request, parent_id=None):
     #     tags = request.POST.get("tags", None).split(' ')
     #     print(code, title, email)
     #     # Create code object but don't save to database yet
-    #     #code = Code.objects.using('fuse_attend').get(id=parent_id)
-    #     branch = Branch.objects.using('fuse_attend').create(
+    #     #code = Code.objects.get(id=parent_id)
+    #     branch = Branch.objects.create(
     #         originalCode=code, code=code, email=email, title=title, tags=tags, author=author)
     #     branch.save()  # Saves the branch
-    #     # new_code = Code.objects.using('fuse_attend').create(
+    #     # new_code = Code.objects.create(
     #     # code=code, email=email, title=title, tags=tags, author=author)
     #     # Assign the current post to the code
 
@@ -176,15 +176,15 @@ def edit_code(request, parent_id=None):
     #         send_mail_please(recipient=[
     #                          email], subject="code", message=format_email_message_body(str(new_code.id)))
 
-    #     #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    #     #codes = Code.objects.all().order_by('-created_on')
     #     #data = serializers.serialize('json', codes)
     #     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
     #     parent_data = None
     #     # return render(request, template_name, {'data': data, 'new_code': new_code, 'code_form': code_form})
     # else:
-    #     parent_data = Code.objects.using('fuse_attend').get(id=parent_id)
+    #     parent_data = Code.objects.get(id=parent_id)
     #     code_form = CodeForm()
-    #     #codes = Code.objects.using('fuse_attend').all().order_by('-created_on')
+    #     #codes = Code.objects.all().order_by('-created_on')
     #     #parent_data = serializers.serialize('json', code)
     #     branch = None
     #     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
@@ -272,7 +272,7 @@ def Code(request):
         author = request.POST.get("author", None);
         
     if not str(code).strip()=='':
-        Codes.objects.using('fuse_attend').create(code=str(code), author = str(author))
+        Codes.objects.create(code=str(code), author = str(author))
         return HttpResponse('Successfully codeed')
     
     else:
@@ -290,7 +290,7 @@ def add_star(request):
         print('\nparent_id:{}, unique_ip:{}\n'.format(parent_id, unique_ip))
         # implement one computer one vote
 
-        code = Code.objects.using('fuse_attend').get(id=parent_id)
+        code = Code.objects.get(id=parent_id)
         code.stars += 1
         if code.stars_ip!=None:
             if not get_client_ip(request) in code.stars_ip:
@@ -310,7 +310,7 @@ def search_code(request):
         # get the nick name from the client side.
         search_term = request.GET.get("search_query", None)
         print(search_term)
-        codes_list = Code.objects.using('fuse_attend').annotate(
+        codes_list = Code.objects.annotate(
         search=SearchVector('title','author','email','tags', 'code')).filter(search=search_term)
         
         codes=[]
@@ -339,7 +339,7 @@ def delete_code(request, parent_id=None):
             print(request.user.email)
         
         print('\n\n' + str(code_id) + '\n\n')
-        code = Code.objects.using('fuse_attend').get(id=code_id)
+        code = Code.objects.get(id=code_id)
         
         print(code.email)
         if code.email == request.user.email:
@@ -359,13 +359,13 @@ def imagepage(request):
  
                 files  = request.FILES.getlist('uploadedfile')  
                 for image in files:  
-                    Images.objects.using('fuse_attend').create(
+                    Images.objects.create(
                         image = image , 
                         title = request.user.name
                         
                     )
                 return HttpResponseRedirect('/refresh/')
-        image = Images.objects.using('fuse_attend').all().order_by('-id')
+        image = Images.objects.all().order_by('-id')
         context = {
             "image" : image  ,
         }
