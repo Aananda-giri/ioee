@@ -1,9 +1,11 @@
-#database: 'fuse_attend'
+# database: 'fuse_attend'
+# python3 manage.py migrate --database=fuse_attend
 from django.db import models
 from django.utils import timezone
 import uuid
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
+
 # settings.configure()
 
 
@@ -26,11 +28,31 @@ class Code(models.Model):
     # To hide the code from home page and search
     private_code = models.BooleanField(default=False) #hide the private code from home_page
     stars = models.PositiveIntegerField(default=0)
+    
+    # to upload output of a code as image
+    # source : https://stackoverflow.com/a/35459441
+    output_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, null=True, blank=True, related_name='+')
     class Meta:
         ordering = ['created_on']
 
     def __str__(self):
         return 'Code {} by {}'.format(self.code, self.author)
+
+class Photo(models.Model):
+    # to upload output of a code as image
+    parent_code = models.ForeignKey(
+        Code, on_delete=models.SET_NULL, null=True, blank=True)
+    title = models.CharField(max_length=70 , null=True)
+    image = models.ImageField(upload_to='static/images/code_share/', null=True, blank=False)
+    #description = models.TextField()
+    
+    class Meta:
+        verbose_name = 'Photo'
+        verbose_name_plural = 'Photos'
+    
+    def __str__(self):
+        return self.title
+
 # branch of code
 class Branch(models.Model):
     id = models.AutoField(primary_key=True)
@@ -90,14 +112,9 @@ class Comment(models.Model):
         return 'Comment {} by {}'.format(self.body, self.name)
 
 
-class Images(models.Model):
-    title=models.CharField(max_length=100 , null=True)
-    image=models.ImageField(upload_to='uploads/images/',null=True)
-    def image_tag(self):
-        if self.image.url is not None:
-            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
-        else:
-            return ""
-
-    def __str__(self):
-        return self.title
+"""    
+    #def image_tag(self):
+    #    if self.image.url is not None:
+    #        return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+    #    else:
+    #        return """

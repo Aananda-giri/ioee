@@ -1,7 +1,8 @@
 from django.urls import path, include
 from . import views
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.snippet_page, name='home'),
+    path('<int:page>/', views.snippet_page, name="get_snippets"),
     path('code/', views.home, name='toy_post'),
     path('edit/<str:parent_id>/', views.edit_code, name='edit_code_by_parent_id'),
     path('edit/', views.edit_code, name='edit_code'), # for some strange reasons edit is sending to code/edit
@@ -15,7 +16,7 @@ urlpatterns = [
     path('search', views.search_code, name='search_code'),
     path('delete', views.delete_code, name='delete_code'),
 
-    path('imagepage/', views.imagepage, name='imagepage'),
+    #path('imagepage/', views.imagepage, name='imagepage'),
     path('refresh/', views.refresh, name='refresh'),
 ]
 

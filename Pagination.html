@@ -1,0 +1,62 @@
+<nav aria-label="Page navigation example">
+  <ul class="pagination pagination-lg justify-content-center">
+    <li class="page-item" id="pagination_previous_li">
+      <a class="page-link" id="pagination_previous" href="#" tabindex="-1">Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" id="pagination_link_0" href="/1/">1</a></li>
+    <li class="page-item"><a class="page-link" id="pagination_link_1" href="/2/">2</a></li>
+    <li class="page-item"><a class="page-link" id="pagination_link_2" href="/3/">3</a></li>
+    <li class="page-item" id="pagination_next_li">
+      <a class="page-link" id="pagination_next" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+
+
+<script>
+
+function updatePagination(page_no, max_pages){
+    
+    page_no = parseInt(window.location.href.split('/')[3]);
+    
+    if (window.location.href.split('/')[3]==''){
+        
+        page_no = 1;                // i.e. page 1
+        document.getElementById('pagination_link_0').className+=' disabled';     //disable_pagination_attr("pagination_link_0");
+        document.getElementById('pagination_previous_li').className+=' disabled';     //disable_pagination_attr("pagination_previous");
+        
+    } else if (page_no == 1){
+        
+        document.getElementById('pagination_previous_li').className+=' disabled';     //disable_pagination_attr("pagination_previous");
+        
+    } else if (page_no == max_pages){
+        
+        document.getElementById('pagination_link_2').className+=' disabled';       //disable_pagination_attr("pagination_link_2");
+        document.getElementById('pagination_next_li').className+=' disabled';      //disable_pagination_attr("pagination_next");
+        
+    } else if (page_no == max_pages - 1){
+        
+        document.getElementById('pagination_next_li').className+=' disabled';      //disable_pagination_attr("pagination_next");
+    }
+
+    let previous = document.getElementById('pagination_previous');
+    previous.href = '/' + parseInt( parseInt(page_no) - 2 ) + '/';
+    previous.textContent = parseInt( parseInt(page_no) - 2 );
+    
+    let link0 = document.getElementById('pagination_link_0');
+    link0.href = '/' + parseInt( parseInt(page_no) - 1 ) + '/';
+    link0.textContent = parseInt( parseInt(page_no) - 1 );
+    
+    let link1 = document.getElementById('pagination_link_1');
+    link1.href =  '/' + parseInt( parseInt(page_no) ) + '/';
+    link1.textContent = parseInt( parseInt(page_no));
+    
+    let link2 = document.getElementById('pagination_link_2');
+    link2.href = '/' + parseInt( parseInt(page_no) + 1 ) + '/';
+    link2.textContent = parseInt( parseInt(page_no) + 1 );
+    
+    let next = document.getElementById('pagination_next');
+    next.href = '/' + parseInt( parseInt(page_no) + 2 ) + '/';
+    next.textContent = parseInt( parseInt(page_no) + 2 );
+}
+</script>

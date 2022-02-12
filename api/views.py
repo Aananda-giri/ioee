@@ -53,13 +53,16 @@ def get_saved_notifications(request, how_many:int):
     
     # Approach_1: Faster
     notices_count = IoeNoti.objects.all().count()
-    notices = IoeNoti.objects.all()[notices_count - how_many -1 : notices_count-1] # gets latest 'how_many' notices
+    notices = IoeNoti.objects.all()[notices_count - how_many -1 : notices_count-1].values_list() # gets latest 'how_many' notices
     
     # Approach_2: Slower
     #notices = IoeNoti.objects.all().order_by("-id")[:300]
     
-    return JsonResponse({"notices":notices}, status = 200)
+    return JsonResponse({"notices":notices}, status = 200, safe=False)
 
+'''        notices_count = IoeNoti.objects.all().count()
+    notices = IoeNoti.objects.all().order_by('id')[notices_count - how_many -1 : notices_count-1] # gets latest 'how_many' notices
+    notices = serializers.serialize('json',notices)'''
 
 
 from api.models import IoeNoti

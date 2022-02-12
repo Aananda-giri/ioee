@@ -184,6 +184,22 @@
 
       <!-- accordian ends here -->
     </div>
+    
+ <!-- for pagination (next_page, previous_page) -->    
+ <nav aria-label="Page navigation example">
+  <ul class="pagination pagination-lg justify-content-center">
+    <li class="page-item" id="pagination_previous_li">
+      <a class="page-link" id="pagination_previous" href="#" tabindex="-1">Previous</a>
+    </li>
+    <li class="page-item" id="pagination_li_0"><a class="page-link" id="pagination_link_0" href="/1/">1</a></li>
+    <li class="page-item"><a class="page-link" id="pagination_link_1" href="/2/">2</a></li>
+    <li class="page-item" id="pagination_li_2"><a class="page-link" id="pagination_link_2" href="/3/">3</a></li>
+    <li class="page-item" id="pagination_next_li">
+      <a class="page-link" id="pagination_next" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+
     <!-- Required Ace Libraries -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js"
@@ -211,7 +227,9 @@
      var branches={{branches|safe}};
      //console.log(dataa);
      okSetupEditor(dataa);
-     setupEditor(dataa)
+     setupEditor(dataa);
+     updatePagination({{max_pages|safe}});
+
 
   // --------------------
   //to save edited code
@@ -406,5 +424,6 @@ console.log('here');
 }}    
 
     </script>
+
   </body>
 </html>

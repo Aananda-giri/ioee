@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment, Code, Images
+from .models import Post, Comment, Code, Photo
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
@@ -39,4 +39,4 @@ class CodeAdmin(admin.ModelAdmin):
         # on the 'other' database.
         return super().formfield_for_manytomany(db_field, request, using=self.using, **kwargs)
 admin.site.register(Code, CodeAdmin)
-admin.site.register(Images, CodeAdmin)
+admin.site.register(Photo, CodeAdmin)

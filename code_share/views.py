@@ -1,4 +1,5 @@
-from .models import Code, Branch, Images
+import math
+from .models import Code, Branch, Photo
 from .forms import CodeForm
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
@@ -21,6 +22,37 @@ def get_client_ip(request):
     return ip
 
 
+@login_required(login_url='login')
+def addPhoto(request):
+    user = request.user
+
+    categories = user.category_set.all()
+
+    if request.method == 'POST':
+        data = request.POST
+        images = request.FILES.getlist('images')
+
+        if data['category'] != 'none':
+            category = Category.objects.get(id=data['category'])
+        elif data['category_new'] != '':
+            category, created = Category.objects.get_or_create(
+                user=user,
+                name=data['category_new'])
+        else:
+            category = None
+
+        for image in images:
+            photo = Photo.objects.create(
+                category=category,
+                description=data['description'],
+                image=image,
+            )
+
+        return redirect('gallery')
+
+    context = {'categories': categories}
+    return render(request, 'photos/add.html', context)
+
 #@login_required
 def home(request):
     #print('\n\nIp: ' + str(get_client_ip(request)) +'\n\n')
@@ -40,7 +72,8 @@ def home(request):
             
             private_code = request.POST.get("private_code", None)
             private_code = (False, True) [private_code=="on"]       #To hide the private code
-
+            
+            
             print(private_code)
             print(code, title, email)
             # Create code object but don't save to database yet
@@ -50,6 +83,17 @@ def home(request):
             #new_code.post = post
             # Save the code to the database
             new_code.save()
+            
+            # Saving images if given
+            images = request.FILES.getlist('images')
+            for image in images:
+                photo = Photo.objects.create(
+                    #category = category,
+                    title = title,
+                    image=image,
+                    parent_code = new_code
+            )
+            
             print('\n\n {} \n\n'.format(str(new_code.id)))
             if email.strip() != '':
                 send_mail_please(recipient=[
@@ -60,9 +104,68 @@ def home(request):
     data = serializers.serialize('json', codes)
     branches = Branch.objects.filter(private_code=False).order_by('-created_on')
     branches = serializers.serialize('json', branches)
+    images = Photo.objects.all()
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
-    return render(request, 'code_share/home.html', {'data': data, 'new_code': new_code, 'code_form': code_form, 'branches':branches, 'search_term':''})
+    return render(request, 'code_share/home.html', {'data': data, codes: new_code, 'code_form': code_form, 'branches':branches, 'search_term':''})
+
+#@login_required
+def snippet_page(request, page=1):
+    print(f"page:{page}")
+    #print('\n\nIp: ' + str(get_client_ip(request)) +'\n\n')
+    template_name = 'code_share/home.html'
+    #post = get_object_or_404(Post, slug=slug)
+
+    new_code = None
+    # code posted
+    if request.method == 'POST':
+        code_form = CodeForm(data=request.POST)
+        if code_form.is_valid():
+            code = request.POST.get("code", None)
+            title = request.POST.get("title", None)
+            author = request.POST.get("author", None)
+            email = request.POST.get("email", None)
+            tags = request.POST.get("tags", None).split(' ')
+            
+            private_code = request.POST.get("private_code", None)
+            private_code = (False, True) [private_code=="on"]       #To hide the private code
+            
+            
+            print(private_code)
+            print(code, title, email)
+            # Create code object but don't save to database yet
+            new_code = Code.objects.create(
+                code=code, email=email, title=title, tags=tags, author=author, stars=0, private_code=private_code, author_ip = get_client_ip(request))
+            # Assign the current post to the code
+            #new_code.post = post
+            # Save the code to the database
+            new_code.save()
+            
+            # Saving images if given
+            images = request.FILES.getlist('images')
+            for image in images:
+                photo = Photo.objects.create(
+                    #category = category,
+                    title = title,
+                    image=image,
+                    parent_code = new_code
+            )
+            
+            print('\n\n {} \n\n'.format(str(new_code.id)))
+            if email.strip() != '':
+                send_mail_please(recipient=[
+                                 email], subject="code", message=format_email_message_body(str(new_code.id)))
+    # else:
+    max_pages = math.ceil(Code.objects.all().count()/10)
+    code_form = CodeForm()
+    codes = Code.objects.filter(private_code=False).order_by('-created_on')[(page-1)*10:(page)*10]
+    data = serializers.serialize('json', codes)
+    branches = Branch.objects.filter(private_code=False).order_by('-created_on')
+    branches = serializers.serialize('json', branches)
+    images = Photo.objects.all()
+    #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
+
+    return render(request, 'code_share/home.html', {'data': data, codes: new_code, 'code_form': code_form, 'branches':branches, 'search_term':'', 'max_pages' : max_pages})
 
 
 def format_email_message_body(uuid):
@@ -352,7 +455,7 @@ def delete_code(request, parent_id=None):
     return HttpResponseRedirect('/')
     #return HttpResponseRedirect(home)
 
-def imagepage(request):
+'''def imagepage(request):
     if request.user.is_authenticated:
         if 'uploadimage' in request.POST:
             if request.method == 'POST':
@@ -371,7 +474,8 @@ def imagepage(request):
         }
         return render(request , "code_share/image.html" , context)
     else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/')'''
 
 def refresh(request):
     return HttpResponseRedirect('/')
+

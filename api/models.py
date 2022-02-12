@@ -23,7 +23,7 @@ def generate_random_alphanumeric(size=6):
 class IoeNoti(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length = 500, default=None, null=True, db_index=True)
-    url = models.CharField(max_length=500, default=None, null=True, db_index=True, unique=True)
+    url = models.CharField(max_length=500, default=None, null=True, db_index=True)
     date = models.CharField(max_length=35, default=None, null=True)
     
     #dob_bs = NepaliDateField(default='2058-12-28')
