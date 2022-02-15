@@ -12,6 +12,8 @@
 
 
 <i><b>To Do:</i></b>
+    requests.is_ajax() dpreciated. replaced by request.accepts("application/json")
+    source:https://stackoverflow.com/questions/63629935/django-3-1-and-is-ajax
     - download notice
     - upload notice
     - like -> set

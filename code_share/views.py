@@ -204,7 +204,8 @@ def code_by_uuid(request, uuid):
 def edit_code(request, parent_id=None):
     print('\n\n inside edit code \n\n')
     
-    if request.method == 'POST' and request.is_ajax:
+    #request.is_ajax depreciated
+    if request.method == 'POST' and request.accepts("application/json"):
         code = request.POST.get("code", None)
         code = code[1:-1].replace('\\n','\n').replace('\\r','\r') # front_end sending code with quotes before and after the code
         parent_id = request.POST.get("parent_id", None)

@@ -93,7 +93,7 @@ function createEditor(key, i) {
           
         </div>
         
-        <div id="main${i}" style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center ms-2" onClick="toggleCodeView(${i},${-1});">
+        <div id="main${i}" style="width: 6vw;cursor: pointer;background-color: green" class="fw-bold fst-italic branch_footer rounded text-center ms-2" onClick="displayBranch(${i},${-1});">
           main
         </div>
 
@@ -161,7 +161,9 @@ function displayCode(i){
   }
 }
 
-function toggleCodeView(code_index, branch_index){
+//function toggleCodeView(code_index, branch_index){
+function displayBranch(code_index, branch_index){
+  // to toggle/change selected branch
   console.log(code_index);
   console.log('branch_index:');
   console.log(branch_index);
@@ -174,9 +176,22 @@ function toggleCodeView(code_index, branch_index){
     //branch code to be displayed
     editor.setValue(branches[branch_index].fields.code, 1); //1 = moves cursor to end
   }
+}
 
-
-
+function selectLatestBranch(code_index){
+  // to toggle/change selected branch
+  console.log(code_index);
+  console.log('branch_index:');
+  console.log(branch_index);
+  window.editor = ace.edit(`editor${code_index}`);
+  if (branch_index==-1){
+    //for main branch: branch_index=-1
+    console.log('\nbranch-1\n');
+    editor.setValue(dataa[code_index-1].fields.code, 1); //1 = moves cursor to end
+  } else {
+    //branch code to be displayed
+    editor.setValue(branches[branch_index].fields.code, 1); //1 = moves cursor to end
+  }
 }
 
 function distributeBranch(branch_data, branch_index){
@@ -191,7 +206,7 @@ function distributeBranch(branch_data, branch_index){
   branches_div.setAttribute('id', 'branch' + p);
   branches_div.setAttribute('style', 'width: 6vw;cursor: pointer;background-color: #282C34;');
   branches_div.setAttribute('class', 'fw-bold rounded text-center ms-2');
-  branches_div.setAttribute('onClick', `toggleCodeView(${parseInt(p)}, ${branch_index} )`);
+  branches_div.setAttribute('onClick', `displayBranch(${parseInt(p)}, ${branch_index} )`);
   branches_div.textContent = `branch(${branch_index})`;
   branches_parent_div.appendChild(branches_div);
 }
