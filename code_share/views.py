@@ -109,6 +109,30 @@ def home(request):
 
     return render(request, 'code_share/home.html', {'data': data, codes: new_code, 'code_form': code_form, 'branches':branches, 'search_term':''})
 
+def search_code(request):
+    if request.method == "GET":
+        # get the nick name from the client side.
+        search_term = request.GET.get("search_query", None)
+        print(search_term)
+        codes_list = Code.objects.annotate(
+        search=SearchVector('title','author','email','tags', 'code')).filter(search=search_term)
+        
+        codes=[]
+        for code in codes_list:
+            codes.append(code)
+        codes = serializers.serialize('json', codes, )
+        print(codes)
+        #print('peoples_list:\n\n'+str(peoples_list))
+        branches = Branch.objects.filter(private_code=False).order_by('-created_on')
+        branches = serializers.serialize('json', branches)
+    else:
+        print('\nfucking request not get\n')
+        branches=''
+    return render(request, 'code_share/home.html', {'data': codes, 'new_code': [], 'code_form': CodeForm(), 'branches':branches, 'search_term':search_term})
+    #  {'people':people}, status = 200)
+
+
+
 #@login_required
 def snippet_page(request, page=1):
     print(f"page:{page}")
@@ -408,25 +432,6 @@ def add_star(request):
     else:
         print('fucking else')
     return HttpResponse('Done')
-
-def search_code(request):
-    if request.method == "GET":
-        # get the nick name from the client side.
-        search_term = request.GET.get("search_query", None)
-        print(search_term)
-        codes_list = Code.objects.annotate(
-        search=SearchVector('title','author','email','tags', 'code')).filter(search=search_term)
-        
-        codes=[]
-        for code in codes_list:
-            codes.append(code)
-        codes = serializers.serialize('json', codes, )
-        print(codes)
-        #print('peoples_list:\n\n'+str(peoples_list))
-    else:
-        print('\nfucking request not get\n')
-    return render(request, 'code_share/home.html', {'data': codes, 'new_code': [], 'code_form': CodeForm(), 'branches':[], 'search_term':search_term})
-    #  {'people':people}, status = 200)
 
 #login_required not redirecting
 @login_required
