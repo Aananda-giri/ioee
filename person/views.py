@@ -40,13 +40,13 @@ def index(request):
 
 def random_person(request):
     people = [Person.objects.using('brainmap').all()[random.randint(0,35)]]
-    '''stuti = Person.objects.using('brainmap').get(id=1)
-    if(stuti.profile_pic == ''):
-        stuti.profile_pic = get_profile_pic(stuti)
-        stuti.save()
-        print('pic:' + str(len(get_profile_pic(stuti))) + str(get_profile_pic(stuti)))
-        print('\n\n Saved profile pic of  #',stuti.first_name)
-        get_profile_pic(stuti)'''
+    '''some_person = Person.objects.using('brainmap').get(id=1)
+    if(some_person.profile_pic == ''):
+        some_person.profile_pic = get_profile_pic(some_person)
+        some_person.save()
+        print('pic:' + str(len(get_profile_pic(some_person))) + str(get_profile_pic(some_person)))
+        print('\n\n Saved profile pic of  #',some_person.first_name)
+        get_profile_pic(some_person)'''
     return render(request, 'person/index.html', {'people':[people]})
 
 
@@ -63,10 +63,10 @@ def uid_search(request, uid):
 def search(request):
     print('\n\n search_section')
     search_term = ''
-    if request.is_ajax and request.method == "GET":
+    if request.method == "GET":
         search_term = request.GET.get("search_query", None);
         
-    #print('\n\n her search_term:' + str(search_term))
+    #print('\n\n search_term:' + str(search_term))
     #people = Person.objects.using('brainmap').all()
     
     peoples_list = Person.objects.using('brainmap').annotate(
@@ -188,7 +188,7 @@ def profile(request):
     
         
     else:
-        people='i want her';
+        people='peoplee';
         return JsonResponse({'people':people}, status = 200)
     
     return render(request, 'person/index.html', {'people':[people]})
@@ -198,7 +198,7 @@ def profile(request):
     
 def search_em(request):
     print('\n\n search_section')
-    if request.is_ajax and request.method == "GET":
+    if request.method == "GET": #request.is_ajax feature removed from django
         search_term = request.GET.get("search_term", None);
     return JsonResponse({'people':'peoples_list'}, status = 200)
 
@@ -217,13 +217,13 @@ def get_profile_pic(person):
 
 def edit_people(request):
     print('\n\n\neditig_people')
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST": #request.is_ajax feature removed from django
         pass
     Person.objects.using('brainmap').get(id=id).update(empty_profile=False)
 
 def add_people(request):
     print('\n\n\nadd_people')
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST": #request.is_ajax feature removed from django
         #print('\n\ninn')
         person_form = PersonForm(request.POST)
         '''
@@ -323,7 +323,7 @@ def add_people(request):
 
 def update_profile(request):
     print('\n\nupdate_profile invoked\n')
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST": #request.is_ajax feature removed from django
         porfile_pic = request.POST.get("profile_pic", None);
         person_id = request.POST.get("persons_id", None);
 
@@ -342,7 +342,7 @@ def update_profile(request):
 
 def save_image_url(request):
     except_flag=False
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST": #request.is_ajax feature removed from django
         # get the nick name from the client side.
         url = request.POST.get("url", None);
     if url!=None:
@@ -538,7 +538,7 @@ def verify(request, ioe_roll_no, last_name, dob_bs):
         ########################################
 
 def login(request):
-    if request.is_ajax and request.method == "GET":
+    if request.method == "GET": #request.is_ajax feature removed from django
         username = request.POST.get("username", None)
         password = request.POST.get("password", None);
     if username != None and password != None:

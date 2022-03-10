@@ -9,7 +9,7 @@
     well, it logs in with your login information periodically ( in every 30 minutes ), click join_class if any live classes are being conducted and close the page which triggers fuse-classroom to record your attendance.<br><br><br>
 
 
-
+<i>
 
 <i><b>To Do:</i></b>
     requests.is_ajax() dpreciated. replaced by request.accepts("application/json")
@@ -48,4 +48,10 @@ Discord_bot : https://discord.com/api/oauth2/authorize?client_id=862191340355715
 Live_website : https://ioee.herokuapp.com/
 
 
-
+editor:
+ - currently using: ace editor
+ - to change to : code mirror 6
+ references: 
+ https://blog.replit.com/code-editors
+ https://codemirror.net/6/docs/
+ https://dyclassroom.com/codemirror/how-to-setup-codemirror

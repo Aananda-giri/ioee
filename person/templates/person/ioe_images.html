@@ -18,14 +18,14 @@
 
 <!-- For accesssing Local css and js -->
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'hotornot/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'person/style.css' %}">
 
-<script src="{% static 'hotornot/script.js' %}"></script>
+<script src="{% static 'person/script.js' %}"></script>
 
 <!-- For google analytics -->
 {% include "google_analytics.html" %}
 
-<body>
+<body oncontextmenu="return false">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Home</a>
