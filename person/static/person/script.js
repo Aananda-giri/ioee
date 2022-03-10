@@ -2,7 +2,7 @@
 document.onkeydown = function(e) {
     //source:https://stackoverflow.com/questions/6597224/how-to-hide-html-source-disable-right-click-and-text-copy
     if(e.keyCode == 123) {
-     return false;
+     return false;  //f12 disabled
     }
     if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
      return false;
