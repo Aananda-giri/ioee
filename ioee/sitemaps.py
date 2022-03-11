@@ -21,7 +21,8 @@ import math
 
 class EachCodeViewSitemap(Sitemap):
     changefreq = 'monthly'
-
+    priority = 0.5
+    
     def items(self):
         return Code.objects.all()
         #return ['home']
@@ -31,6 +32,8 @@ class EachCodeViewSitemap(Sitemap):
 
 class CodeHomePageViewSitemap(Sitemap):
     changefreq = 'daily'
+    priority = 1.0
+
 
     def items(self):
         max_pages = math.ceil(Code.objects.all().count()/10)
