@@ -1,3 +1,4 @@
+# settings.py
 """
 Django settings for ioee project.
 
@@ -43,7 +44,10 @@ INSTALLED_APPS = [
     'images.apps.ImagesConfig',
     'nepali_datetime_field',
     'rest_framework',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
 ]
+SITE_ID = 2
 #'fontawesome-free',
 
 MIDDLEWARE = [
@@ -94,7 +98,15 @@ DATABASES = {
         'PORT': '5432',
     },
     
-    'fuse_attend': {
+    'default': { #fuse_attend
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'vysbznab',
+        'USER': 'vysbznab',
+        'PASSWORD': 'x-2Zh_jpzoWLqbolbcaejot5eVByKzqI',
+        'HOST': 'john.db.elephantsql.com',
+        'PORT': '5432',
+    },
+    'fuse_attend': { #fuse_attend
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'vysbznab',
         'USER': 'vysbznab',
@@ -110,7 +122,7 @@ DATABASES = {
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
-    'default': {
+    'default_previously': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'lflpirvq',
         'USER': 'lflpirvq',

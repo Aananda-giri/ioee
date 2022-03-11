@@ -1,3 +1,4 @@
+# code_share/models.py
 # database: 'fuse_attend'
 # python3 manage.py migrate --database=fuse_attend
 from django.db import models
@@ -38,6 +39,13 @@ class Code(models.Model):
 
     def __str__(self):
         return 'Code {} by {}'.format(self.code, self.author)
+    
+    def get_absolute_url(self):
+        if self.private_code==False:
+            return f'/code/{self.id}/'
+        
+    def get_public_codes(self):
+        return Code.objects.filter(private_code=False)
 
 class Photo(models.Model):
     # to upload output of a code as image
@@ -119,3 +127,4 @@ class Comment(models.Model):
     #        return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
     #    else:
     #        return """
+

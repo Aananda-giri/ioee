@@ -1,3 +1,4 @@
+# urls.py
 """ioee URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -21,6 +22,16 @@ from api import views as api
 from django.contrib.auth import views as auth_views
 from . import views
 
+
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import EachCodeViewSitemap, CodeHomePageViewSitemap
+
+sitemaps = {
+    'cods_collection': CodeHomePageViewSitemap,
+    'each_codes': EachCodeViewSitemap,
+}
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
@@ -34,5 +45,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('home/', views.home, name='home'),
     path('register/', views.register, name='register'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
     path('', include('code_share.urls')),
+    
 ]
