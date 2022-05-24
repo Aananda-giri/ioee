@@ -21,7 +21,7 @@ import math
 
 class EachCodeViewSitemap(Sitemap):
     changefreq = 'monthly'
-    priority = 0.5
+    priority = 0.6
     
     def items(self):
         return Code.objects.all()
@@ -45,4 +45,4 @@ class CodeHomePageViewSitemap(Sitemap):
 
     def location(self, item):
         return f'{item}'
-        
+    

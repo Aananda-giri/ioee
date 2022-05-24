@@ -4,7 +4,6 @@
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
-import scrapy
 import scrapy.crawler as crawler
 from multiprocessing import Process, Queue
 from twisted.internet import reactor
