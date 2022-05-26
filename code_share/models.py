@@ -16,7 +16,7 @@ class Code(models.Model):
         primary_key=True, default=uuid.uuid4, editable=False, db_index=True)
     code = models.TextField()
     author = models.CharField(max_length=80, default='')
-    author_ip = models.CharField(max_length=25, default=None, null=True)
+    author_ip = models.CharField(max_length=25, default='')
     email = models.EmailField(default='')
     created_on = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, default='')

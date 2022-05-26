@@ -1,4 +1,5 @@
 # ioee
+https://accounts.google.com/DisplayUnlockCaptcha -> google capatcha verification if error sending mail
 
 <B><i>Introduction:</i></b>
 
