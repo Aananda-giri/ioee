@@ -9,7 +9,8 @@ from django.contrib.auth.models import User
 
 # settings.configure()
 
-
+for snippet in all_codes:
+Code.objects.using('ioee').create(id=snippet.id, code=snippet.code, author = snippet.author, author_ip=snippet.author_ip, email=snippet.email, created_on=snippet.created_on, title=snippet.title, tags=snippet.tags, stars_ip=snippet.stars_ip, valid_email=snippet.valid_email, private_code=snippet.private_code, stars=snippet.stars, output_photo=snippet.output_photo)
 class Code(models.Model):
     #id = models.AutoField(primary_key=True)
     id = models.UUIDField(
@@ -90,7 +91,7 @@ class Branch(models.Model):
 ###########################################
 # Unused models
 ###########################################
-class Post(models.Model):
+class Comment(models.Model):
     post = models.CharField(max_length=50, default=None, null=True)
     body = models.CharField(max_length=500, default=None)
     loves = models.IntegerField(default=0)
@@ -105,20 +106,20 @@ class Post(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
-class Comment(models.Model):
-    post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, related_name='comments')
-    name = models.CharField(max_length=80)
-    email = models.EmailField()
-    body = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=False)
+# class Comment(models.Model):
+#     post = models.ForeignKey(
+#         Post, on_delete = models.CASCADE, related_name='comments')
+#     name = models.CharField(max_length=80)
+#     email = models.EmailField()
+#     body = models.TextField()
+#     created_on = models.DateTimeField(auto_now_add=True)
+#     active = models.BooleanField(default=False)
 
-    class Meta:
-        ordering = ['created_on']
+#     class Meta:
+#         ordering = ['created_on']
 
-    def __str__(self):
-        return 'Comment {} by {}'.format(self.body, self.name)
+#     def __str__(self):
+#         return 'Comment {} by {}'.format(self.body, self.name)
 
 
 """    
