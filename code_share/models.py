@@ -91,35 +91,36 @@ class Branch(models.Model):
 ###########################################
 # Unused models
 ###########################################
-class Comment(models.Model):
-    post = models.CharField(max_length=50, default=None, null=True)
-    body = models.CharField(max_length=500, default=None)
-    loves = models.IntegerField(default=0)
-    email = models.EmailField(default=None,)
-
-    pub_date = models.DateTimeField('date published', default=timezone.now)
-
-    def __str__(self):
-        return('post: {}'.format(self.post))
-
-    def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.pub_date <= now
-
 # class Comment(models.Model):
 #     post = models.ForeignKey(
-#         Post, on_delete = models.CASCADE, related_name='comments')
-#     name = models.CharField(max_length=80)
-#     email = models.EmailField()
-#     body = models.TextField()
-#     created_on = models.DateTimeField(auto_now_add=True)
-#     active = models.BooleanField(default=False)
+#         Code, on_delete = models.CASCADE, related_name='comments')
+#     body = models.CharField(max_length=500, default=None)
+#     loves = models.IntegerField(default=0)
+#     email = models.EmailField(default=None,)
 
-#     class Meta:
-#         ordering = ['created_on']
+#     pub_date = models.DateTimeField('date published', default=timezone.now)
 
 #     def __str__(self):
-#         return 'Comment {} by {}'.format(self.body, self.name)
+#         return('post: {}'.format(self.post))
+
+#     def was_published_recently(self):
+#         now = timezone.now()
+#         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Code, on_delete = models.CASCADE, related_name='comments')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.body, self.name)
 
 
 """    
