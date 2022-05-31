@@ -9,8 +9,8 @@ from django.contrib.auth.models import User
 
 # settings.configure()
 
-for snippet in all_codes:
-Code.objects.using('ioee').create(id=snippet.id, code=snippet.code, author = snippet.author, author_ip=snippet.author_ip, email=snippet.email, created_on=snippet.created_on, title=snippet.title, tags=snippet.tags, stars_ip=snippet.stars_ip, valid_email=snippet.valid_email, private_code=snippet.private_code, stars=snippet.stars, output_photo=snippet.output_photo)
+# for snippet in all_codes:
+#     Code.objects.using('ioee').create(id=snippet.id, code=snippet.code, author = snippet.author, author_ip=snippet.author_ip, email=snippet.email, created_on=snippet.created_on, title=snippet.title, tags=snippet.tags, stars_ip=snippet.stars_ip, valid_email=snippet.valid_email, private_code=snippet.private_code, stars=snippet.stars, output_photo=snippet.output_photo)
 class Code(models.Model):
     #id = models.AutoField(primary_key=True)
     id = models.UUIDField(
