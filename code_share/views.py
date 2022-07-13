@@ -2,7 +2,8 @@ import math
 from .models import Code, Branch, Photo
 from .forms import CodeForm
 from django.shortcuts import render, get_object_or_404
-from django.core.mail import send_mail
+from django.core.mail import BadHeaderError #, send_mail
+
 
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponseRedirect
@@ -11,6 +12,9 @@ from django.conf import settings
 from django.core import serializers
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.contrib.auth.decorators import login_required
+
+import requests, os
+from requests.structures import CaseInsensitiveDict
 
 #source: https://stackoverflow.com/questions/18264304/get-clients-real-ip-address-on-heroku#answer-18517550
 def get_client_ip(request):
@@ -96,8 +100,12 @@ def home(request):
             
             print('\n\n {} \n\n'.format(str(new_code.id)))
             if email.strip() != '':
-                send_mail_please(recipient=[
+                sent = send_mail_please(recipient=[
                                  email], subject="code", message=format_email_message_body(str(new_code.id)))
+                if sent:
+                    # valid email true
+                    new_code.valid_email=True
+                    new_code.save()
     # else:
     code_form = CodeForm()
     codes = Code.objects.filter(private_code=False).order_by('-created_on')
@@ -200,19 +208,42 @@ def format_email_message_body(uuid):
     return(message)
 
 
-def send_mail_please(recipient, subject="uuid", message='hello World'):
+def send_mail_please(recipient, subject="uuid", message='hello World', name=''):
+    # prevents header injection attack?
+    if '\n' in recipient:
+        raise BadHeaderError
+
+    headers = CaseInsensitiveDict()
+    headers["x-trustifi-key"] = os.environ.get('TRUSTIFI_KEY')
+    headers["x-trustifi-secret"] = os.environ.get('TRUSTIFI_SECRET')
+    headers["Content-Type"] = "application/json"
+
+    url='https://be.trustifi.com/api/i/v1/email'
+    print(f'\'{recipient}\', \'{subject}\', \'{message}\'')
+    data = """
+    {{
+    "recipients": [{{"email": "aanandaprashadgiri@gmail.com", "name": "aananda"}}],
+    "title": "conversation",
+    "html": "do it now"
+    }}
+    """.format(recipient, name, subject, message)
+    print(data)
+    resp = requests.post(url, headers=headers, data=data)
+    print(resp.text)
+    return (resp.status_code==201)  # True if sent mail else False
+    
     # create a variable to keep track of the form
     #messageSent = False
     #recipient = 'aanandaprashadgiri@gmail.com'
     #subject = "Sending an email with Django"
     #message = cd['message']
-
+    
     # send the email to the recipent
-    send_mail(subject, message,
-              settings.DEFAULT_FROM_EMAIL, recipient)
-
+    # send_mail(subject, message,
+    #           settings.DEFAULT_FROM_EMAIL, recipient)
+    
     # set the variable initially created to True
-    messageSent = True
+    # messageSent = True
 
 
 def code_by_uuid(request, uuid):
