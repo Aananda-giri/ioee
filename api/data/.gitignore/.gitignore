@@ -1,0 +1,77 @@
+# ----------------------------------------------------------------------
+############## Checking what is unique in notices ######################
+# turned out: we only need to check for repeated title and url for not adding to db as they are mistakenly repeatedly published by ioe
+# ----------------------------------------------------------------------
+traversed_urls = []
+ids_url_pair = []
+
+repeted_ids_pair=[]
+notifications = IoeNoti.objects.all()
+
+# checking for repeated url
+for notic in notifications:
+        if notic.url in traversed_urls:
+            repeted_ids_pair.append([ids_url_pair[traversed_urls.index(notic.url)][0] ,notic.id])
+        else:
+            traversed_urls.append(notic.url)
+            ids_url_pair.append([notic.id, notic.url])
+
+# checking for repeated title and url
+repeated_title_and_url_ids = []
+for pair in repeted_ids_pair:
+    if notifications[pair[0]-1].title == notifications[pair[1]-1].title:
+        repeated_title_and_url_ids.append(pair)
+        
+# checking for repeated title, url, date
+repeated_everything_ids = []
+for pair in repeated_title_and_url_ids:
+    if notifications[pair[0]-1].date == notifications[pair[1]-1].date:
+        repeated_everything_ids.append(pair)
+        
+repeated_everything_ids = [[433, 443], [434, 444], [435, 445], [436, 446], [437, 447], [438, 448], [439, 449], [440, 450], [441, 451], [442, 452]]
+
+# ----------------------------------------------------------------------------------
+############## recently used to filter new_notices from old  ######################
+# ---------------------------------------------------------------------------------
+# working: returns list of notices from "api/data/new_notices.json" that are not in "api/data/notices.json"
+
+def get_notifications(what=None):
+    with open('api/data/notices.json', 'r') as file:
+      old_notices = json.load(file)
+    
+    with open('api/data/new_notices.json', 'r') as file:
+      newly_scrapped = json.load(file)
+    new_notices = []
+    
+    #reversed because it would be easier to stack on top of old_data
+    #scraped_topics.reverse()
+    #scraped_urls.reverse()
+    
+    
+    for index, notice in enumerate(reversed(newly_scrapped)):
+      if notice not in old_notices:
+          old_notices.insert(0, notice)
+          new_notices.insert(0, notice)
+          print('Adding new notices:\n\t {}'.format(new_notices))
+    
+    with open('api/data/notices.json','w') as file:
+      json.dump(old_notices, file, indent = 4)
+    
+    ## Got new_topics and new_urls
+    if what !=None:print(what)
+    #print(new_notices)
+    return(new_notices)
+
+# ---------------------------------------------------------------------------------
+#################### playing with models ####################
+# ---------------------------------------------------------------------------------
+
+<QuerySet [<IoeNoti: {'title': 'Result: M.Sc. I/II exam held on 2078 Shrawan', 'url': 'https://exam.ioe.edu.np/Images/NotificationsFile/10.2913232msc result.pdf', 'date': 'Thursday, January 13, 2022'}>, <IoeNoti: {'title': 'Notice: Exam Form M.Sc. Thesis 2078 Phalgun', 'url': 'https://exam.ioe.edu.np/Images/NotificationsFile/43.8527387File.PDF', 'date': 'Tuesday, January 18, 2022'}>, <IoeNoti: {'title': 'Notice', 'url': 'https://exam.ioe.edu.np/Images/NotificationsFile/48.7558109Notice.PDF', 'date': 'Thursday, January 20, 2022'}>]>
+
+#with open("api/data/notices.json", "r") as file: a = json.load(file)
+#a.reverse()
+#IoeNoti.objects.bulk_create([IoeNoti(title=i["title"], url=i["url"], date=i["date"]) for i in a])
+
+#with open("api/data/new_notices.json", "r") as file: new = json.load(file)
+#new.reverse()
+#IoeNoti.objects.bulk_create([IoeNoti(title=i["title"], url=i["url"], date=i["date"]) for i in new])
