@@ -299,6 +299,7 @@ class test_model(models.Model):
 #additional data for django User model (***not_required**)
 # default user fields: date_joined, email, first_name, groups, id, is_active, is_staff, is_superuser, last_login, last_name, logentry, password, user_permissions, userdata, username
 class UserData(models.Model):
+    id = models.AutoField(primary_key = True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     is_verified = models.BooleanField(default = False, db_index=True)
     email = models.EmailField(default='')
