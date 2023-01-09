@@ -220,20 +220,17 @@ def send_mail_please(recipient, subject="uuid", message='hello World', name=''):
 
     url='https://be.trustifi.com/api/i/v1/email'
     print(f'\'{recipient}\', \'{subject}\', \'{message}\'')
-    # data = """
-    # {{
+    # data = """    {{
     # "recipients": [{{"email": "aanandaprashadgiri@gmail.com", "name": "aananda"}}],
     # "title": "conversation",
     # "html": "some message"
-    # }}
-    # """.format(recipient, name, subject, message)
-    data = """
-    {{
-    "recipients": [{{"email": """ + str(recipient) + """, "name": """ + str(name) + """}}],
-    "title": """ + str(subject) + """,
-    "html": """ + str(message) + """
-    }}
-    """.format(recipient, name, subject, message)
+    # }}   """.format(recipient, name, subject, message)
+    
+    data = {
+    "recipients": [{"email": recipient, "name": name}],
+    "title": subject,
+    "html": message}
+    
     print(data)
     resp = requests.post(url, headers=headers, data=data)
     print(resp.text)
