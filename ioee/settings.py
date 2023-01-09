@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'ioee.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'ioee': {
+    'default': {    # ioee
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'utmhgxol',
         'USER': 'utmhgxol',
@@ -112,7 +112,7 @@ DATABASES = {
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
-    'default': {
+    'previous_default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'lflpirvq',
         'USER': 'lflpirvq',
