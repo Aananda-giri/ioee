@@ -232,7 +232,7 @@ def send_mail_please(recipient, subject="uuid", message='hello World', name=''):
     "html": message}
     
     print(data)
-    resp = requests.post(url, headers=headers, data=data)
+    resp = requests.post(url, headers=headers, data=str(data))
     print(resp.text)
     return (resp.status_code==201)  # True if sent mail else False
     
