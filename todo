@@ -1,0 +1,3 @@
+- HeaderInjectionAttack:https://docs.djangoproject.com/en/4.0/topics/email/#preventing-header-injection
+-to send mails: use sendGrid or mailgun with heroku addons
+- 

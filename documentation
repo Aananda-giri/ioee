@@ -1,0 +1,15 @@
+# sendMail (code_share/views):
+ - used heroku plugin called trustfi
+ - https://elements.heroku.com/addons/categories/email-sms
+ - according to https://api.trustifi.com/ we can send mail with curl code
+ - using : https://reqbin.com/req/python/c-xgafmluu/convert-curl-to-python-requests, we converted curl to python code to send the mail
+ - to get keys:
+     goto https://dashboard.heroku.com/apps/ioee/resources
+     click trustifi
+     top right corner dropdown
+     settings
+     at the bottom you can get keys you need
+
+# escape in python format '{{}}'
+'{\'hello\'} {name}'.format(name=name) #err.
+'{{\'hello\'}} {name}'.format(name=name) #err.

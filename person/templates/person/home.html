@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> A collective memory Autobiography by community </title>
+<meta name="description"  content="Brain Map, a collective brain, where individuals can share brief profile of people they know.">
+
+<!-- For responsive-website [mobile-friendly website]  -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+<!-- For accesssing css -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'person/style.css' %}">
+
+<script src="{% static 'person/script.js' %}"></script>
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<!-- For floating plus button --> 
+<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></style>
+
+<!-- For google analytics -->
+{% include "google_analytics.html" %}
+
+<style>
+/*############### For floating add person ####################*/
+.float1{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#F33;/*red;/*#0C9*/;
+	color:white;/*#FFF;*/
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+float1:hover{
+	visibility:visible!important;
+	opacity:1!important;
+}
+.my-float1{
+	margin-top:18px;
+	font-size:24px;
+}
+
+body{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+}
+
+
+
+
+
+/*################# For floating shere to social ###################*/
+*{padding:0;margin:0;}
+
+body{
+	font-family:Verdana, Geneva, sans-serif;
+	background-color:#CCC;
+	font-size:12px;
+}
+
+.label-container{
+	position:fixed;
+	bottom:48px;
+	left:105px;/*right:105px;*/
+	display:table;
+	visibility: hidden;
+}
+
+.label-text{
+	color:#FFF;
+	background:rgba(51,51,51,0.5);
+	display:table-cell;
+	vertical-align:middle;
+	padding:10px;
+	border-radius:3px;
+}
+
+.label-arrow{
+	display:table-cell;
+	vertical-align:middle;
+	color:#333;
+	opacity:0.5;
+}
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	left:40px;/*right:40px;*/
+	background-color:#F33;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	animation: bot-to-top 2s ease-out;
+}
+
+ul{
+	position:fixed;
+	left:40px;/*right:40px;*/
+	padding-bottom:20px;
+	bottom:80px;
+	z-index:100;
+}
+
+ul li{
+	list-style:none;
+	margin-bottom:10px;
+}
+
+ul li a{
+	background-color:#F33;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	width:60px;
+	height:60px;
+	display:block;
+}
+
+ul:hover{
+	visibility:visible!important;
+	opacity:1!important;
+}
+
+
+.my-float{
+	font-size:24px;
+	margin-top:18px;
+}
+
+a#menu-share + ul{
+  visibility: hidden;
+}
+
+a#menu-share:hover + ul{
+  visibility: visible;
+  animation: scale-in 0.5s;
+}
+
+a#menu-share i{
+	animation: rotate-in 0.5s;
+}
+
+a#menu-share:hover > i{
+	animation: rotate-out 0.5s;
+}
+
+@keyframes bot-to-top {
+    0%   {bottom:-40px}
+    50%  {bottom:40px}
+}
+
+@keyframes scale-in {
+    from {transform: scale(0);opacity: 0;}
+    to {transform: scale(1);opacity: 1;}
+}
+
+@keyframes rotate-in {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+@keyframes rotate-out {
+    from {transform: rotate(360deg);}
+    to {transform: rotate(0deg);}
+}
+
+a {   
+    color: black;   
+}
+
+</style>
+<!------ Include the above in your HEAD tag ---------->
+
+
+</head>
+
+
+
+
+
+<body>
+
+<script>
+function search() {
+  if(event.key === 'Enter') {
+  toggle_spinner();
+  search_query = document.getElementById('search_input').value;
+  console.log('search_query:'+search_query );
+  //document.getElementById('search_input').value='';
+ $.ajax({
+    type: 'GET',
+    url: "{% url 'search_me' %}",
+    data: {
+      'search_query':String(search_query),
+    },
+    
+    success: function(response) {
+      // value of search tab=sesarch_query
+      //document.getElementById('search_input').value = search_query;
+      toggle_spinner();
+      console.log('search_query:'+search_query);
+
+      var instance = JSON.parse(response["people"]);
+      //appendSearchResults(instance[0]);
+      console.log('fields');
+      console.log(instance[0].fields);
+      console.log('her');
+      console.log(instance[0].fields[0]);
+      console.log('profile_pic:');
+      
+      let profile_pic="//encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog";
+      
+      profile_pic = String(instance[0]['fields']['profile_pic']);
+      profile_pic = profile_pic.substring(2,profile_pic.length-2);
+      console.log(profile_pic);
+      try{
+      for (i=0;i<instance.length;i++){
+      
+      appendSearchResults(instance[i]['fields'],i, profile_pic);
+      }} finally{showMessage('No user found');}        
+
+      
+
+    
+     
+console.log('here');
+      try{
+      console.log('in');
+      //To remove extra forms while searching
+      if(document.querySelectorAll('#getprofile')[1]!==undefined){console.log('inside');
+        document.body.removeChild(document.querySelectorAll('#getprofile')[0]);
+      }//try removing profile displaying section
+         document.body.removeChild(document.getElementById("each_profile_display"));
+      } finally{}    
+      
+
+      
+      //console.log('first_name:' + String(instance[0].fields.first_name));
+    
+    
+
+    }, error: function (response) {
+         console.log(response);
+         
+       }
+    
+  })
+}}    
+
+</script>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="ioe_images/ACE/BEI/76/">IOE_Images</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <!--<a class="navbar-brand" aria-current="page" href="/ioe_images/SEC/BEI/76/">Images</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<!-- ###################### For search icon ###################-->
+
+Hello World
+  <input class="form-control col-md-6 mx-auto d-block loading" id="search_input" type="text" placeholder="Search" name="search_query" onkeydown="search()">
+{%for person in people.0%}
+
+<a href="uid/{{person.id}}/">
+<div class = "md-2 bg-white ms-2 me-5 rounded" style="margin: 20px;">
+<img class="img-fluid img-responsive mr-2 md-6 rounded-circle" src="{{person.profile_pic.0}}" alt="" width="200"><h3>{{person.first_name}} {{person.middle_name}} {{person.last_name}}</h3><strong>Proefession : {{person.profession}}<br></strong><strong>Education : {{person.education}}</strong>
+
+</div>
+
+</a>
+<br><br><br>
+{%endfor%}
+
+
+
+
+
+</body>
+</html>

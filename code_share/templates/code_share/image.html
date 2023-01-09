@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style.css"/>
+
+    <title>SS - Online Exam Soln</title>
+  </head>
+  
+
+  <body>
+    <div class="container-fluid-lg">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Online Exam Soln</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/"
+                  >All</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/postquestion">Post</a>
+              </li> 
+                    <li class="nav-item">
+                <a class="nav-link active" href="/imagepage">ScreenShot</a>
+              </li>
+            </ul>
+       <form class="d-flex" enctype="multipart/form-data" action="/imagepage"  method="POST">
+             {% csrf_token %}  
+
+          <input type="file" required multiple name="uploadedfile" id="uploadedfile" style="display:none;"/>
+          <label for="uploadedfile"style="margin-right: 20px;padding: 5px; color: white; border: solid 2px;background: green;">Choose image</label>
+          <button class="btn btn-primary" name="uploadimage" id="uploadimage" type="submit">Upload</button>
+                    
+
+            </form>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="container-lg my-4">
+
+{% for rs in image %}
+    <div class="card my-2 shadow-sm mx-auto" >
+      <div class="card-body my-2 d-flex align-items-center justify-content-between ">
+        <div class="card_left " style="width: 100%">
+        <img src="{{rs.image.url}}" width="100%" height="auto">
+        </div>
+      </div>
+    </div>
+{% endfor %}
+   
+    </div>
+
+
+    
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    crossorigin="anonymous"
+  ></script>
+</html>
