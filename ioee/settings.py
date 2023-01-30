@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'ioee.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {    # ioee
+    'ioee': {    # ioee <default> # heroku is ignoring dbroutes so renaming fuse_attend to default
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'utmhgxol',
         'USER': 'utmhgxol',
@@ -96,7 +96,7 @@ DATABASES = {
         'PORT': '5432',
     },
 
-    'fuse_attend': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'vysbznab',
         'USER': 'vysbznab',
