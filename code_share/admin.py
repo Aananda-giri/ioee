@@ -19,6 +19,8 @@ class CodeAdmin(admin.ModelAdmin):
     using = 'default'  # using database router
     #fields = ['created_on', 'title', 'tags', 'author', 'email', 'id']
 
+    ordering = ['-created_on']  # order by created_on
+
     def save_model(self, request, obj, form, change):
         # Tell Django to save objects to the 'other' database.
         obj.save(using=self.using)
@@ -40,5 +42,6 @@ class CodeAdmin(admin.ModelAdmin):
         # Tell Django to populate ManyToMany widgets using a query
         # on the 'other' database.
         return super().formfield_for_manytomany(db_field, request, using=self.using, **kwargs)
+
 admin.site.register(Code, CodeAdmin)
-admin.site.register(Photo, CodeAdmin)
+# admin.site.register(Photo, CodeAdmin)

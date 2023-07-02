@@ -1,4 +1,4 @@
-from .models import Code, Comment
+from .models import Code    # , Comment
 from django import forms
 
 
@@ -8,11 +8,12 @@ class CodeForm(forms.ModelForm):
         fields = ('title', 'code', 'author', 'email', 'tags')
         #fields = ('name', 'email', 'body')
 
+'''
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('name', 'email', 'body')
-
+'''
 
 class EmailForm(forms.Form):
     recipient = forms.EmailField()

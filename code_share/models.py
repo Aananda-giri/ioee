@@ -107,9 +107,11 @@ class Branch(models.Model):
 #         now = timezone.now()
 #         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
+'''
 class Comment(models.Model):
     post = models.ForeignKey(
-        Code, on_delete = models.CASCADE, related_name='comments')
+        Code, on_delete = models.CASCADE, related_name='comments', to_field='id'
+        )
     name = models.CharField(max_length=80)
     email = models.EmailField()
     body = models.TextField()
@@ -121,7 +123,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.body, self.name)
-
+'''
 
 """    
     #def image_tag(self):
@@ -130,3 +132,9 @@ class Comment(models.Model):
     #    else:
     #        return """
 
+# filter code whose title is 'test' and body is 'test'
+Code.objects.filter(title__contains='test', code__contains='test')
+
+# filter code whose title and body are same
+from django.db.models import F
+Code.objects.filter(title='test')
