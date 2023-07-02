@@ -170,8 +170,14 @@ def snippet_page(request, page=1):
                 code=code, email=email, title=title, tags=tags, author=author, stars=0, private_code=private_code, author_ip = get_client_ip(request))
             # Assign the current post to the code
             #new_code.post = post
-            # Save the code to the database
-            new_code.save()
+            
+            # check if it exists in the database
+            if not Code.objects.filter(code=code, email=email, title=title, tags=tags, author=author, private_code=private_code).exists():
+                message = "Saved successfully"
+                # Save the code to the database
+                new_code.save()
+            else:
+                message = "Code already exists"
             
             # Saving images if given
             images = request.FILES.getlist('images')
@@ -188,6 +194,7 @@ def snippet_page(request, page=1):
                 send_mail_please(recipient=[
                                  email], subject="code", message=format_email_message_body(str(new_code.id)))
     # else:
+    message = 'Teest message'
     max_pages = math.ceil(Code.objects.all().count()/10)
     code_form = CodeForm()
     codes = Code.objects.filter(private_code=False).order_by('-created_on')[(page-1)*10:(page)*10]
@@ -197,7 +204,7 @@ def snippet_page(request, page=1):
     images = Photo.objects.all()
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
-    return render(request, 'code_share/home.html', {'data': data, codes: new_code, 'code_form': code_form, 'branches':branches, 'search_term':'', 'max_pages' : max_pages})
+    return render(request, 'code_share/home.html', {'data': data, codes: new_code, 'code_form': code_form, 'branches':branches, 'search_term':'', 'max_pages' : max_pages, 'message': message})
 
 
 def format_email_message_body(uuid):

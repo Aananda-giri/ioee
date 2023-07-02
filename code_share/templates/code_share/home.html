@@ -225,6 +225,8 @@
        search_box.setAttribute("value",search_term);
      }
      var branches={{branches|safe}};
+    //  var message={{message|safe}};
+    //  console.log('\n message', message);
      //console.log(dataa);
      okSetupEditor(dataa);
      setupEditor(dataa);
@@ -424,6 +426,43 @@ console.log('here');
 }}    
 
     </script>
+    <div id="alertMessage" class="alert alert-success fixed-bottom mb-0" role="alert" style="display: none;">
+      {{ message }}
+    </div>
+<script>
+$(document).ready(function() {
+  // Check if the success alert element exists
+  if ($('#success-alert').length) {
+    // Create a new alert element and prepend it to the document body
+    var alertElement = $('<div class="alert alert-success" role="alert">' + $('#success-alert').text() + '</div>');
+    alertElement.prependTo('body');
 
+    // Set a timeout to remove the alert after 5 seconds
+    setTimeout(function() {
+      alertElement.fadeOut(function() {
+        alertElement.remove();
+      });
+    }, 5000);
+  }
+});
+</script>
+<!-- display message -->
+{% if message %}
+<div id="success-alert" class="alert alert-success"> {{ message }} </div>
+{% endif %}
+<script>
+// $(document).ready(function() {
+//   // Check if the success alert element exists
+//   if ($('#success-alert').length) {
+//     // Show the success alert
+//     $('#success-alert').fadeIn();
+
+//     // Set a timeout to hide the alert after 5 seconds
+//     setTimeout(function() {
+//       $('#success-alert').fadeOut();
+//     }, 5000);
+//   }
+// });
+</script>
   </body>
 </html>
