@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Comment, Code, Photo
+from .models import Code, Photo     #, Comment
 
+'''
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'body', 'post', 'created_on', 'active')
@@ -10,11 +11,12 @@ class CommentAdmin(admin.ModelAdmin):
 
     def approve_comments(self, request, queryset):
         queryset.update(active=True)
-
+'''
 
 class CodeAdmin(admin.ModelAdmin):
     # A handy constant for the name of the alternate database.
-    using = 'fuse_attend'
+    # using = 'fuse_attend'  # using database router
+    using = 'default'  # using database router
     #fields = ['created_on', 'title', 'tags', 'author', 'email', 'id']
 
     def save_model(self, request, obj, form, change):

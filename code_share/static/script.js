@@ -259,3 +259,28 @@ function updatePagination(max_pages){
     //next.textContent = parseInt( parseInt(page_no) + 2 );
 }
 
+function disableSaveButton(button_id) {
+  // Disable the button after a brief delay to allow safe submission of the form
+  setTimeout(function() {
+    document.getElementById(button_id).disabled = true;
+  }, 100);
+
+  // Add Bootstrap spinner
+  var spinner = document.createElement("span");
+  spinner.classList.add("spinner-border", "spinner-border-sm");
+  document.getElementById(button_id).innerHTML = "Processing ";
+  document.getElementById(button_id).appendChild(spinner);
+/*
+  // Perform your desired action (e.g., API call, form submission, etc.)
+  // Once the action is complete, you can re-enable the button and remove the spinner
+  setTimeout(function() {
+    // Simulating a delay of 2 seconds for demonstration purposes
+    // Replace this with your actual code
+
+    // Re-enable the button
+    document.getElementById(button_id).disabled = false;
+
+    // Remove the spinner
+    document.getElementById(button_id).innerHTML = "Click me";
+  }, 2000);*/
+}
