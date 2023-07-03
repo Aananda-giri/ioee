@@ -1,5 +1,5 @@
 {
-    "python.defaultInterpreterPath": "/home/machina/Documents/ioe_env/bin/python3",
+    "python.defaultInterpreterPath": "/home/machina/Documents/machine_env/bin/python3",
     "python.terminal.activateEnvInCurrentTerminal": true
     // source /home/nathan/Documents/machine_env/bin/activate
 }

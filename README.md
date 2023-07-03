@@ -13,3 +13,7 @@ editor:
  https://blog.replit.com/code-editors
  https://codemirror.net/6/docs/
  https://dyclassroom.com/codemirror/how-to-setup-codemirror
+
+
+# ToDo
+- [ ] dont save code if it exists in db :: inform user it exists
