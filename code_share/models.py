@@ -132,9 +132,4 @@ class Comment(models.Model):
     #    else:
     #        return """
 
-# filter code whose title is 'test' and body is 'test'
-Code.objects.filter(title__contains='test', code__contains='test')
 
-# filter code whose title and body are same
-from django.db.models import F
-Code.objects.filter(title='test')

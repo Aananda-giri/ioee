@@ -426,10 +426,15 @@ console.log('here');
 }}    
 
     </script>
-    <div id="alertMessage" class="alert alert-success fixed-bottom mb-0" role="alert" style="display: none;">
-      {{ message }}
+    {% if message %}
+    <div id="alert-container">
+      <div id="alert" class="alert alert-{{message.status}}">
+        {{message.message}}
+      </div>
     </div>
-<script>
+    {% endif %}
+    
+<!-- <script>
 $(document).ready(function() {
   // Check if the success alert element exists
   if ($('#success-alert').length) {
@@ -445,24 +450,24 @@ $(document).ready(function() {
     }, 5000);
   }
 });
-</script>
-<!-- display message -->
+</script> -->
+<!-- display message
 {% if message %}
-<div id="success-alert" class="alert alert-success"> {{ message }} </div>
-{% endif %}
+<div id="success-alert" class="alert alert-{{message.status}}"> {{ message.message }} </div>
+{% endif %} -->
 <script>
-// $(document).ready(function() {
-//   // Check if the success alert element exists
-//   if ($('#success-alert').length) {
-//     // Show the success alert
-//     $('#success-alert').fadeIn();
+$(document).ready(function() {
+  // Check if the success alert element exists
+  if ($('#alert').length) {
+    // Show the success alert
+    $('#alert').fadeIn();
 
-//     // Set a timeout to hide the alert after 5 seconds
-//     setTimeout(function() {
-//       $('#success-alert').fadeOut();
-//     }, 5000);
-//   }
-// });
+    // Set a timeout to hide the alert after 5 seconds
+    setTimeout(function() {
+      $('#alert').fadeOut();
+    }, 5000);
+  }
+});
 </script>
   </body>
 </html>
