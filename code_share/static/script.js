@@ -260,27 +260,162 @@ function updatePagination(max_pages){
 }
 
 function disableSaveButton(button_id) {
-  // Disable the button after a brief delay to allow safe submission of the form
-  setTimeout(function() {
-    document.getElementById(button_id).disabled = true;
-  }, 100);
+  // check if form is valid
+  const form = document.getElementById("myForm");
+  
+  if (form.checkValidity()) {
+    // Disable the button after a brief delay to allow safe submission of the form
+    setTimeout(function() {
+      document.getElementById(button_id).disabled = true;
+    }, 100);
 
-  // Add Bootstrap spinner
-  var spinner = document.createElement("span");
-  spinner.classList.add("spinner-border", "spinner-border-sm");
-  document.getElementById(button_id).innerHTML = "Processing ";
-  document.getElementById(button_id).appendChild(spinner);
-/*
-  // Perform your desired action (e.g., API call, form submission, etc.)
-  // Once the action is complete, you can re-enable the button and remove the spinner
-  setTimeout(function() {
-    // Simulating a delay of 2 seconds for demonstration purposes
-    // Replace this with your actual code
-
-    // Re-enable the button
-    document.getElementById(button_id).disabled = false;
-
-    // Remove the spinner
-    document.getElementById(button_id).innerHTML = "Click me";
-  }, 2000);*/
+    // Add Bootstrap spinner
+    var spinner = document.createElement("span");
+    spinner.classList.add("spinner-border", "spinner-border-sm");
+    document.getElementById(button_id).innerHTML = "Processing ";
+    document.getElementById(button_id).appendChild(spinner);
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------
+// File-Upload Function to handle file selection and preview
+// ------------------------------------------------------------
+function handleFileSelect(event) {
+  const files = event.target.files;
+  const previewContainer = document.getElementById("file-preview-container");
+  previewContainer.innerHTML = "";
+
+  for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const filePreview = document.createElement("div");
+      filePreview.classList.add("file-preview");
+
+      const fileName = document.createElement("p");
+      fileName.innerText = file.name;
+      filePreview.appendChild(fileName);
+
+      if (file.type.startsWith("image/")) {
+      const img = document.createElement("img");
+      img.classList.add("img-thumbnail");
+      img.file = file;
+      filePreview.appendChild(img);
+
+      const fileReader = new FileReader();
+      fileReader.onload = (function (aImg) {
+          return function (e) {
+          aImg.src = e.target.result;
+          };
+      })(img);
+
+      fileReader.readAsDataURL(file);
+      } else {
+      const fileIcon = document.createElement("i");
+      fileIcon.classList.add("file-icon", "fas", "fa-file");
+      filePreview.appendChild(fileIcon);
+      }
+
+      previewContainer.appendChild(filePreview);
+  }
+
+  const uploadButton = document.getElementById("upload-button");
+  if (files.length > 0) {
+      uploadButton.removeAttribute("disabled");
+  } else {
+      uploadButton.setAttribute("disabled", "true");
+  }
+  }
+
+  // Function to handle file drop event
+  function handleFileDrop(event) {
+    event.preventDefault();
+    const dropzone = document.getElementById("file-dropzone");
+    dropzone.classList.remove("border-primary");
+
+    const files = event.dataTransfer.files;
+    const fileInput = document.getElementById("file-input");
+    fileInput.files = files;
+
+    handleFileSelect(event);
+  }
+
+  // Function to handle file drag over event
+  function handleDragOver(event) {
+    event.preventDefault();
+    const dropzone = document.getElementById("file-dropzone");
+    dropzone.classList.add("border-primary");
+  }
+
+  // Function to handle file drag leave event
+  function handleDragLeave(event) {
+    event.preventDefault();
+    const dropzone = document.getElementById("file-dropzone");
+    dropzone.classList.remove("border-primary");
+  }
+
+  // Function to handle file upload progress
+  function handleUploadProgress(event) {
+    const progress = document.getElementById("upload-progress");
+    if (event.lengthComputable) {
+      const percentComplete = Math.round((event.loaded / event.total) * 100);
+      progress.innerText = "Upload Progress: " + percentComplete + "%";
+    }
+  }
+
+  // Event listener for file input change
+  const fileInput = document.getElementById("file-input");
+  fileInput.addEventListener("change", handleFileSelect);
+
+  // Event listeners for file drag and drop
+  const dropzone = document.getElementById("file-dropzone");
+      dropzone.addEventListener("dragover", handleDragOver);
+      dropzone.addEventListener("dragleave", handleDragLeave);
+      dropzone.addEventListener("drop", handleFileDrop);
+
+  // Event listener for unselect button
+  const unselectButton = document.getElementById("unselect-files");
+  unselectButton.addEventListener("click", function () {
+  const fileInput = document.getElementById("file-input");
+  fileInput.value = null; // Reset file input field
+  handleFileSelect({ target: fileInput }); // Trigger file selection handling
+  });
+
+
+
+  // Event listener for upload button
+  const uploadButton = document.getElementById("upload-button");
+  uploadButton.addEventListener("click", function () {
+    const fileInput = document.getElementById("file-input");
+    const files = fileInput.files;
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/upload-endpoint"); // Replace with your upload endpoint URL
+    xhr.upload.addEventListener("progress", handleUploadProgress);
+    xhr.addEventListener("load", handleUploadComplete);
+    xhr.send(formData);
+
+    uploadButton.setAttribute("disabled", "true");
+    const progress = document.getElementById("upload-progress");
+    progress.innerText = "Upload in progress...";
+  });
+
+  // Function to handle file upload complete
+  function handleUploadComplete(event) {
+    const progress = document.getElementById("upload-progress");
+    progress.innerText = "Upload Complete!";
+  }
