@@ -3,3 +3,6 @@ ioee/settings_offline.py
 ioee/settings.py
 ioee/settings0.py
 .env
+test/*
+uploads/*
+
