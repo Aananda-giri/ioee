@@ -1,0 +1,80 @@
+<script>
+$(document).ready(function() {
+    $('#uploadForm').on('submit', function(e) {
+        e.preventDefault();     // Prevent form submission
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/upload/',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                /*
+                // Create a new element to display the file information
+                var fileInfo = response.file;
+                var fileHTML = '<div id="fileInfo">';
+                fileHTML += '<p><strong>File Name:</strong> ' + fileInfo.name + '</p>';
+                fileHTML += '<p><strong>File Size:</strong> ' + fileInfo.size + ' bytes</p>';
+                fileHTML += '<p><strong>Content Type:</strong> ' + fileInfo.content_type + '</p>';
+                fileHTML += '</div>';
+
+                // Append the file information element to a container
+                $('#fileContainer').html(fileHTML);
+
+                // Reset the file input field
+                $('#fileInput').val('');
+                */
+               pass;
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
+
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+#fileInfo {
+    margin-top: 20px;
+}
+
+#fileInfo p {
+    margin-bottom: 5px;
+}
+
+</style>
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/upload.css' %}">
+</head>
+<body>
+    <h1>File Upload</h1>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" id="fileInput" name="file">
+        <button type="submit">Upload</button>
+    </form>
+    <div id="fileInfo"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/upload.js' %}"></script>
+</body>
+</html>

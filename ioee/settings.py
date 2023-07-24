@@ -9,6 +9,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+# loading environment variables
+# if os.path.exists('.env'):
+from dotenv import load_dotenv
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'ioestudents.herokuapp.com', 'ioee.herokuapp.com']
 
 
 # Application definition
-
+ 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
-    'person.apps.PersonConfig',
+    # 'person.apps.PersonConfig',
+    'person',
     'code_share.apps.CodeShareConfig',
+    'ioe_overflow.apps.IoeOverflowConfig',
     'nepali_datetime_field',
 ]
 #'fontawesome-free',
@@ -163,6 +170,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+UPLOADS_DIR = os.path.join(BASE_DIR, 'uploads')
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (

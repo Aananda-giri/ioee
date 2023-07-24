@@ -145,6 +145,16 @@
                   <label for="exampleFormControlTags" class="form-label"
                     >Private Code?</label>
                 </div>
+                <div class="dropzone" id="file-dropzone">
+                    <p>(optional) Drag and drop files here</p>
+                    <!-- <label for="id_file_field" class="btn btn-primary">Choose File</label> -->
+                    <input name="file_field" id="id_file_field" name="file_field" type="file" multiple>
+                    <div class="preview-container" id="file-preview-container"></div>
+                  </div>
+                  <div class="preview-container" id="file-preview-container"></div>
+                  <div class="progress" id="upload-progress"></div>
+                  <label id="unselect-files" class="btn btn-danger mt-3">Unselect All</label>
+                
                 <div class="mb-3">
                   <label for="exampleFormControlTextarea1" class="form-label"
                     >Code</label

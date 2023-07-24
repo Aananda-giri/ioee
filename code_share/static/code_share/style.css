@@ -1,0 +1,229 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(120deg, #ee7752, #8974ff, #23a6d5, #36eec3);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.editor {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.editor__code {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* disable tag matching */
+.ace_editor .ace_marker-layer .ace_bracket {
+  display: none;
+}
+.accordion-body {
+  height: 50vh;
+  background-color: #282c34;
+}
+.accordion {
+  margin: auto;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+.accordion-item {
+  box-shadow: 1px 4px 8px 2px rgba(0, 0, 0, 0.34);
+}
+.accordion-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.accordion-left-title {
+  width: 100%;
+  flex: -1;
+}
+.accordion-right-title {
+  width: 100%;
+  text-align: right;
+  margin-right: 10px;
+}
+.btn {
+  margin: auto;
+  text-align: center;
+  display: flex;
+}
+.editor__code {
+  border: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: rgb(66, 66, 66);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 20px;
+
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+
+  background: rgb(73, 73, 73);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(143, 143, 143);
+}
+@media screen and (max-width: 600px) {
+  .accordion {
+    width: 100%;
+  }
+}
+
+.copy {
+  cursor: pointer;
+  z-index: 100;
+  margin-left: 6px;
+}
+.copy:visited {
+  background-color: blue !important;
+}
+.copy:active {
+  background-color: green !important;
+}
+
+.footer_div {
+  margin-top: 0.5rem !important;
+  height: 5vh;
+}
+.save {
+  display: none;
+}
+
+#alert-container {
+  position: fixed;
+  left: 0;
+  bottom: 20px; /* Adjust the margin as per your requirement */
+  width: 100%;
+  z-index: 9999;
+}
+
+#alert {
+  margin: 0 auto;
+  width: 80%; /* Adjust the width as per your requirement */
+  text-align: center; /* Center the text within the alert */
+}
+
+.custom-file-input {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-file-input:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-file-input::file-selector-button {
+  padding: 0.375rem 0.75rem;
+  margin-right: -1px;
+  background-color: #e9ecef;
+  border-left: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+}
+
+.custom-file-input::file-selector-button:hover {
+  background-color: #dee2e6;
+}
+
+.custom-file-input::file-selector-button:focus {
+  box-shadow: none;
+}
+
+    .dropzone {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+    }
+    .dropzone p {
+      margin-top: 10px;
+    }
+
+    .preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    }
+
+    .file-preview {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    }
+
+    .file-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+
+    .preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .file-icon {
+      font-size: 50px;
+      margin-bottom: 5px;
+    }
+    .progress {
+      margin-top: 20px;
+    }

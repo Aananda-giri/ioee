@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Multiple Files</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Upload Multiple Files</h1>
+    <input type="file" id="fileInput" multiple>
+    <div id="imagePreview"></div>
+    <button id="upload_file">upload</button>
+    <!-- <span id="upload_file" style="background-color: green;">test</span> -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Function to display the uploaded images
+        function displayImages(fileUrls) {
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.innerHTML = '';
+
+            fileUrls.forEach(function(fileUrl) {
+                var imgElement = document.createElement('img');
+                imgElement.src = fileUrl;
+                imgElement.alt = 'Uploaded Image';
+                imagePreview.appendChild(imgElement);
+            });
+        }
+
+        // Function to handle the file upload
+        function handleFileUpload() {
+            var fileInput = document.getElementById('fileInput');
+            var files = fileInput.files;
+            var formData = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                formData.append('files', files[i]);
+            }
+
+            $.ajax({
+                url: '{% url "upload_multiple_files" %}',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.file_urls) {
+                        displayImages(data.file_urls);
+                    } else {
+                        alert('File upload failed.');
+                    }
+                },
+                error: function () {
+                    alert('File upload failed.');
+                }
+            });
+        }
+
+        // Attach the event listener to the file input element
+        // document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+        document.getElementById('upload_file').addEventListener('click', handleFileUpload);
+    </script>
+</body>
+</html>

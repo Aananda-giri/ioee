@@ -1,0 +1,513 @@
+
+ <!-- <label for="id_title">Title:</label>
+                      <input type="text" name="title" maxlength="255" required="" id="id_title">
+                      <label for="id_author">Author:</label>
+                      <input type="text" name="author" maxlength="255" id="id_author">
+                      <label for="id_email">Email:</label>
+                      <input type="email" name="email" required="" id="id_email">
+                      <label for="id_tags">Tags:</label>
+                      <input type="text" name="tags" maxlength="255" id="id_tags">
+                      <label for="id_is_private">Is private:</label>
+                      <input type="checkbox" name="is_private" id="id_is_private">
+                      <label for="id_file_field">File field:</label>
+                      <input type="file" name="file_field" multiple="" id="id_file_field">
+                      <label for="id_body">Body:</label>
+                      <textarea name="body" cols="40" rows="10" maxlength="1000" id="id_body"></textarea>
+ -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Share</title>
+    <link
+      href="//cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    
+
+
+    <!--<link rel="stylesheet" href="css/style.css" />-->
+    {% load static %}
+    <!--<script src="./js/index.js"></script>-->
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'code_share/style.css' %}"> -->
+    
+    <!-- fontawsome -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+    <!-- jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- for fontaesome icons -->
+    <!-- <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script> -->
+    
+  <!-- For google analytics -->
+{% include "google_analytics.html" %}
+
+
+</head>
+
+  <body>
+    <!-- Search form -->
+    <form class="d-flex" method="get" action="/search">
+      <input id="search_input" type="text" placehoder="Search" name="search_query" style="width: 50vw;" class="form-control col-md-6 mx-auto d-block  loading my-5 me-3">
+      <button type="submit" style="background-color: white;" class="btn btn-outline-success mt-5 ms-0">Search</button>
+    </form>
+
+    <div id="container" class="container-fluid">
+      <!-- Modal starts here -->
+      <!-- Button trigger modal -->
+      <div class="d-flex">
+        <button
+          type="button"
+          class="btn btn-primary btn-position"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add Code
+        </button>
+        <!--<button type="button" class="btn btn-primary btn-position" data-bs-toggle="modal" onclick="location.replace('/community/')">
+          Community
+        </button>-->
+        <button type="button" class="btn btn-primary btn-position ms-2" style="display:none" data-bs-toggle="modal" onclick="location.replace('/community/images/ACE/BEI/76/')">
+          Images
+        </button>
+
+        <!-- Modal -->
+        <form id="upload_form" method="post" action="/home2/" enctype="multipart/form-data">
+        {%csrf_token%}
+         
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="
+              modal-dialog
+              modal-lg
+              modal-dialog-centered
+              modal-dialog-scrollable
+            "
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                
+                <div
+                class="mb-3">
+                  <label for="exampleFormControlTitle"
+                  class="form-label"
+                    >Title</label
+                  >
+
+
+                  <input
+                    type="text"
+                    maxlength="255"
+                    class="form-control"
+                    id="id_title"
+                    name="title"
+                    placeholder="title"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlAuthor" class="form-label"
+                    >Author</label
+                  >
+                  
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="author"
+                    id="id_author
+                    maxlength="255"
+                    placeholder="author"
+                    required
+
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Email address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="id_email"
+                    name="email"
+                    placeholder="email"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlTags" class="form-label"
+                    >Tags</label
+                  >
+                  <label for="id_tags">Tags:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="tags"
+                    maxlength="255"
+                    id="id_tags"
+                    placeholder="tags"
+                  />
+                </div>
+                <div class="mb-3">
+                  <input class="form-check-input" type="checkbox" name="is_private" id="id_is_private">
+                  <label for="exampleFormControlTags" class="form-label"
+                    >Private Code?</label>
+                </div>
+                
+                <div class="dropzone" id="file-dropzone">
+                    <p>(optional) Drag and drop files here</p>
+                    <!-- <label for="file-input" class="btn btn-primary">Choose File</label> -->
+                    <input name="file_field" id="id_file_field" name="file_field" type="file" multiple="">
+                    <div class="preview-container" id="file-preview-container"></div>
+                  </div>
+                  <div class="preview-container" id="file-preview-container"></div>
+                  <div class="progress" id="upload-progress"></div>
+                  <label id="unselect-files" class="btn btn-danger mt-3" onclick="document.getElementsByName('file_field')[1].value=null;">Unselect All</label>
+                
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label"
+                    >Code</label
+                  >
+                  <!-- <textarea name="body" cols="40" rows="10" maxlength="1000" id="id_body"></textarea> -->
+                  
+                  <textarea
+                    class="form-control"
+                    id="id_body"
+                    name="body"
+                    rows="30"
+                    maxlength="1000"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" id="save_new_code_btn" onclick="disableSaveButton('save_new_code_btn')">
+                  Save
+                </button>
+              </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- accordian starts here -->
+
+      <div class="accordion" id="accordionExample"></div>
+
+      <!-- accordian ends here -->
+    </div>
+    
+ <!-- for pagination (next_page, previous_page) -->    
+ <nav aria-label="Page navigation example">
+  <ul class="pagination pagination-lg justify-content-center">
+    <li class="page-item" id="pagination_previous_li">
+      <a class="page-link" id="pagination_previous" href="#" tabindex="-1">Previous</a>
+    </li>
+    <li class="page-item" id="pagination_li_0"><a class="page-link" id="pagination_link_0" href="/1/">1</a></li>
+    <li class="page-item"><a class="page-link" id="pagination_link_1" href="/2/">2</a></li>
+    <li class="page-item" id="pagination_li_2"><a class="page-link" id="pagination_link_2" href="/3/">3</a></li>
+    <li class="page-item" id="pagination_next_li">
+      <a class="page-link" id="pagination_next" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+
+{% for container in containers %}
+    {% include 'code_share/editor.html' with title=container.title author=container.author created_on=container.created_on codes=container.codes files=container.files editor_number=forloop.counter0%}
+{% endfor %}
+{% include 'code_share/dropzone.html' %}
+
+
+    <!-- Required Ace Libraries -->
+    <script
+      src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js"
+      integrity="sha512-OMjy8oWtPbx9rJmoprdaQdS2rRovgTetHjiBf7RL7LvRSouoMLks5aIcgqHb6vGEAduuPdBTDCoztxLR+nv45g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script
+      src="//cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    
+    <!-- Custom Scripts -->
+    <!--<script src="./js/index.js"></script>-->
+    <!-- <script src="{% static 'code_share/script.js' %}"></script> -->
+    <script>
+     var search_term="{{search_term}}";
+     if (search_term!=""){
+       search_box = document.getElementById('search_input');
+       search_box.setAttribute("value",search_term);
+     }
+     var branches={{branches|safe}};
+
+     updatePagination({{max_pages|safe}});
+
+
+  // --------------------
+  //to save edited code
+  // --------------------
+  function save(i) {
+  window.editor = ace.edit(`editor${i}`);
+  let getCode = editor.getValue();
+  console.log(getCode);
+  editor.setReadOnly(true);
+  let saveCode = document.getElementById(`save${i}`);
+  saveCode.style.display = "none";
+
+  //sending to the backend
+  // async function postSaveCode() {
+  //   const response = await fetch("{% url 'edit_code' %}", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/text",
+  //       csrfmiddlewaretoken: "{{ csrf_token }}",
+  //       credentials: "same-origin",
+  //       mode: "same-origin",
+  //     },
+  //     body: JSON.stringify(getCode),
+  //   });
+  //   return response.json;
+  // }
+  // postSaveCode()
+  //   .then((data) => {
+  //     console.log("Success", data);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error:", error);
+  //   });
+  //sending to backend
+  $.ajax({
+    type:'POST',
+    url:"{% url 'edit_code' %}",
+    data: {
+      'parent_id':dataa[i-1].pk,
+      'code':JSON.stringify(getCode),//.substring(1,JSON.stringify(getCode).length-1),
+      
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      
+    },
+    success: function(response) {
+      console.log('Success saving code')
+      location.reload();  //reloads the page on saving new branch
+      //console.log(response);
+      //Successfully saved code_branch
+    }, error: function (response) {
+      console.log('error');
+      console.log(response);   
+       }
+    
+  })
+}
+
+function notify(notice){
+  // to be implemented .........
+  // to show toast notifications
+  // reference: https://getbootstrap.com/docs/5.1/components/toasts/
+
+}
+
+// -----------------
+// To delete code
+// -----------------
+function deleteCode(index){
+  console.log('deleting:'+dataa[index-1].pk);
+  $.ajax({
+    type:'POST',
+    url:"{% url 'delete_code' %}",
+    data: {
+      'code_id':dataa[index-1].pk,
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+    },
+    success: function(response) {
+      //Successfully saved code
+      console.log(response); 
+      notify(response);
+      location.reload();  //reloads the page on deleting code
+    }, error: function (response) {
+      console.log('error');
+      console.log(response);
+       }
+    
+  })
+}
+// --------------------     
+// To add star
+// --------------------
+     function starCode(code_position) {
+  
+        console.log(code_position);
+        var parent_code_id = dataa[code_position].pk;
+        console.log('parent_code_id',parent_code_id);
+  $.ajax({
+    type:'POST',
+    url:"{% url 'add_star' %}",
+    data: {
+      'unique_ip':'ip',
+      'parent_id':parent_code_id,
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      
+    },
+    success: function(response) {
+      //console.log('Success saving star')
+      //updata_Star count
+      var stars = parseInt(dataa[code_position].fields.stars) + 1;
+      document.getElementById("star" + code_position).textContent="star(" + stars + ')';
+    }, error: function (response) {
+      console.log('error');
+      console.log(response);   
+       }
+    
+  })
+      }
+
+    let branch_count=0;
+    for (branch of branches){
+      distributeBranch(branch.fields, branch_count);
+      //for loading branches to any code that have brance
+      branch_count+=1;
+     }
+// --------------------
+// For search
+// --------------------
+function search() {
+  if(event.key === 'Enter') {
+  toggle_spinner();
+  search_query = document.getElementById('search_input').value;
+  console.log('search_query:'+search_query );
+  //document.getElementById('search_input').value='';
+ $.ajax({
+    type: 'GET',
+    url: "{% url 'search_me' %}",
+    data: {
+      'search_query':String(search_query),
+    },
+    
+    success: function(response) {
+      // value of search tab=sesarch_query
+      //document.getElementById('search_input').value = search_query;
+      toggle_spinner();
+      console.log('search_query:'+search_query);
+
+      var instance = JSON.parse(response["people"]);
+      //appendSearchResults(instance[0]);
+      console.log('fields');
+      console.log(instance[0].fields);
+      console.log('her');
+      console.log(instance[0].fields[0]);
+      console.log('profile_pic:');
+      
+      let profile_pic="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog";
+      
+      profile_pic = String(instance[0]['fields']['profile_pic']);
+      profile_pic = profile_pic.substring(2,profile_pic.length-2);
+      console.log(profile_pic);
+      try{
+      for (i=0;i<instance.length;i++){
+      
+      appendSearchResults(instance[i]['fields'],i, profile_pic);
+      }} finally{showMessage('No user found');}        
+
+      
+
+    
+     
+console.log('here');
+      try{
+      console.log('in');
+      //To remove extra forms while searching
+      if(document.querySelectorAll('#getprofile')[1]!==undefined){console.log('inside');
+        document.body.removeChild(document.querySelectorAll('#getprofile')[0]);
+      }//try removing profile displaying section
+         document.body.removeChild(document.getElementById("each_profile_display"));
+      } finally{}    
+      
+
+      
+      //console.log('first_name:' + String(instance[0].fields.first_name));
+    
+    
+
+    }, error: function (response) {
+         console.log(response);
+         
+       }
+    
+  })
+}}    
+
+    </script>
+    {% if message %}
+    <div id="alert-container">
+      <div id="alert" class="alert alert-{{message.status}}">
+        {{message.message}}
+      </div>
+    </div>
+    {% endif %}
+    
+<!-- <script>
+$(document).ready(function() {
+  // Check if the success alert element exists
+  if ($('#success-alert').length) {
+    // Create a new alert element and prepend it to the document body
+    var alertElement = $('<div class="alert alert-success" role="alert">' + $('#success-alert').text() + '</div>');
+    alertElement.prependTo('body');
+
+    // Set a timeout to remove the alert after 5 seconds
+    setTimeout(function() {
+      alertElement.fadeOut(function() {
+        alertElement.remove();
+      });
+    }, 5000);
+  }
+});
+</script> -->
+<!-- display message
+{% if message %}
+<div id="success-alert" class="alert alert-{{message.status}}"> {{ message.message }} </div>
+{% endif %} -->
+<script>
+$(document).ready(function() {
+  // Check if the success alert element exists
+  if ($('#alert').length) {
+    // Show the success alert
+    $('#alert').fadeIn();
+
+    // Set a timeout to hide the alert after 5 seconds
+    setTimeout(function() {
+      $('#alert').fadeOut();
+    }, 5000);
+  }
+});
+</script>
+  </body>
+</html>
+
+    

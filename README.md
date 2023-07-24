@@ -13,3 +13,18 @@ editor:
  https://blog.replit.com/code-editors
  https://codemirror.net/6/docs/
  https://dyclassroom.com/codemirror/how-to-setup-codemirror
+
+
+
+bulk create files
+bulk create codes
+post file, code
+
+code_share.models.Files::
+    remove: link, download_link :: use file_id only
+code_share.editor.html::
+    image preview in gallery like view: (left/right) arrow keys to navigate within images of same container
+code_share.editor.html.file_upload::
+    preview before upload
+code_share.editor.html.file_upload.success::
+    success bootstrap notice

@@ -1,0 +1,49 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+  
+
+
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <!-- Container Form Fields -->
+  {{ container_form.as_p }}
+
+  <!-- File Form Fields -->
+  {{ file_form.as_p }}
+
+  <!-- Code Form Fields -->
+  {{ code_form.as_p }}
+
+  <button type="submit">Save</button>
+</form>
+
+
+
+
+
+<!-- {{containers}}z -->
+{% for container in containers %}
+<h2>{{ container.title }}</h2>
+  <p>Created On: {{ container.created_on }}</p>
+
+  <h3>Files:</h3>
+  <ul>
+    {% for file in container.files %}
+      <li>{{ file.link }}</li>  
+      <li>{{ file.filename }}</li>
+      <li>{{ file.type }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Codes:</h3>
+  <ul>
+    {% for code in container.codes %}
+      <li>{{ code.body }}</li>
+    {% endfor %}
+  </ul>
+{% endfor %}

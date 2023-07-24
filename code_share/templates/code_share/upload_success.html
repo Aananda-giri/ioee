@@ -1,0 +1,246 @@
+<h2>Files uploaded successfully!</h2>
+<!-- Add any additional success message or redirect the user to another page -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Upload</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .custom-file-input {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-file-input:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-file-input::file-selector-button {
+  padding: 0.375rem 0.75rem;
+  margin-right: -1px;
+  background-color: #e9ecef;
+  border-left: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+}
+
+.custom-file-input::file-selector-button:hover {
+  background-color: #dee2e6;
+}
+
+.custom-file-input::file-selector-button:focus {
+  box-shadow: none;
+}
+
+    .dropzone {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+    }
+    .dropzone p {
+      margin-top: 10px;
+    }
+
+    .preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    }
+
+    .file-preview {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    }
+
+    .file-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+
+    .preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .file-icon {
+      font-size: 50px;
+      margin-bottom: 5px;
+    }
+    .progress {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>File Upload</h1>
+    <div class="dropzone" id="file-dropzone">
+        <p>Drag and drop files here or</p>
+        <!-- <label for="file-input" class="btn btn-primary">Choose File</label> -->
+        <input id="file-input" name="file_field" type="file" multiple>
+        <div class="preview-container" id="file-preview-container"></div>
+      </div>
+    <div class="preview-container" id="file-preview-container"></div>
+    <div class="progress" id="upload-progress"></div>
+    <label id="unselect-files" class="btn btn-danger mt-3">Unselect All</label>
+    <button id="upload-button" class="btn btn-primary mt-3" disabled>Upload</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Function to handle file selection and preview
+    // Function to handle file selection and preview
+
+    // Function to handle file selection and preview
+    function handleFileSelect(event) {
+    const files = event.target.files;
+    const previewContainer = document.getElementById("file-preview-container");
+    previewContainer.innerHTML = "";
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const filePreview = document.createElement("div");
+        filePreview.classList.add("file-preview");
+
+        const fileName = document.createElement("p");
+        fileName.innerText = file.name;
+        filePreview.appendChild(fileName);
+
+        if (file.type.startsWith("image/")) {
+        const img = document.createElement("img");
+        img.classList.add("img-thumbnail");
+        img.file = file;
+        filePreview.appendChild(img);
+
+        const fileReader = new FileReader();
+        fileReader.onload = (function (aImg) {
+            return function (e) {
+            aImg.src = e.target.result;
+            };
+        })(img);
+
+        fileReader.readAsDataURL(file);
+        } else {
+        const fileIcon = document.createElement("i");
+        fileIcon.classList.add("file-icon", "fas", "fa-file");
+        filePreview.appendChild(fileIcon);
+        }
+
+        previewContainer.appendChild(filePreview);
+    }
+
+    const uploadButton = document.getElementById("upload-button");
+    if (files.length > 0) {
+        uploadButton.removeAttribute("disabled");
+    } else {
+        uploadButton.setAttribute("disabled", "true");
+    }
+    }
+
+    // Function to handle file drop event
+    function handleFileDrop(event) {
+      event.preventDefault();
+      const dropzone = document.getElementById("file-dropzone");
+      dropzone.classList.remove("border-primary");
+
+      const files = event.dataTransfer.files;
+      const fileInput = document.getElementById("file-input");
+      fileInput.files = files;
+
+      handleFileSelect(event);
+    }
+
+    // Function to handle file drag over event
+    function handleDragOver(event) {
+      event.preventDefault();
+      const dropzone = document.getElementById("file-dropzone");
+      dropzone.classList.add("border-primary");
+    }
+
+    // Function to handle file drag leave event
+    function handleDragLeave(event) {
+      event.preventDefault();
+      const dropzone = document.getElementById("file-dropzone");
+      dropzone.classList.remove("border-primary");
+    }
+
+    // Function to handle file upload progress
+    function handleUploadProgress(event) {
+      const progress = document.getElementById("upload-progress");
+      if (event.lengthComputable) {
+        const percentComplete = Math.round((event.loaded / event.total) * 100);
+        progress.innerText = "Upload Progress: " + percentComplete + "%";
+      }
+    }
+
+    // Event listener for file input change
+    const fileInput = document.getElementById("file-input");
+    fileInput.addEventListener("change", handleFileSelect);
+
+    // Event listeners for file drag and drop
+    const dropzone = document.getElementById("file-dropzone");
+        dropzone.addEventListener("dragover", handleDragOver);
+        dropzone.addEventListener("dragleave", handleDragLeave);
+        dropzone.addEventListener("drop", handleFileDrop);
+
+    // Event listener for unselect button
+    const unselectButton = document.getElementById("unselect-files");
+    unselectButton.addEventListener("click", function () {
+    const fileInput = document.getElementById("file-input");
+    fileInput.value = null; // Reset file input field
+    handleFileSelect({ target: fileInput }); // Trigger file selection handling
+    });
+
+
+
+    // Event listener for upload button
+    const uploadButton = document.getElementById("upload-button");
+    uploadButton.addEventListener("click", function () {
+      const fileInput = document.getElementById("file-input");
+      const files = fileInput.files;
+
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/upload-endpoint"); // Replace with your upload endpoint URL
+      xhr.upload.addEventListener("progress", handleUploadProgress);
+      xhr.addEventListener("load", handleUploadComplete);
+      xhr.send(formData);
+
+      uploadButton.setAttribute("disabled", "true");
+      const progress = document.getElementById("upload-progress");
+      progress.innerText = "Upload in progress...";
+    });
+
+    // Function to handle file upload complete
+    function handleUploadComplete(event) {
+      const progress = document.getElementById("upload-progress");
+      progress.innerText = "Upload Complete!";
+    }
+  </script>
+</body>
+</html>
+

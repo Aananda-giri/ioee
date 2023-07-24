@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload File</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <input type="file" id="fileInput">
+    <div id="imagePreview"></div>
+
+    <script>
+        // Function to display the uploaded image
+        function displayImage(fileUrl) {
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.innerHTML = '<img src="' + fileUrl + '" alt="Uploaded Image">';
+        }
+
+        // Function to handle the file upload
+        function handleFileUpload() {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+
+            $.ajax({
+                url: '{% url "upload_one_file" %}',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.file_url) {
+                        displayImage(data.file_url);
+                    } else {
+                        alert('File f failed.');
+                    }
+                },
+                error: function () {
+                    alert('File upload failed.');
+                }
+            });
+        }
+
+        // Attach the event listener to the file input element
+        document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+    </script>
+</body>
+</html>

@@ -19,36 +19,20 @@ urlpatterns = [
 
     #path('imagepage/', views.imagepage, name='imagepage'),
     path('refresh/', views.refresh, name='refresh'),
+
+    path('home2/', views.create_container, name = 'home2'),
+    path('upload/', views.upload_files, name='upload_files'),
+    path('success/', views.upload_success, name='success'),
+    path('containers/', views.container_list, name='container-list'),
+    path('editor/', views.editor, name='editor'),
+    
+    path('um/', views.upload_multiple_files, name='upload_multiple_files'),
+    path('uc/', views.upload_one_code, name='upload_one_code'),
+    
 ]
+
 
 from django.conf import settings
 from django.conf.urls.static import static
 if settings.DEBUG:
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
-
-
-
-
-
-
-
-"""
-# filter code whose title is 'test' and body is 'test'
-Code.objects.filter(title='test')
-Code.objects.filter(title__contains='test', code__contains='test')
-
-
-# filter code whose title and body are same
-from django.db.models import F
-Code.objects.filter(title__exact=models.F('code')).delete()
-
-# delete code whose body is null or empty string
-from code_share.models import Code
-from django.db.models import Q
-
-Code.objects.filter(Q(code__isnull=True) | Q(code__exact='')).delete()
-
-"""

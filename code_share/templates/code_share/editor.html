@@ -1,0 +1,403 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'code_share/style_editor.css' %}">
+<script src="{% static 'code_share/script_editor.js' %}"></script>
+
+
+
+<!-- <link rel="stylesheet" type="text/css" href="style_editor.css">
+<script src="script_editor.js"></script> -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+<script src="https://kit.fontawesome.com/f7bdeb8972.js" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+<div class="custom-editor container-fluid" id="editor-{{editor_number}}">
+    <div class="row" style="height: 10%">
+      <div class="col" style="">
+        <div class="editor-title">
+          <div class="row align-items-center">
+            <div class="col-9" style="justify-content: center;display: flex;">
+              <h2 style="color: white;font-weight: bold; justify-content: center;">
+                  {{title |default:"Some Title" }}
+              </h2>
+            </div>
+            <div class="col-3 d-flex justify-content-end">
+              <i class="fa fa-expand circular-icon mb-3" aria-hidden="true" style="background-color: yellow; padding: 3px; border-radius: 50%;" onclick="toggleFullscreen({{editor_number}});"></i>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-9">
+                <h6 style="display: flex;color: white;font-weight: bold; justify-content: center;">
+                    - {{author|default:"author"}}
+                </h6>
+            </div>    
+            <div class="col-3">
+              <h5 style="color: white;font-weight: bold;" class="d-flex justify-content-end">
+                {{created_on|default:"2023-07-17T05:09:37.356Z"}}
+              </h5>
+          </div>    
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="height:88%;margin-bottom: 3px;">
+      <div class="col h-100" style="">
+        <div class="container-fluid custom-editor-body mt-0 w-100 h-100">
+          <div class="row h-100">
+            <div class="col-md-3 bg-dark text-light overflow-auto custom-scrollbar h-100">
+              <!-- Sidebar content here -->
+              <div class="row align-items-center" style="margin-top: 5px;">
+                <div class="col-8">
+                  <h4 style="margin-top: 8px; margin-bottom: 8px;font-weight: bold;">Codes</h4>
+                </div>
+                <div class="col-4">
+                  <h4>
+                    <a class="fa fa-plus-square inverted-icon no-underline" aria-hidden="true" onclick="add_code_to_editor({{editor_number}});"></a>
+                  </h4>
+                </div>
+              </div>
+              <ul id="ul_codes_{{editor_number}}">
+                <li class="my-2" id="sidebar_code_{{editor_number}}_0" style="background-color: black; display: none;">
+                  <div class="row align-items-center">
+                    <div class="col-7 sidebar_item" onclick="preview_code('{{editor_number}}', '0');">
+                      New Code
+                    </div>
+                  </div>
+                </li>
+                
+                {% for code in codes %}
+                    <!-- make first item bold -->
+                    {% if forloop.first %}    
+                      <li class="my-2" id="sidebar_code_{{editor_number}}_{{forloop.counter}}" style="background-color: black;">
+                    {% else %}
+                      <li class="my-2" id="sidebar_code_{{editor_number}}_{{forloop.counter}}">
+                    {% endif %}
+                    <div class="row align-items-center">
+                      <div class="col-7 sidebar_item" onclick="preview_code('{{editor_number}}', '{{forloop.counter}}');">
+                        {{code.filename|slice:":5"|default:"Code 0"}}
+                      </div>
+                      <div class="col-5">
+                        <i class="fa fa-clone me-3" aria-hidden="true"></i>
+                        <a class="fa fa-edit inverted-icon no-underline" aria-hidden="true" href="https://google.com/"></a>
+                      </div>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+              <div class="row align-items-center" style="margin-bottom: 8px;margin-top: 8px;">
+                <div class="col-8">
+                  <h4>Files</h4>
+                </div>
+                <div class="col-4">
+                  <h4> 
+                    <a class="fa fa-plus-square inverted-icon no-underline" aria-hidden="true"  onclick="add_files_to_editor({{editor_number}});"></a>
+                  </h4>
+                </div>
+              </div>
+              <ul  id="ul_files_{{editor_number}}">
+                <li class="my-2" id="sidebar_file_{{editor_number}}_0" style="background-color: black; display: none;">
+                  <div class="row align-items-center">
+                  <div class="col-8 sidebar_item" onclick="preview_file('{{editor_number}}', '0');">  
+                      New File
+                    </div>
+                  </div>
+                </li>
+                {% for file in files %}
+                  <li class="my-2" id="sidebar_file_{{editor_number}}_{{forloop.counter}}">
+                    <div class="row align-items-center">
+                      <div class="col-8 sidebar_item" onclick="preview_file('{{editor_number}}', '{{forloop.counter}}');">
+                        {{file.filename|slice:":5"|default:"File 1"}}
+                      </div>
+                      <div class="col-4">
+                        <a class="fa fa-download inverted-icon no-underline" aria-hidden="true"  href={{file.download_link}} target="_blank"></a>
+                      </div>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+            
+            <div class="col-md-9">
+              <!-- Content area here -->
+              <div class="container">
+                <div class="row h-100 display-area" id="display_area_{{editor_number}}">
+                  
+                  <!-- -------- -->
+                  <!-- Add code -->
+                  <!-- -------- -->
+                  <div class='col  h-100 overflow-auto custom-scrollbar item-content' id='codePreview_{{editor_number}}_0' style='display: none; overflow: auto; border: 1px solid #ddd; padding: 10px;'>
+                    <input type="text" id="code_filename_{{editor_number}}" value="code_{{ codes|length|add:1 }}"></input>
+                    <textarea class="form-control m-2" name="body" id="codeInput_{{editor_number}}" rows="17" maxlength="1000" style="height:88% !important;"></textarea>
+                    <button class="btn btn-primary" onclick="handleCodeUpload('{{container.unique_uuid}}', '{{editor_number}}')" id="save_code_btn_{{editor_number}}"> Save </button>
+                  </div>
+
+                  <!-- -------- -->
+                  <!-- Add File -->
+                  <!-- -------- -->
+                  <div class='col  h-100 overflow-auto custom-scrollbar item-content' id='filePreview_{{editor_number}}_0' style='display: none; overflow: auto; border: 1px solid #ddd; padding: 10px;'>
+                    <div class="dropzone" id="file-dropzone">
+                      <p>(optional) Drag and drop files here</p>
+                      <!-- <label for="file-input" class="btn btn-primary">Choose File</label> -->
+                      <input name="file_field" id="fileInput_{{editor_number}}" type="file" multiple>
+                      <div class="preview-container" id="file-preview-container"></div>
+                    </div>
+
+                    <!-- preview before upload -->
+                    <button type="submit" class="btn btn-primary mt-3" id="save_file_btn_{{editor_number}}" onclick="handleFileUpload('{{container.unique_uuid}}', '{{editor_number}}')">Upload</button>
+                    <label id="unselect-files" class="btn btn-danger mt-3" onclick="document.getElementById('id_file_field').value=null;">Unselect All</label>  
+                    <div class="progress h-100" id="upload-progress"></div>
+                  </div>
+                  <!-- 
+                    file upload id + _0_0
+                    file preview
+                  -->
+                  
+                  <!-- ------------ -->
+                  <!-- preview File -->
+                  <!-- ------------ -->
+                  {% for file in files %}
+                    <div class='col  h-100 overflow-auto custom-scrollbar item-content' id='filePreview_{{editor_number}}_{{forloop.counter}}' style='display: none; overflow: auto; border: 1px solid #ddd; padding: 10px;'>
+                      <!-- check if type is image and have  google_drive_file_id-->
+                      {% if file.google_drive_file_id and file.file_type == 'img' %}
+                        <iframe src="https://drive.google.com/file/d/{{file.google_drive_file_id}}/preview" width="640" height="480" allow="autoplay"></iframe>  
+                        <!-- <img src="https://drive.google.com/uc?export=view&id={{file.google_drive_file_id}}" class="img-fluid" alt="Responsive image"> -->
+                      
+                      <!-- check if type is image and have  google_drive_file_id-->
+                      {% elif file.google_drive_file_id and file.file_type == 'pdf' %}
+                        <iframe src="https://drive.google.com/file/d/{{file.google_drive_file_id}}/preview" width="640" height="480" allow="autoplay"></iframe>
+                      
+                      <!-- check if type is image and have  google_drive_file_id-->
+                      {% elif file.google_drive_file_id and file.file_type == 'video' %}
+                        <iframe src="https://drive.google.com/file/d/{{file.google_drive_file_id}}/preview" width="640" height="480" allow="autoplay"></iframe>
+                      
+                      {% else %}
+                        <!-- display default image -->
+                        <iframe src="https://drive.google.com/file/d/{{file.google_drive_file_id}}/preview" width="640" height="480" allow="autoplay"></iframe>  
+                        
+
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+
+                  <!-- ------------ -->
+                  <!-- preview code -->
+                  <!-- ------------ -->
+                  {% for code in codes %}
+                  {% if forloop.first %}  
+                    <div class="col  h-100 overflow-auto custom-scrollbar item-content" id="codePreview_{{editor_number}}_{{forloop.counter}}" style="display: block; overflow: auto; border: 1px solid #ddd; padding: 10px;">
+                  {% else%}
+                    <div class="col overflow-auto  h-100 item-content" id="codePreview_{{editor_number}}_{{forloop.counter}}" style="display: none;">
+                  {% endif %}
+                      <h2>{{code.codename|default:"Code 0"}}</h2>
+                      <p>
+                        {{code.body|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}}
+                      </p>
+                    </div>
+                    {% endfor %}
+                  <!-- <div class="col overflow-auto  h-100 item-content" id="codePreview_0_1" style="display: none;">
+                    <h2>Code 1</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  </div>
+                  <div class="col overflow-auto  h-100 item-content" id="codePreview_0_2" style="display: none;">
+                    <h2>Code 2</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  </div>
+                  <div class="col overflow-auto  h-100 item-content" id="codePreview_0_3" style="display: none;">
+                    <h2>Code 3</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  </div> -->
+                  <!-- Add more Code content as needed -->  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------------------------- -->
+  <!-- ---Script for file upload--- -->
+  <!-- ---------------------------- -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      // Function to display the uploaded images
+      function displayImages(fileUrls) {
+          var imagePreview = document.getElementById('imagePreview');
+          imagePreview.innerHTML = '';
+
+          fileUrls.forEach(function(fileUrl) {
+              var imgElement = document.createElement('img');
+              imgElement.src = fileUrl;
+              imgElement.alt = 'Uploaded Image';
+              imagePreview.appendChild(imgElement);
+          });
+      }
+      
+      function disableSaveButton(button_id) {
+        // check if form is valid
+        console.log(`disableSaveButton(${button_id})`)
+          // Disable the button after a brief delay to allow safe submission of the form
+          setTimeout(function() {
+            document.getElementById(button_id).disabled = true;
+          }, 100);
+
+          // Add Bootstrap spinner
+          var spinner = document.createElement("span");
+          spinner.classList.add("spinner-border", "spinner-border-sm");
+          document.getElementById(button_id).innerHTML = "Processing ";
+          document.getElementById(button_id).appendChild(spinner);
+      }
+
+      function enableSaveButton(button_id, originalText) {
+        // Re-enable the button by removing the disabled attribute
+        document.getElementById(button_id).disabled = false;
+
+        // Remove the Bootstrap spinner
+        var button = document.getElementById(button_id);
+        var spinner = button.querySelector(".spinner-border");
+        if (spinner) {
+          button.removeChild(spinner);
+        }
+
+        // Restore the button's original text
+        button.innerHTML = originalText;
+      }
+
+
+      // Function to handle the file upload
+      function handleFileUpload(container_uuid, editor_number) {
+        disableSaveButton('save_file_btn_'+editor_number);  // disable save button to prevent multiple clicks
+
+        console.log(`handleFileUpload(${container_uuid}, ${editor_number})`);
+        let fileInput = document.getElementById('fileInput_' + editor_number);
+        let files = fileInput.files;
+        let formData = new FormData();
+
+          for (let i = 0; i < files.length; i++) {
+              formData.append('files', files[i]);
+          }
+          // add container_id to formData
+          formData.append('container_uuid', container_uuid);
+
+          $.ajax({
+              url: '{% url "upload_multiple_files" %}',
+              type: 'POST',
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (data) {
+                enableSaveButton('save_file_btn_'+editor_number, 'Upload');
+                reset_editor(editor_number);  // resetting the editor
+                
+                console.log('success response: ', data);
+                alert('File upload success.');  // success message
+                let file_sidebar_ul = document.getElementById('ul_files_' + editor_number);
+                let file_children = file_sidebar_ul.children;
+                for (let i = 0; i < data.metadata.length ; i++) {
+                  console.log(data.metadata[i]);
+                  let sidebar_item = `
+                      <li class="my-2" id="sidebar_file_${editor_number}_${file_children.length}">
+                        <div class="row align-items-center">
+                          <div class="col-8 sidebar_item" onclick="preview_file('${editor_number}', '${file_children.length}');">
+                            ${data.metadata[i].filename}
+                          </div>
+                          <div class="col-4">
+                            <a class="fa fa-download inverted-icon no-underline" aria-hidden="true"  href=${data.metadata[i].download_link} target="_blank"></a>
+                          </div>
+                        </div>
+                      </li>
+                    `
+                    // Append sidebar_item to file_sidebar_ul
+                    file_sidebar_ul.insertAdjacentHTML('beforeend', sidebar_item);
+                    
+                    let corresponding_preview = `
+                      <div class='col  h-100 overflow-auto custom-scrollbar item-content' id='filePreview_${editor_number}_${file_children.length-1}' style='display: none; overflow: auto; border: 1px solid #ddd; padding: 10px;'>
+                          <!-- display default image -->
+                          <iframe src="https://drive.google.com/file/d/${data.metadata[i].google_drive_file_id}/preview" width="640" height="480" allow="autoplay"></iframe>  
+                      </div>
+                  `
+
+                     // Append corresponding_preview to preview_parent
+                    let preview_parent = document.getElementById('display_area_' + editor_number);
+                    preview_parent.insertAdjacentHTML('beforeend', corresponding_preview);
+                }
+
+                // select the new sidebar item
+                console.log('click: sidebar_file_'+ editor_number + '_' + file_children.length-1)
+                document.getElementById('sidebar_file_'+ editor_number + '_' + String( parseInt(file_children.length)-parseInt(1))).click();
+                // document.getElementById('sidebar_file_'+ editor_number + '_' + file_children.length + 1).classList.add('active');
+                /* 
+                update_files(data, editor_number);  // update files in sidebar and its corresponding preview
+                show save success message.
+                enable button, remove spinner
+                reset editor
+                create new sidebar items
+                create new previews
+                select one of new sidebar items
+                */
+                if (data.file_urls) {
+                      displayImages(data.file_urls);
+                  } else {
+                      alert('File upload failed.');
+                  }
+              },
+              error: function () {
+                  enableSaveButton('save_file_btn_'+editor_number, 'Upload');
+                  reset_editor(editor_number);  // resetting the editor
+                  alert('File upload failed.');
+              }
+          });
+      }
+
+      // Function to handle the code upload
+      function handleCodeUpload(container_uuid, editor_number) {
+          console.log(`handleCodeUpload(${container_uuid}, ${editor_number})`);  
+          disableSaveButton('save_code_btn_'+editor_number);  // disable save button to prevent multiple clicks
+          var codeInput = document.getElementById('codeInput_'+editor_number);
+          
+          var formData = new FormData();
+          
+          // add code body to request
+          var code = codeInput.value;
+          formData.append('code', code);
+          
+          // add file name to request
+          filename = document.getElementById('code_filename_'+editor_number).value;
+          formData.append('filename', filename)
+          
+          // add container_id to formData
+          formData.append('container_uuid', container_uuid);
+
+          $.ajax({
+              url: '{% url "upload_one_code" %}',
+              type: 'POST',
+              data: formData,
+              beforeSend: function (xhr) {
+                  xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+              },
+              processData: false,
+              contentType: false,
+              success: function (data) {
+                enableSaveButton('save_file_btn_' + editor_number, 'Upload');
+                reset_editor(editor_number);  // resetting the editor
+                console.log(data);
+
+                if (data.file_urls) {
+                      displayImages(data.file_urls);
+                  } else {
+                      alert('File upload failed.');
+                  }
+              },
+              error: function () {
+                  alert('File upload failed.');
+              }
+          });
+      }
+
+      // Attach the event listener to the file input element
+      // document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+      // document.getElementById('upload_file').addEventListener('click', handleFileUpload);
+  </script>

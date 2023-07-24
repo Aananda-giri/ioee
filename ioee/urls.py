@@ -36,7 +36,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     # path('code/', include('code_share.urls')),
-    path('community/', include('person.urls')),
+    
     path('images/', include('images.urls')),
     #path('community/', include('community.urls')),
     
@@ -46,6 +46,8 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('register/', views.register, name='register'),
     path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}),
+    path('ioe_overflow/', include('ioe_overflow.urls')),
     path('', include('code_share.urls')),
-    
+
+    path('community/', include('person.urls')),
 ]

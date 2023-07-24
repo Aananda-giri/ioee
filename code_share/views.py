@@ -6,7 +6,7 @@ from django.core.mail import BadHeaderError #, send_mail
 
 
 from django.shortcuts import render, HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .forms import EmailForm
 from django.conf import settings
 from django.core import serializers
@@ -15,6 +15,8 @@ from django.contrib.auth.decorators import login_required
 
 import requests, os
 from requests.structures import CaseInsensitiveDict
+from .functions import DriveFunctions
+from .serializers import ContainerSerializer
 
 #source: https://stackoverflow.com/questions/18264304/get-clients-real-ip-address-on-heroku#answer-18517550
 def get_client_ip(request):
@@ -150,7 +152,7 @@ def snippet_page(request, page=1):
 
     new_code = None
     # code posted
-    if request.method == 'POST':
+    if request.method == 'POST': 
         code_form = CodeForm(data=request.POST)
         if code_form.is_valid():
             code = request.POST.get("code", None)
@@ -528,3 +530,283 @@ def delete_code(request, parent_id=None):
 def refresh(request):
     return HttpResponseRedirect('/')
 
+
+
+
+
+# ----------------------------------
+# File upload to Google Drive
+# ----------------------------------
+
+
+
+from django.shortcuts import render, redirect
+from django.conf import settings
+from googleapiclient.discovery import build
+from google.oauth2 import service_account
+from .forms import UploadFileForm
+# from .models import File
+
+def save_file(files, author=None, title=None, description=None):
+    print(f'\n---------- file info ----------\n')
+    for file in files:
+        print(file.name)
+        # save file to media folder
+        with open(f'uploads/file_upload/{file.name}', 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+    print(f'\n author: {author}, title: {title}, description:{description}')
+
+
+# --------------------
+# for testing purpose
+# --------------------
+def upload_files(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid() or True:
+            files = request.FILES.getlist('file_field')
+            print('files', files,'\n\n')
+            author = form.cleaned_data.get('title')
+            title = form.cleaned_data.get('title')
+            description = form.cleaned_data.get('description')
+            print(f'request.Files:{request.FILES}')
+            save_file(files, author, title, description)
+            
+            # upload files to google drive
+            # drive_links = DriveFunctions.upload_multiple_files(files)
+            # print(drive_links)
+
+            # save to django models
+            # File.objects.create(author='anon', title='some title', description='desc',  drive_links=drive_links)
+            
+
+            return redirect('success')  # Redirect to success page
+    else:
+        form = UploadFileForm()
+    
+    containers = Container.objects.prefetch_related('files', 'codes')
+    serializer = ContainerSerializer(containers, many=True)
+    context = {
+        'container_form': ContainerForm(),
+        'file_form': FilesForm(),
+        'code_form': CodesForm(),
+        'form': form,
+        'containers':serializer.data
+    }
+    
+    return render(request, 'code_share/upload_files.html', context)
+
+# ------------------
+# New views Format
+# ------------------
+from django.shortcuts import render, redirect
+from .forms import ContainerForm, FilesForm, CodesForm
+from .models import Container
+def create_container(request, page=1):
+    container_form = ContainerForm()
+    file_form = FilesForm()
+    code_form = CodesForm()
+    
+    if request.method == 'POST':
+            container_form = ContainerForm(request.POST)
+            file_form = FilesForm(request.POST)
+            code_form = CodesForm(request.POST)
+
+            # if container_form.is_valid() and file_form.is_valid() and code_form.is_valid():
+            body = request.POST.get("body", None)
+            files = request.FILES.getlist('file_field')
+            if (body == None or body.strip() == '') and files == []:
+                return render(request, 'code_share/home2.html', {'container_form': container_form, 'file_form': file_form, 'code_form': code_form, 'message':"Body and Files can't be empty"})
+            
+            if body != None and body.strip() != '':
+                code_data = [
+                    {'body': body}
+                ]
+            else:
+                code_data = None
+            title = request.POST.get("title", None)
+            author = request.POST.get("author", None)
+            email = request.POST.get("email", None)
+            tags = request.POST.get("tags", None).split(' ')
+            
+            is_private = request.POST.get("is_private", None)
+            is_private = (False, True) [is_private=="on"]       #To hide the private code
+
+            # print all fields send by requests
+            print(f'{request.POST}')
+            container_data = {
+                'title': title if (title != None) else '',
+                'author': author if (author != None) else '',
+                # 'created_on': '2023-07-08',
+                # 'unique_uuid': '123e4567-e89b-12d3-a456-426614174000',
+                'tags': tags if (tags != None) else [],
+                # 'likes_count': 10
+            }
+
+            
+            # get_info(files, author, title, description)
+            if len(files) > 0:
+                save_file(files, author, title, body)
+                # upload files to google drive
+                uploaded_file_data = DriveFunctions.upload_multiple_files(files)
+            else:
+                uploaded_file_data = None
+            
+            print(f'\n\n title:{title}, \nauthor:{author}, \nemail:{email}, \ntags:{tags}, \nis_private:{is_private}, \nbody:{body}, \nfiles:{files}')
+            
+            Container.create_container_file_code(container_data=container_data, file_data=uploaded_file_data, code_data=code_data)
+            # container_data = container_form.cleaned_data
+            # file_data = [file_form.cleaned_data]
+            # code_data = [code_form.cleaned_data]
+            # print(f'container_data:{container_data}, file_data:{file_data}, code_data:{code_data}')
+            # container = Container.create_container_file_code(
+            #     container_data=container_data,
+            #     file_data=file_data,
+            #     code_data=code_data
+            # )
+            # return redirect('success')#, container_id=container.unique_uuid)
+            
+    context = {
+        'container_form': container_form,
+        'file_form': file_form,
+        'code_form': code_form
+    }
+    
+
+
+    containers = Container.objects.prefetch_related('files', 'codes')
+    serializer = ContainerSerializer(containers, many=True)
+    return render(request, 'code_share/home2.html', {'containers':serializer.data, 'context':context})
+    return JsonResponse(serializer.data, safe=False)
+
+    message = None
+    max_pages = math.ceil(Container.objects.all().count()/10)
+    containers = Container.objects.filter(is_private=False).order_by('-created_on')[(page-1)*10:(page)*10]
+    return render(request, 'code_share/home2.html', {'context':context, 'containers':containers})
+    data = serializers.serialize('json', containers)
+    files = Files.objects.filter(is_private=False).order_by('-created_on')
+    branches = serializers.serialize('json', branches)
+    images = Photo.objects.all()
+    #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
+
+    return render(request, 'code_share/home.html', {'data': data, 'codes': new_code, 'code_form': code_form, 'branches':branches, 'search_term':'', 'max_pages' : max_pages, 'message': message})
+
+def upload_success(request):
+    return render(request, 'code_share/upload_success.html')
+
+def container_list(request):
+    containers = Container.objects.all()
+    serializer = ContainerSerializer(containers, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+def editor(request):
+    return render(request, 'code_share/editor.html')
+
+
+
+
+import os
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+# ---------------------
+# ------- Test -------
+# ---------------------
+@csrf_exempt
+def upload_multiple_files(request):
+    print(f'methid: {request.method}')
+    if request.method == 'POST':
+        files = request.FILES.getlist('files')
+        container_uuid = request.POST.get('container_uuid')
+        
+        print(f'container_uuid: \'{container_uuid}\'')
+        if len(files) == 0:
+            print(f'length of files is zero')
+            return JsonResponse({'error': 'No files found'}, status=400)
+        # for file in files:
+        #     # Save each file to the /uploads directory using Django's default storage
+        #     file_path = os.path.join(settings.MEDIA_ROOT, 'uploads/file_upload', file.name)
+        #     default_storage.save(file_path, file)
+
+        #     # Get the URL of the uploaded file
+        #     file_url = default_storage.url(file_path)
+        #     file_urls.append(file_url)
+        # save files to directory
+        print(files)
+        save_file(files)
+        print('saved')
+
+        # upload files to google drive
+        file_data = DriveFunctions.upload_multiple_files(files)    # returns list of urls
+        print(f'file_data: {file_data}')
+        
+        # # save file url to database
+        file_metadata = Container.bulk_create_files(container_uuid, file_data)
+        # files_to_create = [Files(container=container, filename='1',type='img', link= file_data) for file_data in file_data_list]
+        # Container.create_container_file_code(container_data=container_data, file_data=uploaded_file_data, code_data=code_data)
+
+        return JsonResponse({'metadata': file_metadata}, status=200)
+    # return render(request, 'code_share/upload_multiple.html')
+    return JsonResponse({'error': 'File upload failed.'}, status=400)
+
+'''
+upload code
+backend-frondend integration
+'''
+# ---------------------
+# ------- Test -------
+# ---------------------
+def upload_one_code(request):
+    if request.method == 'POST':
+        container_id = request.POST.get("container_uuid", None)
+        code =  request.POST.get("code", None)
+        filename =  request.POST.get("filename", 'code')
+        
+        print(f'0code:{code}, container_id: {container_id}, filename:{filename}')
+        if code !=None and code.strip() != '' and container_id != None and container_id.strip() != '':
+            print(f'code:{code}, container_id: {container_id}, filename:{filename}')
+            # save code
+            saved_data = Container.add_one_code(container_id, filename, code)
+            
+            return JsonResponse({'metadata': saved_data}, status=200)
+        else:
+            return JsonResponse({'error': 'Code upload failed.'}, status=400)
+# ---------------------
+# ------- Test -------
+# ---------------------
+def new_container(request):
+    if request.method == 'POST':
+        title = request.POST.get("title", None)
+        author = request.POST.get("author", None)
+        email = request.POST.get("email", None)
+        tags = request.POST.get("tags", None).split(' ')
+        
+        is_private = request.POST.get("is_private", None)
+        is_private = (False, True) [is_private=="on"]       #To hide the private code
+        author_ip = request.POST.get("ip", None)
+
+        # print all fields send by requests
+        print(f'{request.POST}')
+        container_data = {
+            'title': title if (title != None) else '',
+            'author': author if (author != None) else '',
+            # 'created_on': '2023-07-08',
+            # 'unique_uuid': '123e4567-e89b-12d3-a456-426614174000',
+            'tags': tags if (tags != None) else [],
+            'author_email': email,
+            'is_private': is_private,
+            'author_ip': author_ip,
+            # 'likes_count': 10
+        }
+        container = Container.objects.create(**container_data)
+        return JsonResponse({'container_uuid': container.unique_uuid})
+    else:
+        return JsonResponse({'error': 'Container creation failed.'}, status=400)
+'''
+bulk create files
+bulk create codes
+post file, code
+'''

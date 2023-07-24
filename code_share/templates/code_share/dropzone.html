@@ -1,0 +1,9 @@
+<div class="dropzone" id="file-dropzone">
+    <p>(optional) Drag and drop files here</p>
+    <!-- <label for="file-input" class="btn btn-primary">Choose File</label> -->
+    <input name="file_field" id="id_file_field" name="file_field" type="file" multiple="">
+    <div class="preview-container" id="file-preview-container"></div>
+</div>
+<div class="preview-container" id="file-preview-container"></div>
+<div class="progress" id="upload-progress"></div>
+<label id="unselect-files" class="btn btn-danger mt-3" onclick="document.getElementById('id_file_field').value=null;">Unselect All</label>
