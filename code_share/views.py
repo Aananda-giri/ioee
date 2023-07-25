@@ -771,6 +771,7 @@ def upload_one_code(request):
             # save code
             saved_data = Container.add_one_code(container_id, filename, code)
             
+            print(f'saved code successfully! returning metadata:{saved_data}')
             return JsonResponse({'metadata': saved_data}, status=200)
         else:
             return JsonResponse({'error': 'Code upload failed.'}, status=400)

@@ -74,16 +74,16 @@
                     {% else %}
                       <li class="my-2" id="sidebar_code_{{editor_number}}_{{forloop.counter}}">
                     {% endif %}
-                    <div class="row align-items-center">
-                      <div class="col-7 sidebar_item" onclick="preview_code('{{editor_number}}', '{{forloop.counter}}');">
-                        {{code.filename|slice:":5"|default:"Code 0"}}
-                      </div>
-                      <div class="col-5">
-                        <i class="fa fa-clone me-3" aria-hidden="true"></i>
-                        <a class="fa fa-edit inverted-icon no-underline" aria-hidden="true" href="https://google.com/"></a>
-                      </div>
-                    </div>
-                  </li>
+                        <div class="row align-items-center">
+                          <div class="col-7 sidebar_item" onclick="preview_code('{{editor_number}}', '{{forloop.counter}}');">
+                            {{code.filename|slice:":7"|default:"Code 0"}}
+                          </div>
+                          <div class="col-5">
+                            <i class="fa fa-clone me-3" aria-hidden="true"></i>
+                            <a class="fa fa-edit inverted-icon no-underline" aria-hidden="true" href="https://google.com/"></a>
+                          </div>
+                        </div>
+                      </li>
                 {% endfor %}
               </ul>
               <div class="row align-items-center" style="margin-bottom: 8px;margin-top: 8px;">
@@ -326,8 +326,9 @@
                 }
 
                 // select the new sidebar item
-                console.log('click: sidebar_file_'+ editor_number + '_' + file_children.length-1)
-                document.getElementById('sidebar_file_'+ editor_number + '_' + String( parseInt(file_children.length)-parseInt(1))).click();
+                // console.log('click: sidebar_file_'+ editor_number + '_' + file_children.length-1)
+                // document.getElementById('sidebar_file_'+ editor_number + '_' + String( parseInt(file_children.length)-parseInt(1))).click();
+                
                 // document.getElementById('sidebar_file_'+ editor_number + '_' + file_children.length + 1).classList.add('active');
                 /* 
                 update_files(data, editor_number);  // update files in sidebar and its corresponding preview
@@ -384,9 +385,42 @@
                 enableSaveButton('save_file_btn_' + editor_number, 'Upload');
                 reset_editor(editor_number);  // resetting the editor
                 console.log(data);
+                // sidebar ul
+                let file_sidebar_ul_children = document.getElementById('ul_files_' + editor_number).children;
 
-                if (data.file_urls) {
-                      displayImages(data.file_urls);
+                // new sidebar item for code
+                let new_sidebar_el = `
+                <li class="my-2" id="sidebar_code_${editor_number}_${file_sidebar_ul_children.length}" style="background-color: black;">
+                  <div class="row align-items-center">
+                    <div class="col-7 sidebar_item" onclick="preview_code('${editor_number}', '${file_sidebar_ul_children.length}');">
+                      ${data.metadata.filename}
+                    </div>
+                    <div class="col-5">
+                      <i class="fa fa-clone me-3" aria-hidden="true"></i>
+                      <a class="fa fa-edit inverted-icon no-underline" aria-hidden="true" href="https://google.com/"></a>
+                    </div>
+                  </div>
+                </li>
+                `
+                document.getElementById('ul_codes_' + editor_number).innerHTML += new_sidebar_el;
+                
+                // corresponding code body
+                let corresponding_body = `
+                    <div class="col  h-100 overflow-auto custom-scrollbar item-content" id="codePreview_${editor_number}_${file_sidebar_ul_children.length-1}" style="display: block; overflow: auto; border: 1px solid #ddd; padding: 10px;">
+                        <h2>Code ${file_sidebar_ul_children.length-1}</h2>
+                        <p>
+                          ${data.metadata.body}
+                        </p>
+                    </div>
+                `
+                document.getElementById('display_area_' + editor_number).innerHTML += corresponding_body;
+
+                // let new_sidebar_el_id = 'sidebar_file_'+ editor_number + '_' + String( parseInt(parseInt(file_sidebar_ul_children.length)-parseInt(1)));
+                // console.log('click id: ' + new_sidebar_el_id)
+                // document.getElementById(new_sidebar_el_id).click();
+                
+                if (data.metadata) {
+                      displayImages(data.metadata);
                   } else {
                       alert('File upload failed.');
                   }
