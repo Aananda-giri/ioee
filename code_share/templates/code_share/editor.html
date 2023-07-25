@@ -386,13 +386,13 @@
                 reset_editor(editor_number);  // resetting the editor
                 console.log(data);
                 // sidebar ul
-                let file_sidebar_ul_children = document.getElementById('ul_files_' + editor_number).children;
+                let code_sidebar_ul = document.getElementById('ul_codes_' + editor_number);
 
                 // new sidebar item for code
                 let new_sidebar_el = `
-                <li class="my-2" id="sidebar_code_${editor_number}_${file_sidebar_ul_children.length}" style="background-color: black;">
+                <li class="my-2" id="sidebar_code_${editor_number}_${code_sidebar_ul.children.length}" style="background-color: black;">
                   <div class="row align-items-center">
-                    <div class="col-7 sidebar_item" onclick="preview_code('${editor_number}', '${file_sidebar_ul_children.length}');">
+                    <div class="col-7 sidebar_item" onclick="preview_code('${editor_number}', '${code_sidebar_ul.children.length}');">
                       ${data.metadata.filename}
                     </div>
                     <div class="col-5">
@@ -402,12 +402,12 @@
                   </div>
                 </li>
                 `
-                document.getElementById('ul_codes_' + editor_number).innerHTML += new_sidebar_el;
+                code_sidebar_ul.innerHTML += new_sidebar_el;
                 
                 // corresponding code body
                 let corresponding_body = `
-                    <div class="col  h-100 overflow-auto custom-scrollbar item-content" id="codePreview_${editor_number}_${file_sidebar_ul_children.length-1}" style="display: block; overflow: auto; border: 1px solid #ddd; padding: 10px;">
-                        <h2>Code ${file_sidebar_ul_children.length-1}</h2>
+                    <div class="col  h-100 overflow-auto custom-scrollbar item-content" id="codePreview_${editor_number}_${code_sidebar_ul.children.length-1}" style="display: block; overflow: auto; border: 1px solid #ddd; padding: 10px;">
+                        <h2>Code ${code_sidebar_ul.children.length-1}</h2>
                         <p>
                           ${data.metadata.body}
                         </p>
@@ -415,7 +415,7 @@
                 `
                 document.getElementById('display_area_' + editor_number).innerHTML += corresponding_body;
 
-                // let new_sidebar_el_id = 'sidebar_file_'+ editor_number + '_' + String( parseInt(parseInt(file_sidebar_ul_children.length)-parseInt(1)));
+                // let new_sidebar_el_id = 'sidebar_file_'+ editor_number + '_' + String( parseInt(parseInt(code_sidebar_ul.children.length)-parseInt(1)));
                 // console.log('click id: ' + new_sidebar_el_id)
                 // document.getElementById(new_sidebar_el_id).click();
                 

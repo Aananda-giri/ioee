@@ -240,7 +240,7 @@
 {% for container in containers %}
     {% include 'code_share/editor.html' with title=container.title author=container.author created_on=container.created_on codes=container.codes files=container.files editor_number=forloop.counter0%}
 {% endfor %}
-{% include 'code_share/dropzone.html' %}
+<!-- {% include 'code_share/dropzone.html' %} -->
 
 
     <!-- Required Ace Libraries -->
