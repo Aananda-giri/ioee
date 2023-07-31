@@ -675,7 +675,7 @@ def create_container(request, page=1):
     
 
 
-    containers = Container.objects.prefetch_related('files', 'codes')
+    containers = Container.objects.order_by('-created_on').prefetch_related('files', 'codes')
     serializer = ContainerSerializer(containers, many=True)
     return render(request, 'code_share/home2.html', {'containers':serializer.data, 'context':context})
     return JsonResponse(serializer.data, safe=False)
@@ -775,6 +775,10 @@ def upload_one_code(request):
             return JsonResponse({'metadata': saved_data}, status=200)
         else:
             return JsonResponse({'error': 'Code upload failed.'}, status=400)
+'''
+message: new code/file
+Add Code -> new_Container
+'''
 # ---------------------
 # ------- Test -------
 # ---------------------

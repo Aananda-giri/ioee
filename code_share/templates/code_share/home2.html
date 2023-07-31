@@ -20,12 +20,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Code Share</title>
-    <link
+    <!-- <link
       href="//cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
-    />
+    /> -->
     
 
 
@@ -37,7 +37,7 @@
     <!-- fontawsome -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
     <!-- jquery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
     <!-- for fontaesome icons -->
     <!-- <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script> -->
     
@@ -221,6 +221,10 @@
 
       <!-- accordian ends here -->
     </div>
+
+    {% for container in containers %}
+        {% include 'code_share/editor.html' with title=container.title author=container.author created_on=container.created_on codes=container.codes files=container.files editor_number=forloop.counter0%}
+    {% endfor %}
     
  <!-- for pagination (next_page, previous_page) -->    
  <nav aria-label="Page navigation example">
@@ -237,9 +241,7 @@
   </ul>
 </nav>
 
-{% for container in containers %}
-    {% include 'code_share/editor.html' with title=container.title author=container.author created_on=container.created_on codes=container.codes files=container.files editor_number=forloop.counter0%}
-{% endfor %}
+
 <!-- {% include 'code_share/dropzone.html' %} -->
 
 

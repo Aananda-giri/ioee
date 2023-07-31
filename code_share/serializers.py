@@ -18,3 +18,4 @@ class ContainerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Container
         fields = '__all__'
+        ordering = ['created_on']  # Use '-' to sort in descending order based on 'created_on'

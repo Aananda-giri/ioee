@@ -269,10 +269,18 @@
 
       // Function to handle the file upload
       function handleFileUpload(container_uuid, editor_number) {
-        disableSaveButton('save_file_btn_'+editor_number);  // disable save button to prevent multiple clicks
-
         console.log(`handleFileUpload(${container_uuid}, ${editor_number})`);
         let fileInput = document.getElementById('fileInput_' + editor_number);
+        
+        if (!fileInput.files.length) {
+          // alert is displayed if no file is selected
+          // enableSaveButton('save_file_btn_'+editor_number, 'Upload');
+          alert('Please choose at least 1 file to upload.');
+          return;
+        }
+
+        disableSaveButton('save_file_btn_'+editor_number);  // disable save button to prevent multiple clicks
+
         let files = fileInput.files;
         let formData = new FormData();
 
