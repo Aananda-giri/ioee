@@ -1,9 +1,7 @@
 # ioee :: no-login code sharing site with nice template
 <B><i>Introduction:</i></b>
 
-    This is the app/bot that does attendance for you in fuse-classroom so that you don't become disqualified for exams for being absent in class.
-
-Live_website : https://ioee.herokuapp.com/
+live_website : https://ioee.herokuapp.com/
 
 
 editor:
@@ -19,7 +17,12 @@ editor:
 bulk create files
 bulk create codes
 post file, code
+* code_share.home2 -> alert if file is empty before upload
 
+## Yet to do:
+* code color theme
+* debug broken css of eeditor on include to home2.html
+* code_share/home2/pagination
 code_share.models.Files::
     remove: link, download_link :: use file_id only
 code_share.editor.html::
