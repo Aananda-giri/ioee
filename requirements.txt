@@ -14,6 +14,12 @@ django-fernet-fields==0.6
 django-nepali-datetime-field==0.6
 djangorestframework==3.14.0
 filelock==3.9.0
+google-api-core==2.11.1
+google-api-python-client==2.92.0
+google-auth==2.21.0
+google-auth-httplib2==0.1.0
+google-auth-oauthlib==1.0.0
+googleapis-common-protos==1.59.1
 gunicorn==20.1.0
 h11==0.14.0
 html5lib==1.1
