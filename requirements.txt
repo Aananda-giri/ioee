@@ -71,3 +71,4 @@ webencodings==0.5.1
 whitenoise==6.3.0
 wsproto==1.2.0
 zope.interface==5.5.2
+PyDrive2==1.16.1
