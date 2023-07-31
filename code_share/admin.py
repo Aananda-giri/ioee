@@ -61,7 +61,7 @@ class CodeAdmin(admin.ModelAdmin):
 
 
 from django.contrib import admin
-from .models import Files, Container
+from .models import Codes, Files, Container
 from .functions import DriveFunctions
 class FilesAdmin(admin.ModelAdmin):
 
@@ -80,5 +80,6 @@ class ContainerAdmin(admin.ModelAdmin):
     ordering = ['-created_on']  # order by created_on
 
 admin.site.register(Code, CodeAdmin)
+admin.site.register(Codes)
 admin.site.register(Files, FilesAdmin)
 admin.site.register(Container, ContainerAdmin)
