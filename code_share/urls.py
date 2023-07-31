@@ -2,6 +2,7 @@ from django.urls import path, include
 from . import views
 urlpatterns = [
     #path('', views.home, name='home'),
+    
     path('v0/', views.snippet_page, name='home'),
     path('<int:page>/', views.snippet_page, name="get_snippets"),
     path('code/', views.home, name='toy_post'),
