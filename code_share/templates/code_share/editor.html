@@ -14,20 +14,20 @@
 
 
 <div class="custom-editor container-fluid" id="editor-{{editor_number}}">
-    <div class="row" style="height: 10%">
-      <div class="col" style="">
+    <div class="row" style="height: 12%">
+      <div class="col">
         <div class="editor-title">
           <div class="row align-items-center">
             <div class="col-9" style="justify-content: center;display: flex;">
-              <h2 style="color: white;font-weight: bold; justify-content: center;">
+              <h3 style="color: white;font-weight: bold; justify-content: center;">
                   {{title |default:"Some Title" }}
-              </h2>
+              </h3>
             </div>
-            <div class="col-3 d-flex justify-content-end">
-              <i class="fa fa-expand circular-icon mb-3" aria-hidden="true" style="background-color: yellow; padding: 3px; border-radius: 50%;" onclick="toggleFullscreen({{editor_number}});"></i>
+            <div class="col-3 d-flex justify-content-end" style="margin-top: 6px;">
+              <i class="fa fa-expand circular-icon mb-3 full-screen-icon" aria-hidden="true" style="background-color: white; padding: 3px; border-radius: 50%;" onclick="toggleFullscreen({{editor_number}});"></i>
             </div>
-        </div>
-        <div class="row align-items-center">
+          </div>
+          <div class="row align-items-center">
             <div class="col-9">
                 <h6 style="display: flex;color: white;font-weight: bold; justify-content: center;">
                     - {{author|default:"author"}}
@@ -37,16 +37,16 @@
               <h5 style="color: white;font-weight: bold;" class="d-flex justify-content-end">
                 {{created_on|default:"2023-07-17T05:09:37.356Z"}}
               </h5>
-          </div>    
+            </div>    
           </div>
         </div>
       </div>
     </div>
-    <div class="row" style="height:88%;margin-bottom: 3px;">
+    <div class="row" style="height:85%;margin-bottom: 3px; margin-top:2%">
       <div class="col h-100" style="">
         <div class="container-fluid custom-editor-body mt-0 w-100 h-100">
           <div class="row h-100">
-            <div class="col-md-3 bg-dark text-light overflow-auto custom-scrollbar h-100">
+            <div class="col-md-3 text-light h-100 sidebar">
               <!-- Sidebar content here -->
               <div class="row align-items-center" style="margin-top: 5px;">
                 <div class="col-8">
@@ -58,7 +58,7 @@
                   </h4>
                 </div>
               </div>
-              <ul id="ul_codes_{{editor_number}}">
+              <ul id="ul_codes_{{editor_number}}" style="list-style: none;">
                 <li class="my-2" id="sidebar_code_{{editor_number}}_0" style="background-color: black; display: none;">
                   <div class="row align-items-center">
                     <div class="col-7 sidebar_item" onclick="preview_code('{{editor_number}}', '0');">
@@ -69,15 +69,15 @@
                 
                 {% for code in codes %}
                     <!-- make first item bold -->
-                    {% if forloop.first %}    
-                      <li class="my-2" id="sidebar_code_{{editor_number}}_{{forloop.counter}}" style="background-color: black;">
-                    {% else %}
-                      <li class="my-2" id="sidebar_code_{{editor_number}}_{{forloop.counter}}">
-                    {% endif %}
+                      <li class="my-2">
                         <div class="row align-items-center">
-                          <div class="col-7 sidebar_item" onclick="preview_code('{{editor_number}}', '{{forloop.counter}}');">
-                            {{code.filename|slice:":7"|default:"Code 0"}}
-                          </div>
+                          {% if forloop.first %}
+                            <div class="col-7 sidebar_item" id="sidebar_code_{{editor_number}}_{{forloop.counter}}" onclick="preview_code('{{editor_number}}', '{{forloop.counter}}');" style="background-color: black;">
+                          {% else %}
+                            <div class="col-7 sidebar_item" id="sidebar_code_{{editor_number}}_{{forloop.counter}}" onclick="preview_code('{{editor_number}}', '{{forloop.counter}}');">
+                          {% endif %}
+                              {{code.filename|slice:":7"|default:"Code 0"}}
+                            </div>
                           <div class="col-5">
                             <i class="fa fa-clone me-3" aria-hidden="true"></i>
                             <a class="fa fa-edit inverted-icon no-underline" aria-hidden="true" href="https://google.com/"></a>
@@ -96,7 +96,7 @@
                   </h4>
                 </div>
               </div>
-              <ul  id="ul_files_{{editor_number}}">
+              <ul  id="ul_files_{{editor_number}}" style="list-style: none;">
                 <li class="my-2" id="sidebar_file_{{editor_number}}_0" style="background-color: black; display: none;">
                   <div class="row align-items-center">
                   <div class="col-8 sidebar_item" onclick="preview_file('{{editor_number}}', '0');">  
@@ -105,9 +105,9 @@
                   </div>
                 </li>
                 {% for file in files %}
-                  <li class="my-2" id="sidebar_file_{{editor_number}}_{{forloop.counter}}">
+                  <li class="my-2">
                     <div class="row align-items-center">
-                      <div class="col-8 sidebar_item" onclick="preview_file('{{editor_number}}', '{{forloop.counter}}');">
+                      <div class="col-8 sidebar_item" id="sidebar_file_{{editor_number}}_{{forloop.counter}}" onclick="preview_file('{{editor_number}}', '{{forloop.counter}}');">
                         {{file.filename|slice:":5"|default:"File 1"}}
                       </div>
                       <div class="col-4">
@@ -119,9 +119,9 @@
               </ul>
             </div>
             
-            <div class="col-md-9">
+            <div class="col-md-9 h-100">
               <!-- Content area here -->
-              <div class="container">
+              <div class="container h-100">
                 <div class="row h-100 display-area" id="display_area_{{editor_number}}">
                   
                   <!-- -------- -->
@@ -190,9 +190,8 @@
                   {% else%}
                     <div class="col overflow-auto  h-100 item-content" id="codePreview_{{editor_number}}_{{forloop.counter}}" style="display: none;">
                   {% endif %}
-                      <h2>{{code.codename|default:"Code 0"}}</h2>
                       <p>
-                        {{code.body|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}}
+                        {{code.body|linebreaksbr|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}}
                       </p>
                     </div>
                     {% endfor %}
@@ -217,7 +216,7 @@
       </div>
     </div>
   </div>
-
+</div>
   <!-- ---------------------------- -->
   <!-- ---Script for file upload--- -->
   <!-- ---------------------------- -->
@@ -307,9 +306,9 @@
                 for (let i = 0; i < data.metadata.length ; i++) {
                   console.log(data.metadata[i]);
                   let sidebar_item = `
-                      <li class="my-2" id="sidebar_file_${editor_number}_${file_children.length}">
+                      <li class="my-2">
                         <div class="row align-items-center">
-                          <div class="col-8 sidebar_item" onclick="preview_file('${editor_number}', '${file_children.length}');">
+                          <div class="col-8 sidebar_item"  id="sidebar_file_${editor_number}_${file_children.length}" onclick="preview_file('${editor_number}', '${file_children.length}');">
                             ${data.metadata[i].filename}
                           </div>
                           <div class="col-4">

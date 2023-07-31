@@ -22,6 +22,7 @@ urlpatterns = [
     path('refresh/', views.refresh, name='refresh'),
 
     path('', views.create_container, name = 'home2'),
+    path('new_container', views.new_container, name = 'new_container'),
     path('upload/', views.upload_files, name='upload_files'),
     path('success/', views.upload_success, name='success'),
     path('containers/', views.container_list, name='container-list'),

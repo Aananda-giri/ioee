@@ -48,28 +48,38 @@
 </head>
 
   <body>
-    
-    <div class="container-fluid d-flex align-items-center"><form method="get" action="/search">
-      <!-- Search form -->
-      <form class="d-flex" method="get" action="/search">
-        <input id="search_input" type="text" placehoder="Search" name="search_query" style="width: 50vw;" class="form-control col-md-6 mx-auto d-block  loading my-5 me-3">
-        <button type="submit" style="background-color: white;" class="btn btn-outline-success mt-5 ms-0">Search</button>
-      </form>
-    </div>
 
+
+
+
+    <!-- search bar -->
+    <div class="container my-5">
+      <div class="row">
+        <!-- Col-8 with green background -->
+        <form class="d-flex" method="get" action="/search">
+          <div class="col-md-8 d-flex justify-content-center" style="/*background-color: green;*/">
+            <div class="text-center">
+              <input id="search_input" type="text" placehoder="Search" name="search_query" style="width: 50vw;" class="form-control loading">
+            </div>
+          </div>
+    
+          <!-- Col-4 with pink background -->
+          <div class="col-md-4 d-flex justify-content-center" style="/*background-color: pink;*/">
+            <div class="text-center">
+              <button type="submit" style="background-color: white;" class="btn btn-outline-success">Search</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
     
 
     <div id="container" class="container-fluid">
       <!-- Modal starts here -->
       <!-- Button trigger modal -->
-      <div class="d-flex">
-        <button
-          type="button"
-          class="btn btn-primary btn-position"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
+      <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-primary btn-position" data-bs-toggle="modal" data-bs-target="#exampleModal" >
           Add Code
         </button>
         <!--<button type="button" class="btn btn-primary btn-position" data-bs-toggle="modal" onclick="location.replace('/community/')">
@@ -80,157 +90,81 @@
         </button>
 
         <!-- Modal -->
-        <form id="upload_form" method="post" action="/home2/" enctype="multipart/form-data">
+        <form id="upload_form" method="post" action="/new_container">
         {%csrf_token%}
          
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div
-            class="
-              modal-dialog
-              modal-lg
-              modal-dialog-centered
-              modal-dialog-scrollable
-            "
-          >
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Form</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                
-                <div
-                class="mb-3">
-                  <label for="exampleFormControlTitle"
-                  class="form-label"
-                    >Title</label
-                  >
-
-
-                  <input
-                    type="text"
-                    maxlength="255"
-                    class="form-control"
-                    id="id_title"
-                    name="title"
-                    placeholder="title"
-                    required
-                  />
+          <div class="modal fade" style="background-color: black;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+            <div class=" modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content" style="background-color: black; color: white;">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">New Container</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
                 </div>
-                <div class="mb-3">
-                  <label for="exampleFormControlAuthor" class="form-label"
-                    >Author</label
-                  >
+                <div class="modal-body">
                   
-
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="author"
-                    id="id_author
-                    maxlength="255"
-                    placeholder="author"
-                    required
-
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Email address</label
-                  >
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="id_email"
-                    name="email"
-                    placeholder="email"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="exampleFormControlTags" class="form-label"
-                    >Tags</label
-                  >
-                  <label for="id_tags">Tags:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="tags"
-                    maxlength="255"
-                    id="id_tags"
-                    placeholder="tags"
-                  />
-                </div>
-                <div class="mb-3">
-                  <input class="form-check-input" type="checkbox" name="is_private" id="id_is_private">
-                  <label for="exampleFormControlTags" class="form-label"
-                    >Private Code?</label>
-                </div>
-                
-                <div class="dropzone" id="file-dropzone">
-                    <p>(optional) Drag and drop files here</p>
-                    <!-- <label for="file-input" class="btn btn-primary">Choose File</label> -->
-                    <input name="file_field" id="id_file_field" name="file_field" type="file" multiple="">
-                    <div class="preview-container" id="file-preview-container"></div>
+                  <div class="mb-3">
+                    <label for="Title" class="form-label">Title</label>
+                    <input type="text" maxlength="255" class="form-control" id="id_title" name="title" placeholder="title" required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="ControlAuthor" class="form-label">Author</label>
+                    <input type="text" class="form-control" name="author" id="id_author maxlength="255" placeholder="author" required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="email_address" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="id_email" name="email" placeholder="email" />
+                  </div>
+                  <div class="mb-3">
+                    <label for="id_tags">Tags:</label>
+                    <input type="text" class="form-control" name="tags" maxlength="255" id="id_tags" placeholder="tags" />
+                  </div>
+                  <div class="mb-3">
+                    <input class="form-check-input" type="checkbox" name="is_private" id="id_is_private">
+                    <label for="Tags" class="form-label">Private Code?</label>
+                  </div>
+                  
+                  <!--<div class="dropzone" id="file-dropzone">
+                      <p>(optional) Drag and drop files here</p>
+                      <input name="file_field" id="id_file_field" name="file_field" type="file" multiple="">
+                      <div class="preview-container" id="file-preview-container"></div>
                   </div>
                   <div class="preview-container" id="file-preview-container"></div>
                   <div class="progress" id="upload-progress"></div>
                   <label id="unselect-files" class="btn btn-danger mt-3" onclick="document.getElementsByName('file_field')[1].value=null;">Unselect All</label>
-                
-                <div class="mb-3">
-                  <label for="exampleFormControlTextarea1" class="form-label"
-                    >Code</label
-                  >
-                  <!-- <textarea name="body" cols="40" rows="10" maxlength="1000" id="id_body"></textarea> -->
                   
-                  <textarea
-                    class="form-control"
-                    id="id_body"
-                    name="body"
-                    rows="30"
-                    maxlength="1000"
-                  ></textarea>
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label"> Code</label >
+                    
+                    <textarea class="form-control" id="id_body" name="body" rows="30" maxlength="1000" ></textarea>
+                  </div> -->
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="submit" class="btn btn-primary" id="save_new_code_btn" onclick="disableSaveButton('save_new_code_btn')">
-                  Save
-                </button>
-              </form>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary" id="save_new_code_btn" onclick="disableSaveButton('save_new_code_btn')">
+                    Save
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
+    </div>
 
       <!-- accordian starts here -->
 
       <div class="accordion" id="accordionExample"></div>
 
       <!-- accordian ends here -->
-    </div>
 
-    {% for container in containers %}
-        {% include 'code_share/editor.html' with title=container.title author=container.author created_on=container.created_on codes=container.codes files=container.files editor_number=forloop.counter0%}
-    {% endfor %}
+      <!-- -------------------------- -->
+      <!-- code to display containers -->
+      <!-- -------------------------- -->
+      {% for container in containers %}
+          {% include 'code_share/editor.html' with title=container.title author=container.author created_on=container.created_on codes=container.codes files=container.files editor_number=forloop.counter0%}
+      {% endfor %}
     
  <!-- for pagination (next_page, previous_page) -->    
  <nav aria-label="Page navigation example">
@@ -246,9 +180,6 @@
     </li>
   </ul>
 </nav>
-
-
-<!-- {% include 'code_share/dropzone.html' %} -->
 
 
     <!-- Required Ace Libraries -->
@@ -427,7 +358,7 @@ function search() {
       var instance = JSON.parse(response["people"]);
       //appendSearchResults(instance[0]);
       console.log('fields');
-      console.log(instance[0].fields);
+      console.log(instance[0].fieflds);
       console.log('her');
       console.log(instance[0].fields[0]);
       console.log('profile_pic:');

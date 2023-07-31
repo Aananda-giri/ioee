@@ -763,6 +763,7 @@ def upload_one_code(request):
     if request.method == 'POST':
         container_id = request.POST.get("container_uuid", None)
         code =  request.POST.get("code", None)
+        print(code)
         filename =  request.POST.get("filename", 'code')
         
         print(f'0code:{code}, container_id: {container_id}, filename:{filename}')
@@ -791,10 +792,10 @@ def new_container(request):
         
         is_private = request.POST.get("is_private", None)
         is_private = (False, True) [is_private=="on"]       #To hide the private code
-        author_ip = request.POST.get("ip", None)
+        author_ip = author_ip = get_client_ip(request)
 
         # print all fields send by requests
-        print(f'{request.POST}')
+        
         container_data = {
             'title': title if (title != None) else '',
             'author': author if (author != None) else '',
@@ -806,8 +807,13 @@ def new_container(request):
             'author_ip': author_ip,
             # 'likes_count': 10
         }
+
+        print(f'container_data:{container_data} \n\n  request.POST: {request.POST}')
         container = Container.objects.create(**container_data)
-        return JsonResponse({'container_uuid': container.unique_uuid})
+        
+        # return JsonResponse({'container_uuid': container.unique_uuid})
+        # redirect to create_container
+        return redirect('home2')
     else:
         return JsonResponse({'error': 'Container creation failed.'}, status=400)
 '''
