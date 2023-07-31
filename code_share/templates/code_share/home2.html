@@ -48,11 +48,17 @@
 </head>
 
   <body>
-    <!-- Search form -->
-    <form class="d-flex" method="get" action="/search">
-      <input id="search_input" type="text" placehoder="Search" name="search_query" style="width: 50vw;" class="form-control col-md-6 mx-auto d-block  loading my-5 me-3">
-      <button type="submit" style="background-color: white;" class="btn btn-outline-success mt-5 ms-0">Search</button>
-    </form>
+    
+    <div class="container-fluid d-flex align-items-center"><form method="get" action="/search">
+      <!-- Search form -->
+      <form class="d-flex" method="get" action="/search">
+        <input id="search_input" type="text" placehoder="Search" name="search_query" style="width: 50vw;" class="form-control col-md-6 mx-auto d-block  loading my-5 me-3">
+        <button type="submit" style="background-color: white;" class="btn btn-outline-success mt-5 ms-0">Search</button>
+      </form>
+    </div>
+
+
+    
 
     <div id="container" class="container-fluid">
       <!-- Modal starts here -->
