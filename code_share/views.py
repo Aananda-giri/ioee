@@ -767,15 +767,15 @@ def upload_one_code(request):
         filename =  request.POST.get("filename", 'code')
         
         print(f'0code:{code}, container_id: {container_id}, filename:{filename}')
-        if code !=None and code.strip() != '' and container_id != None and container_id.strip() != '':
-            print(f'code:{code}, container_id: {container_id}, filename:{filename}')
-            # save code
-            saved_data = Container.add_one_code(container_id, filename, code)
+        # if code !=None and code.strip() != '' and container_id != None and container_id.strip() != '':
+        #     print(f'code:{code}, container_id: {container_id}, filename:{filename}')
+        #     # save code
+        #     saved_data = Container.add_one_code(container_id, filename, code)
             
-            print(f'saved code successfully! returning metadata:{saved_data}')
-            return JsonResponse({'metadata': saved_data}, status=200)
-        else:
-            return JsonResponse({'error': 'Code upload failed.'}, status=400)
+        #     print(f'saved code successfully! returning metadata:{saved_data}')
+        #     return JsonResponse({'metadata': saved_data}, status=200)
+        # else:
+        #     return JsonResponse({'error': 'Code upload failed.'}, status=400)
 '''
 message: new code/file
 Add Code -> new_Container
