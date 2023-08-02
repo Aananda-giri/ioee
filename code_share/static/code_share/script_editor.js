@@ -177,23 +177,35 @@ function toggleFullscreen(editor_number) {
 
 
 function copy_to_clipboard (editor_number, item_number) {
+  function clip(codeBlock){
+      // Create a range to select the text inside the code block
+      var range = document.createRange();
+      range.selectNode(codeBlock);
+
+      // Add the range to the clipboard
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      // Execute the copy command
+      document.execCommand('copy');
+
+      // Clean up the selection
+      selection.removeAllRanges();
+  }
   // Get the code block element
   var codeBlock = document.getElementById('codePreview_' + editor_number+'_'+item_number);
 
-  // Create a range to select the text inside the code block
-  var range = document.createRange();
-  range.selectNode(codeBlock);
-
-  // Add the range to the clipboard
-  var selection = window.getSelection();
-  selection.removeAllRanges();
-  selection.addRange(range);
-
-  // Execute the copy command
-  document.execCommand('copy');
-
-  // Clean up the selection
-  selection.removeAllRanges();
+  // note: it was only copying the code when the code block was visible
+  if (codeBlock.style.display == 'none'){
+    // Temporarily show the div to make the code block visible
+    codeBlock.style.display = 'block';
+    clip(codeBlock);
+    // Restore the original display style of the parent div
+    codeBlock.style.display = 'none';
+  } else {
+    clip(codeBlock);
+  }
 
   // Notify the user that the code has been copied (optional)
   alert('Code has been copied to the clipboard!');
