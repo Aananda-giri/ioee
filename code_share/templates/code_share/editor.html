@@ -58,7 +58,7 @@
                     {% if forloop.first and is_new_container %}
                       <span class="fa fa-plus-square inverted-icon no-underline" aria-hidden="true" onclick="add_code_to_editor({{editor_number}});" data-bs-toggle="tooltip" data-bs-placement="right" title="Add new Code!" id="addCode"></span>
                     {% else %}
-                      <span class="fa fa-plus-square inverted-icon no-underline" aria-hidden="true" onclick="add_code_to_editor({{editor_number}});"></span>
+                      <span class="fa fa-plus-square inverted-icon no-underline" aria-hidden="true" onclick="add_code_to_editor({{editor_number}});"  data-bs-toggle="tooltip" data-bs-placement="right" title="Add new Code!"></span>
                     {% endif %}
                   </h4>
                 </div>
@@ -100,7 +100,7 @@
                     {% if forloop.first and is_new_container %}
                     <a class="fa fa-plus-square inverted-icon no-underline" aria-hidden="true"  onclick="add_files_to_editor({{editor_number}});" data-bs-toggle="tooltip" data-bs-placement="right" title="Add new Image/File!" id="addFile"></a>
                     {% else %}
-                      <a class="fa fa-plus-square inverted-icon no-underline" aria-hidden="true"  onclick="add_files_to_editor({{editor_number}});"></a>
+                    <a class="fa fa-plus-square inverted-icon no-underline" aria-hidden="true"  onclick="add_files_to_editor({{editor_number}});" data-bs-toggle="tooltip" data-bs-placement="right" title="Add new Image/File!"></a>  
                     {% endif %}
                     
                   </h4>
