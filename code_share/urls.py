@@ -22,7 +22,11 @@ urlpatterns = [
     path('refresh/', views.refresh, name='refresh'),
 
     path('', views.create_container, name = 'home2'),
+    path('<int:page>/<str:is_new_container>/', views.create_container, name = 'home2'),
+    path('', views.create_container, name = 'create_container'),
     path('new_container', views.new_container, name = 'new_container'),
+    # path(r'(?P<page>\d+)/(?P<is_new_container>\w+)$', views.create_container, name = 'home2'),
+    # path(r'(?P<page>\d+)/(?P<is_new_container>\w+)$/', views.create_container, name = 'home2'),
     path('upload/', views.upload_files, name='upload_files'),
     path('success/', views.upload_success, name='success'),
     path('containers/', views.container_list, name='container-list'),

@@ -163,7 +163,7 @@
       <!-- code to display containers -->
       <!-- -------------------------- -->
       {% for container in containers %}
-          {% include 'code_share/editor.html' with title=container.title author=container.author created_on=container.created_on codes=container.codes files=container.files editor_number=forloop.counter0%}
+          {% include 'code_share/editor.html' with title=container.title author=container.author created_on=container.created_on codes=container.codes files=container.files editor_number=forloop.counter0 is_new_container=is_new_container%}
       {% endfor %}
     
  <!-- for pagination (next_page, previous_page) -->    

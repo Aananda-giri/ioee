@@ -206,6 +206,7 @@ class Container(models.Model):
     def get_absolute_url(self):
         if self.private_code==False:
             return f'/code/{self.id}/'
+    
 
     @classmethod
     @transaction.atomic

@@ -3,6 +3,7 @@ from .models import Code, Branch, Photo
 from .forms import CodeForm
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import BadHeaderError #, send_mail
+from django.urls import reverse
 
 
 from django.shortcuts import render, HttpResponse
@@ -603,11 +604,11 @@ def upload_files(request):
 from django.shortcuts import render, redirect
 from .forms import ContainerForm, FilesForm, CodesForm
 from .models import Container
-def create_container(request, page=1):
+def create_container(request, page=1, is_new_container='False'):
     container_form = ContainerForm()
     file_form = FilesForm()
     code_form = CodesForm()
-    
+
     if request.method == 'POST':
             container_form = ContainerForm(request.POST)
             file_form = FilesForm(request.POST)
@@ -666,7 +667,7 @@ def create_container(request, page=1):
             #     code_data=code_data
             # )
             # return redirect('success')#, container_id=container.unique_uuid)
-            
+        
     context = {
         'container_form': container_form,
         'file_form': file_form,
@@ -677,7 +678,10 @@ def create_container(request, page=1):
 
     containers = Container.objects.order_by('-created_on').prefetch_related('files', 'codes')
     serializer = ContainerSerializer(containers, many=True)
-    return render(request, 'code_share/home2.html', {'containers':serializer.data, 'context':context})
+    is_new_container = True if is_new_container=='True' else False
+    is_new_container = True if (containers[0].files.all().count() == 0 and containers[0].codes.all().count() == 0) else is_new_container
+    print(f'is_new_container:\'{is_new_container}\', {type(is_new_container)}')
+    return render(request, 'code_share/home2.html', {'containers':serializer.data, 'context':context, 'is_new_container':is_new_container})
     return JsonResponse(serializer.data, safe=False)
 
     message = None
@@ -691,6 +695,50 @@ def create_container(request, page=1):
     #data = serializers.serialize('json', {'codes': codes, 'new_code': new_code, 'code_form': code_form} )
 
     return render(request, 'code_share/home.html', {'data': data, 'codes': new_code, 'code_form': code_form, 'branches':branches, 'search_term':'', 'max_pages' : max_pages, 'message': message})
+
+
+'''
+message: new code/file
+Add Code -> new_Container
+'''
+# ---------------------
+# ------- create new container -------
+# ---------------------
+def new_container(request):
+    print('\n\n redirecting')
+    # return redirect('create_container')
+    if request.method == 'POST':
+        title = request.POST.get("title", None)
+        author = request.POST.get("author", None)
+        email = request.POST.get("email", None)
+        tags = request.POST.get("tags", None).split(' ')
+        
+        is_private = request.POST.get("is_private", None)
+        is_private = (False, True) [is_private=="on"]       #To hide the private code
+        author_ip = author_ip = get_client_ip(request)
+
+        # print all fields send by requests
+        
+        container_data = {
+            'title': title if (title != None) else '',
+            'author': author if (author != None) else '',
+            # 'created_on': '2023-07-08',
+            # 'unique_uuid': '123e4567-e89b-12d3-a456-426614174000',
+            'tags': tags if (tags != None) else [],
+            'author_email': email,
+            'is_private': is_private,
+            'author_ip': author_ip,
+            # 'likes_count': 10
+        }
+
+        print(f'container_data:{container_data} \n\n  request.POST: {request.POST}')
+        container = Container.objects.create(**container_data)
+        
+        # return JsonResponse({'container_uuid': container.unique_uuid})
+        # redirect to create_container
+        return redirect(reverse('home2', kwargs={'page':1, 'is_new_container':'True'}))
+    else:
+        return JsonResponse({'error': 'Container creation failed.'}, status=400)
 
 def upload_success(request):
     return render(request, 'code_share/upload_success.html')
@@ -776,46 +824,7 @@ def upload_one_code(request):
         #     return JsonResponse({'metadata': saved_data}, status=200)
         # else:
         #     return JsonResponse({'error': 'Code upload failed.'}, status=400)
-'''
-message: new code/file
-Add Code -> new_Container
-'''
-# ---------------------
-# ------- Test -------
-# ---------------------
-def new_container(request):
-    if request.method == 'POST':
-        title = request.POST.get("title", None)
-        author = request.POST.get("author", None)
-        email = request.POST.get("email", None)
-        tags = request.POST.get("tags", None).split(' ')
-        
-        is_private = request.POST.get("is_private", None)
-        is_private = (False, True) [is_private=="on"]       #To hide the private code
-        author_ip = author_ip = get_client_ip(request)
 
-        # print all fields send by requests
-        
-        container_data = {
-            'title': title if (title != None) else '',
-            'author': author if (author != None) else '',
-            # 'created_on': '2023-07-08',
-            # 'unique_uuid': '123e4567-e89b-12d3-a456-426614174000',
-            'tags': tags if (tags != None) else [],
-            'author_email': email,
-            'is_private': is_private,
-            'author_ip': author_ip,
-            # 'likes_count': 10
-        }
-
-        print(f'container_data:{container_data} \n\n  request.POST: {request.POST}')
-        container = Container.objects.create(**container_data)
-        
-        # return JsonResponse({'container_uuid': container.unique_uuid})
-        # redirect to create_container
-        return redirect('home2')
-    else:
-        return JsonResponse({'error': 'Container creation failed.'}, status=400)
 '''
 bulk create files
 bulk create codes
