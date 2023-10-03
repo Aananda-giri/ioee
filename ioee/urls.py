@@ -47,6 +47,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}),
     path('ioe_overflow/', include('ioe_overflow.urls')),
+    path('pdf', include('pdf_engine.urls')),
     path('', include('code_share.urls')),
 
     path('community/', include('person.urls')),

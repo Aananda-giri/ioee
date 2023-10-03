@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'person',
     'code_share.apps.CodeShareConfig',
     'ioe_overflow.apps.IoeOverflowConfig',
+    'pdf_engine.apps.PdfEngineConfig',
     'nepali_datetime_field',
 ]
 #'fontawesome-free',

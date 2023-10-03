@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: default;
+        }
+
+        body {
+        font-family: Arial, sans-serif;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    
+        .result {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+        }
+    
+        .icon {
+            margin-right: 20px;
+        }
+    
+        .icon img {
+            max-width: 50px;
+            max-height: 50px;
+        }
+    
+        .details {
+            flex-grow: 1;
+        }
+    
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    
+    </style>
+</head>
+
+<body>
+    <div class="search-container">
+        <form action="" method="get" action="/new_container" id="/pdf">
+            <input type="text" name="search" placeholder="{{search_result.query}}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="result">
+        <div class="icon">
+            {% if search_result.type == 'folder' %}
+                <img src="folder_icon.png" alt="Folder Icon">
+            {% else %
+            <img src="file_icon.png" alt="File Icon">
+            {% endif %}
+        </div>
+        <div class="details">
+            <h3>File Name</h3>
+            <p>Size: 10 MB</p>
+            <button class="download-btn">Download</button>
+            <button class="open-btn">Open</button>
+        </div>
+    </div>
+
+    {% for file in search_result.result %}
+        <div class="result">
+            
+            
+            <div class="icon">
+                {% if file.mimeType == "application/vnd.google-apps.shortcut" or  file.mimeType == "application/vnd.google-apps.folder"%}
+                    <svg focusable="false" viewBox="0 0 24 24" height="24px" width="24px" fill="#5f6368" class="a-s-fa-Ha-pa"><g><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></g></svg>
+                {% else %}
+                
+                    {% if file.thumbnail == "" or not file.thumbnail %}
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#5f6368" class="a-s-fa-Ha-pa">
+                            <path d="M3 2c-.55 0-1 .45-1 1v18c0 .55.45 1 1 1h18c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1h-7V2H3zm4 16H3v-6h4v6zm0-8H3V4h4v6zm14 10H7c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2z"></path>
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                          </svg>
+                          
+                    {% else %}
+                        <img src="{{file.thumbnail}}" alt="File Icon">
+                    {%endif%}
+                {%endif%}
+            </div>
+            <div class="details">
+                <h3>{{file.title}}</h3>
+                <p>Size: <span class="quotaBytesUsed" quotaBytesUsed="{{ file.quotaBytesUsed }}"></span> MB</p>
+                {% if file.mimeType == "application/vnd.google-apps.shortcut" or  file.mimeType == "application/vnd.google-apps.folder"%}
+                    <button class="download-btn"><a target="_blank" href="https://drive.google.com/drive/folders/{{file.id}}">Open</a></button>
+                {% else %}
+                    <button class="download-btn"><a target="_blank" href="https://drive.usercontent.google.com/download?id={{file.id}}&export=download&confirm=t">Download</a></button>
+                    <button class="download-btn"><a target="_blank" href="https://drive.google.com/file/d/{{file.id}}/view?usp=drivesdk">Open</a></button>    
+                {%endif%}
+            </div>
+            
+        </div>
+    {%endfor%}
+    
+    <!-- Add more results as needed -->
+{{search_result}}
+
+<script>
+    function updateQuotaBytesUsed() {
+    const spans = document.querySelectorAll('.quotaBytesUsed');
+    for (const span of spans) {
+        const productId = parseInt(span.getAttribute('quotaBytesUsed'));
+        console.log(productId);
+        const newQuotaBytesUsed = productId / 1048576;
+        span.textContent = newQuotaBytesUsed.toFixed(2);
+    }
+    }
+    updateQuotaBytesUsed();
+
+</script>
+</body>
+</html>
