@@ -19,8 +19,8 @@ def search(request):
         try:
             search_result = requests.get('http://ec2-18-206-249-251.compute-1.amazonaws.com:5000/search', params={'query': query})
             search_result.raise_for_status()  # Raise an exception for HTTP errors (4xx and 5xx)
-            search_result = search_result.json()
-        except requests.exceptions.HTTPError as err:
+            # search_result = search_result.json()
+        except Exception as err:
             print(f'error: {err}')
             search_result = requests.get('https://strangehacksoldquestionsolution.aanandagiri.repl.co/search', params={'query': query}).json()
         
