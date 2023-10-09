@@ -19,6 +19,8 @@ import requests, os
 from requests.structures import CaseInsensitiveDict
 from .functions import DriveFunctions
 from .serializers import ContainerSerializer
+from django.db.models import Prefetch
+from django.utils import timezone
 
 #source: https://stackoverflow.com/questions/18264304/get-clients-real-ip-address-on-heroku#answer-18517550
 def get_client_ip(request):
@@ -539,9 +541,6 @@ def refresh(request):
 # ----------------------------------
 # File upload to Google Drive
 # ----------------------------------
-
-
-
 from django.shortcuts import render, redirect
 from django.conf import settings
 from googleapiclient.discovery import build
@@ -610,35 +609,47 @@ from django.shortcuts import render, redirect
 from .forms import ContainerForm, FilesForm, CodesForm
 from .models import Container
 
-def filter_containers():
+def filter_containers(filter=True):
     
     '''
      * removes spam code
      * and remove empty containers created more than 1 day ago
     '''
 
-    from django.db.models import Prefetch
-    from django.utils import timezone
+    
+    if filter == True:
+        # Create a Prefetch object to filter out spam codes
+        non_spam_codes_prefetch = Prefetch('codes', queryset=Codes.objects.filter(is_spam=False), to_attr='non_spam_codes')
 
-    # Create a Prefetch object to filter out spam codes
-    non_spam_codes_prefetch = Prefetch('codes', queryset=Codes.objects.filter(is_spam=False), to_attr='non_spam_codes')
+        # Filter out containers created more than 1 day ago and have non-spam codes or no files
+        one_day_ago = timezone.now() - timezone.timedelta(days=1)
 
-    # Fetch containers with non-spam codes using the Prefetch
-    containers_with_non_spam_codes = Container.objects.order_by('-created_on').prefetch_related(
-        non_spam_codes_prefetch,
-        'files'
-    )[:25]
+        # Fetch containers with non-spam codes using the Prefetch
+        containers_with_non_spam_codes = Container.objects.order_by('-created_on').prefetch_related(
+            non_spam_codes_prefetch,
+            'files'
+        )#.filter(created_on__lte=one_day_ago)
 
-    # Filter out containers created more than 1 day ago and have non-spam codes or no files
-    one_day_ago = timezone.now() - timezone.timedelta(days=1)
 
-    filtered_containers = [
-        container for container in containers_with_non_spam_codes
-        if container.created_on <= one_day_ago or container.non_spam_codes and not container.files.all()
-    ][:25]
+        filtered_containers = [
+            container for container in containers_with_non_spam_codes
+            # display if: "Not private code and"
+            # 1. created less than 1 day ago
+            # 2. has non-spam codes
+            # 3. has files
+            if (container.is_private == False) and (one_day_ago <= container.created_on) or (container.non_spam_codes) or (container.files.all())
+            # if container.non_spam_codes and not container.files.all()
+        ][:25]
 
-    return filtered_containers
-
+        return filtered_containers
+    else:
+        # containers = Container.objects.order_by('-created_on').prefetch_related('files', 'codes')[:25]
+        
+        containers = Container.objects.order_by('-created_on').prefetch_related(
+            Prefetch('codes', queryset=Codes.objects.filter(is_spam=False)),
+            'files'
+            )[:25]
+        return containers
 
 
 def create_container(request, page=1, is_new_container='False'):
@@ -712,14 +723,7 @@ def create_container(request, page=1, is_new_container='False'):
     }
     
 
-
-    # containers = Container.objects.order_by('-created_on').prefetch_related('files', 'codes')[:25]
-    # containers = Container.objects.order_by('-created_on').prefetch_related(
-    #     Prefetch('codes', queryset=Codes.objects.filter(is_spam=False)),
-    #     'files'
-    #     )[:25]
-
-    containers = filter_containers()
+    containers = filter_containers(filter=True)
     serializer = ContainerSerializer(containers, many=True)
     is_new_container = True if is_new_container=='True' else False
     is_new_container = True if (containers[0].files.all().count() == 0 and containers[0].codes.all().count() == 0) else is_new_container
