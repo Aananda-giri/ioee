@@ -1,5 +1,5 @@
 import math
-from .models import Code, Branch, Photo
+from .models import Code, Branch, Photo, Codes
 from .forms import CodeForm
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import BadHeaderError #, send_mail
@@ -13,6 +13,7 @@ from django.conf import settings
 from django.core import serializers
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.contrib.auth.decorators import login_required
+from django.db.models import Prefetch
 
 import requests, os
 from requests.structures import CaseInsensitiveDict
@@ -608,6 +609,38 @@ def upload_files(request):
 from django.shortcuts import render, redirect
 from .forms import ContainerForm, FilesForm, CodesForm
 from .models import Container
+
+def filter_containers():
+    
+    '''
+     * removes spam code
+     * and remove empty containers created more than 1 day ago
+    '''
+
+    from django.db.models import Prefetch
+    from django.utils import timezone
+
+    # Create a Prefetch object to filter out spam codes
+    non_spam_codes_prefetch = Prefetch('codes', queryset=Codes.objects.filter(is_spam=False), to_attr='non_spam_codes')
+
+    # Fetch containers with non-spam codes using the Prefetch
+    containers_with_non_spam_codes = Container.objects.order_by('-created_on').prefetch_related(
+        non_spam_codes_prefetch,
+        'files'
+    )[:25]
+
+    # Filter out containers created more than 1 day ago and have non-spam codes or no files
+    one_day_ago = timezone.now() - timezone.timedelta(days=1)
+
+    filtered_containers = [
+        container for container in containers_with_non_spam_codes
+        if container.created_on <= one_day_ago or container.non_spam_codes and not container.files.all()
+    ][:25]
+
+    return filtered_containers
+
+
+
 def create_container(request, page=1, is_new_container='False'):
     container_form = ContainerForm()
     file_form = FilesForm()
@@ -680,7 +713,13 @@ def create_container(request, page=1, is_new_container='False'):
     
 
 
-    containers = Container.objects.order_by('-created_on').prefetch_related('files', 'codes')[:25]
+    # containers = Container.objects.order_by('-created_on').prefetch_related('files', 'codes')[:25]
+    # containers = Container.objects.order_by('-created_on').prefetch_related(
+    #     Prefetch('codes', queryset=Codes.objects.filter(is_spam=False)),
+    #     'files'
+    #     )[:25]
+
+    containers = filter_containers()
     serializer = ContainerSerializer(containers, many=True)
     is_new_container = True if is_new_container=='True' else False
     is_new_container = True if (containers[0].files.all().count() == 0 and containers[0].codes.all().count() == 0) else is_new_container

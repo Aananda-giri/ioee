@@ -337,6 +337,7 @@ class Codes(models.Model):
     container = models.ForeignKey(Container, on_delete=models.CASCADE, related_name='codes')    # model.cascade deletes code on deleting container
     filename = models.CharField(default='code', max_length=25)
     body = models.TextField(max_length=1000)
+    is_spam = models.BooleanField(default=False)
 
     def __str__(self):
         return self.body
