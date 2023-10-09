@@ -680,7 +680,7 @@ def create_container(request, page=1, is_new_container='False'):
     
 
 
-    containers = Container.objects.order_by('-created_on').prefetch_related('files', 'codes')
+    containers = Container.objects.order_by('-created_on').prefetch_related('files', 'codes')[:25]
     serializer = ContainerSerializer(containers, many=True)
     is_new_container = True if is_new_container=='True' else False
     is_new_container = True if (containers[0].files.all().count() == 0 and containers[0].codes.all().count() == 0) else is_new_container

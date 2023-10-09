@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from .functions import DriveFunctions
 
 
+
 # settings.configure()
 
 # for snippet in all_codes:
@@ -334,7 +335,7 @@ class Files(models.Model):
 
 class Codes(models.Model):
     container = models.ForeignKey(Container, on_delete=models.CASCADE, related_name='codes')    # model.cascade deletes code on deleting container
-    filename = models.CharField(default='code', max_length=15)
+    filename = models.CharField(default='code', max_length=25)
     body = models.TextField(max_length=1000)
 
     def __str__(self):
