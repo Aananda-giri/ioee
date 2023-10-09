@@ -553,6 +553,10 @@ def save_file(files, author=None, title=None, description=None):
     for file in files:
         print(file.name)
         # save file to media folder
+        if not os.path.exists('uploads/file_upload'):
+            if not os.path.exists('uploads'):
+                os.mkdir('uploads')
+            os.mkdir('uploads/file_upload')
         with open(f'uploads/file_upload/{file.name}', 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
@@ -815,15 +819,15 @@ def upload_one_code(request):
         filename =  request.POST.get("filename", 'code')
         
         print(f'0code:{code}, container_id: {container_id}, filename:{filename}')
-        # if code !=None and code.strip() != '' and container_id != None and container_id.strip() != '':
-        #     print(f'code:{code}, container_id: {container_id}, filename:{filename}')
-        #     # save code
-        #     saved_data = Container.add_one_code(container_id, filename, code)
+        if code !=None and code.strip() != '' and container_id != None and container_id.strip() != '':
+            print(f'code:{code}, container_id: {container_id}, filename:{filename}')
+            # save code
+            saved_data = Container.add_one_code(container_id, filename, code)
             
-        #     print(f'saved code successfully! returning metadata:{saved_data}')
-        #     return JsonResponse({'metadata': saved_data}, status=200)
-        # else:
-        #     return JsonResponse({'error': 'Code upload failed.'}, status=400)
+            print(f'saved code successfully! returning metadata:{saved_data}')
+            return JsonResponse({'metadata': saved_data}, status=200)
+        else:
+            return JsonResponse({'error': 'Code upload failed.'}, status=400)
 
 '''
 bulk create files
