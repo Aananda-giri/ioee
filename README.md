@@ -1,12 +1,14 @@
 # ioee
+* Django-powered application for Engineering Students.
 
-## Code Share
+# Features
+## 1. Code Share
 * **store and share** your lab work (**file/code**)
 * **no login** required
 
 * [deployed here](https://ioee.herokuapp.com/)
 
-## Pdf Search Engine (IOE)
+## 2. Pdf Search Engine (IOE)
 * **Search pdfs** shared by other ioe students
 * currently indexed over **`30,000 pdfs`**
 * [deployed here](https://ioee.herokuapp.com/pdf/)
