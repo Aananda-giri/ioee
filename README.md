@@ -1,19 +1,18 @@
-# ioee :: no-login code sharing site with nice template
-<B><i>Introduction:</i></b>
+# ioee
 
-    This is the app/bot that does attendance for you in fuse-classroom so that you don't become disqualified for exams for being absent in class.
+## Code Share
+* **store and share** your lab work (**file/code**)
+* **no login** required
 
-Live_website : https://ioee.herokuapp.com/
+* [deployed here](https://ioee.herokuapp.com/)
 
+## Pdf Search Engine (IOE)
+* **Search pdfs** shared by other ioe students
+* currently indexed over **`30,000 pdfs`**
+* [deployed here](https://ioee.herokuapp.com/pdf/)
 
-editor:
- - currently using: ace editor
- - to change to : code mirror 6
- references: 
- https://blog.replit.com/code-editors
- https://codemirror.net/6/docs/
- https://dyclassroom.com/codemirror/how-to-setup-codemirror
-
-
-# ToDo
-- [ ] dont save code if it exists in db :: inform user it exists
+# references:
+* [This app deployed](https://ioee.herokuapp.com)
+* [Repli's blog on their experience with code editors](https://blog.replit.com/code-editors)
+* [code-mirror docs](https://codemirror.net/6/docs/)
+* [setting up code-mirror](https://dyclassroom.com/codemirror/how-to-setup-codemirror)
