@@ -55,6 +55,10 @@
         .details {
             flex-grow: 1;
         }
+
+        .title{
+            cursor: pointer;/* show pointer on hover */
+        }
     
         button {
             background-color: #007BFF;
@@ -97,11 +101,11 @@
             <div class="details">
                 {% if file.mimeType == "application/vnd.google-apps.shortcut" or  file.mimeType == "application/vnd.google-apps.folder"%}
                     <a target="_blank" href="https://drive.google.com/drive/folders/{{file.id}}">
-                        <h3>{{file.title}}</h3>
+                        <h3 class="title">{{file.title}}</h3>
                     </a>
                 {% else %}
                     <a target="_blank" href="https://drive.google.com/file/d/{{file.id}}/view?usp=drivesdk">
-                        <h3>{{file.title}}</h3>
+                        <h3 class="title">{{file.title}}</h3>
                     </a>
                 {% endif %}
                 <p>Size: <span class="quotaBytesUsed" quotaBytesUsed="{{ file.quotaBytesUsed }}"></span> MB</p>
