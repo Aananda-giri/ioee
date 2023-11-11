@@ -8,8 +8,8 @@
 
     <style>
         a {
-            text-decoration: none;
-            color: inherit;
+            text-decoration: none !important;
+            color: inherit !important;
             cursor: default;
         }
 
@@ -73,6 +73,13 @@
 </head>
 
 <body>
+
+    <div class="d-flex justify-content-center mb-3">
+        <button class="btn btn-primary btn-position ms-5" target="_blank">
+            <a href="/" targer="_blank" style="text-decoration: none; color:white;">Code-Share</a>
+        </button>
+    </div>
+
     <div class="search-container">
         <form action="" method="get" action="/new_container" id="/pdf">
             <input type="text" name="search" placeholder="{{search_result.query}}">
