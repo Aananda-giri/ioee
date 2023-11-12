@@ -10,7 +10,7 @@
 
 ## 2. Pdf Search Engine
 * **Search pdfs** shared by other ioe students
-* currently indexed over **`30,000 pdfs`**
+* currently indexed over **`50,000 pdfs`**
 * [deployed here](https://ioee.herokuapp.com/pdf/)
 
 # references:
