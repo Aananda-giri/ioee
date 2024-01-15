@@ -15,20 +15,25 @@ def search(request):
             search_result = json.load(f)
         query = 'physics'
     else:
+        # get results from mongo db
+        from pdf_engine.mongo_db_handler import MongoDBHandler
+        mongo_handler = MongoDBHandler(collection_name = "pdf_collection", db_name="pdf_engine")
+        search_result = mongo_handler.search(query)
+        
         # get results from second api if first api fails
-        try:
-            print('try')
-            search_result = requests.get('https://strangehacksoldquestionsolution.aanandagiri.repl.co/search', params={'query': query})
-            search_result.raise_for_status()  # Raise an exception for HTTP errors (4xx and 5xx)
-            search_result = search_result.json()
+        # try:
+        #     print('try')
+        #     search_result = requests.get('https://strangehacksoldquestionsolution.aanandagiri.repl.co/search', params={'query': query})
+        #     search_result.raise_for_status()  # Raise an exception for HTTP errors (4xx and 5xx)
+        #     search_result = search_result.json()
             
-            print(search_result)
-        except Exception as err:
-            print('except')
-            print(f'error: {err}')
-            search_result = requests.get('http://ec2-18-206-249-251.compute-1.amazonaws.com:5000/search', params={'query': query})
-            search_result.raise_for_status()  # Raise an exception for HTTP errors (4xx and 5xx)
-            search_result = search_result.json()
+        #     print(search_result)
+        # except Exception as err:
+        #     print('except')
+        #     print(f'error: {err}')
+        #     search_result = requests.get('http://ec2-18-206-249-251.compute-1.amazonaws.com:5000/search', params={'query': query})
+        #     search_result.raise_for_status()  # Raise an exception for HTTP errors (4xx and 5xx)
+        #     search_result = search_result.json()
             
         
     return render(request, 'pdf_engine/search.html', {'search_result': search_result})
