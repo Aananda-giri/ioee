@@ -44,6 +44,7 @@ pyasn1-modules==0.2.8
 pyBSDate==0.3.0
 pycparser==2.21
 PyDispatcher==2.0.6
+pymongo==4.6.1
 pyOpenSSL==23.0.0
 pyparsing==3.0.9
 PySocks==1.7.1
