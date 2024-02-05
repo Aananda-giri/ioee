@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,13 +28,18 @@
             padding: 10px;
             width: 300px;
         }
-
-        button {
+        .search-input{
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .search-button {
             padding: 10px 20px;
-            background-color: #007BFF;
+            background-color: #333;
             color: #fff;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
         }
     
         .result {
@@ -71,6 +77,43 @@
         }
     
     </style>
+    <style>
+
+        .code-share-button {
+          position: relative;
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: #333;
+          color: #00ff00;
+          text-decoration: none;
+          font-family: 'Arial', sans-serif;
+          font-size: 18px;
+          font-weight: bold;
+          border: none;
+          border-radius: 5px;
+          overflow: hidden;
+          cursor: pointer;
+        }
+    
+        .code-share-button::after {
+          content: '|';
+          position: absolute;
+          top: 50%;
+          right: 10px;
+          transform: translateY(-50%);
+          color: #00ff00;
+          animation: blinkCursor 0.8s infinite;
+        }
+    
+        @keyframes blinkCursor {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0;
+          }
+        }
+    </style>
 </head>
 
 <body>
@@ -78,15 +121,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     
     <div class="d-flex justify-content-center mb-3">
-        <button class="btn btn-primary btn-position ms-5" target="_blank">
+        <button class="code-share-button mt-3" target="_blank">
             <a href="/" targer="_blank" style="text-decoration: none; color:white;">Code-Share</a>
         </button>
     </div>
 
+    <div class="alert alert-info alert-dismissible fade show" role="alert" id="welcome">
+        It is <strong>Pdf Search Engine</strong> 
+        <strong> for IOE Students. </strong>
+        As of today we have <span id="counter" style="font-weight: 500;">{{documents_count|intcomma}}</span> documents. Good Luck For the Exams and don't forget to bookmark and share the love!
+    </div>
+
     <div class="search-container">
         <form action="" method="get" action="/new_container" id="/pdf">
-            <input type="text" name="search" placeholder="{{search_result.query}}">
-            <button type="submit">Search</button>
+            <input type="text" class="search-input" name="search" placeholder="{{query}}">
+            <button class="search-button" type="submit">Search</button>
         </form>
     </div>
 

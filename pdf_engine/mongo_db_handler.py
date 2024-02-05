@@ -21,7 +21,7 @@ class MongoDBHandler:
         # suitable for full  text search
         # Create a text index on 'children_list' field
         # self.collection.create_index([("children_list", pymongo.TEXT)])
-
+        
         # Create a unique index on the 'id' field
         # self.collection.create_index([("id", pymongo.ASCENDING)], unique=True)
 
@@ -37,7 +37,7 @@ class MongoDBHandler:
         
         # Create the database for our example (we will use the same database throughout the tutorial
         return client[db_name]
-  
+        
     def insert_one(self, data):
         """Insert a single document into the collection."""
         self.collection.insert_one(data)
@@ -54,7 +54,7 @@ class MongoDBHandler:
             
             # Insert documents into the collection
             result = self.collection.insert_many(documents_to_insert)
-
+            
             # Print the inserted document ids
             print(f"Inserted documents with ids: {result.inserted_ids[:10]}")
 
@@ -90,7 +90,6 @@ class MongoDBHandler:
         #         }
         #     }
         # })
-        
 
         # result = self.collection.find({
         #     "$or": [
@@ -114,6 +113,7 @@ class MongoDBHandler:
         count = self.collection.count_documents({})
         # Print the count
         print(f"Number of entries in the collection: {count}")
+        return count
         
         
     def get_all_entries(self):

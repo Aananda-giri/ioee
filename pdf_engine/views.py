@@ -9,9 +9,12 @@ def search(request):
     
     print(f'\n\n query: {query} \n\n {request}')
     
+    documents_count = 51471   # Todo: display live count like pdfdrive; after implementing live_crawling
+    # documents_count = mongo_handler.count_entries()   # Todo: display like pdfdrive
+
     if query == '':
         # get the search results from the api
-        with open('sample_search_result.json','r') as f:
+        with open('pdf_engine_search_result_physics.json','r') as f:
             search_result = json.load(f)
         query = 'physics'
     else:
@@ -19,6 +22,11 @@ def search(request):
         from pdf_engine.mongo_db_handler import MongoDBHandler
         mongo_handler = MongoDBHandler(collection_name = "pdf_collection", db_name="pdf_engine")
         search_result = mongo_handler.search(query)
+        
+        # save results fro default query: physics
+        # with open("pdf_engine_search_result_physics.json", 'w') as file:
+        #     json.dump(list(search_result), file)
+        
         
         # get results from second api if first api fails
         # try:
@@ -36,7 +44,7 @@ def search(request):
         #     search_result = search_result.json()
             
         
-    return render(request, 'pdf_engine/search.html', {'search_result': search_result})
+    return render(request, 'pdf_engine/search.html', {'search_result': search_result, 'query': query, 'documents_count': documents_count})
 
 # requests.get(http://ec2-18-206-249-251.compute-1.amazonaws.com:5000/search', params={'query': 'physics'}).json()['result'][0]
 # requests.get('https://strangehacksoldquestionsolution.aanandagiri.repl.co/search', params={'query': 'physics'}).json()['result'][0]

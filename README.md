@@ -9,8 +9,8 @@
 * [deployed here](https://ioee.herokuapp.com/)
 
 ## 2. Pdf Search Engine
-* **Search pdfs** shared by other ioe students
-* currently indexed over **`50,000 pdfs`**
+* **Searches pdfs** shared by other ioe students
+* currently crawled (from google drive) and indexed over **`50,000 pdfs`**
 * [deployed here](https://ioee.herokuapp.com/pdf)
 
 # references:
