@@ -12,6 +12,7 @@
 * **Searches pdfs** shared by other ioe students
 * currently crawled (from google drive) and indexed over **`50,000 pdfs`**
 * redis to cache the results.
+* Deep search: split multi-word input into individual words and search parallely for individual words.
 * [deployed here in heroku](https://ioee.herokuapp.com/pdf)
 
 # references:
