@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'ioe_overflow.apps.IoeOverflowConfig',
     'pdf_engine.apps.PdfEngineConfig',
     'nepali_datetime_field',
-     'django.contrib.humanize',
+    'django.contrib.humanize',
 ]
 #'fontawesome-free',
 

@@ -68,7 +68,27 @@ class MongoDBHandler:
     def delete_one(self, document_id):
         """Delete a document by its ID."""
         self.collection.delete_one({"id": document_id})
-
+    
+    # async def search(self, query):
+    #     """Perform an asynchronous text search based on the given query."""
+    #     import asyncio
+    #     from motor.motor_asyncio import AsyncIOMotorClient
+    #     regex_pattern = f"{' '.join(query.split())}"
+    #     query_result = await self.collection.find({'data.children_list': {'$regex': regex_pattern}}).to_list(length=None)
+    #     return [result['data'] for result in query_result]
+    #     #     async for result in query_result:
+    #     #         yield result['data']
+    # def search(self, query):
+    #     """Perform a text search based on the given query."""
+        
+    #     # Define a regex pattern with spaces between elements
+    #     regex_pattern = f"{' '.join(query.split())}"
+    #     # Perform the search using $regex
+    #     query_result = self.collection.find({'data.children_list': {'$regex': regex_pattern}})
+        
+    #     # Use list comprehension to collect results in a list and return it
+    #     return [result['data'] for result in query_result]
+    
     def search(self, query):
         """Perform a text search based on the given query."""
         
@@ -81,7 +101,6 @@ class MongoDBHandler:
             yield result['data']
         # result = self.collection.find({"$text": {"$search": query}})
         # 12 seconds
-
         # result = self.collection.find({
         #     "children_list": {
         #         "$elemMatch": {
@@ -90,21 +109,19 @@ class MongoDBHandler:
         #         }
         #     }
         # })
-
         # result = self.collection.find({
         #     "$or": [
         #         {"children_list": {"$elemMatch": {"$regex": query, "$options": "i"}}},
         #         {"data": {"$regex": query, "$options": "i"}}
         #     ]
         # })
-
         # result = self.collection.find({
         #     "children_list": {
         #         "$regex": query,
         #         "$options": "i"  # Case-insensitive
         #     }
         # })
-        return list(result)
+        # return list(result)
     def count_entries(self):
         """
         Counts number of entries int the database
