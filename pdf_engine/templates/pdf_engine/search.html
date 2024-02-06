@@ -184,9 +184,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     
     <div class="d-flex justify-content-center mb-3">
-        <button class="code-share-button mt-3" target="_blank">
-            <a href="/" targer="_blank" style="text-decoration: none; color:white;">Code-Share</a>
-        </button>
+        <a href="/" targer="_blank" style="text-decoration: none; color:white;">
+            <button class="code-share-button mt-3" target="_blank">
+                Code-Share
+            </button>
+        </a>
     </div>
 
     <div class="alert alert-info alert-dismissible fade show" role="alert" id="welcome">
@@ -196,9 +198,12 @@
     </div>
 
     <div class="search-container">
-        <form action="" method="get" action="/new_container" id="/pdf">
+        <form action="" method="get" id="/pdf">
             <input type="text" class="search-input" name="search" placeholder="{{query}}">
-            <button class="search-button" type="submit">Search</button>
+            <button class="search-button" type="submit">Search</button><br>
+            
+            <input type="checkbox" id="deep-search" class="mt-3" name="deep_search">
+            <label for="deep-search">Search for Individual words of a multi-word query</label>
         </form>
     </div>
 
@@ -240,6 +245,7 @@
     {%endfor%}
     {% if not search_result %}
         <h1>No results found</h1>
+        <h6>Note: Minimum query-length is 3</h6>
     {%endif%}
 <script>
     function updateQuotaBytesUsed() {
