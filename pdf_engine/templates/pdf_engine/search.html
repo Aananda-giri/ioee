@@ -142,8 +142,6 @@
 
     {% for file in search_result %}
         <div class="result">
-            
-            
             <div class="icon">
                 {% if file.mimeType == "application/vnd.google-apps.shortcut" or  file.mimeType == "application/vnd.google-apps.folder"%}
                     <svg focusable="false" viewBox="0 0 24 24" height="24px" width="24px" fill="#5f6368" class="a-s-fa-Ha-pa"><g><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></g></svg>
@@ -153,8 +151,6 @@
                         <path d="M3 2c-.55 0-1 .45-1 1v18c0 .55.45 1 1 1h18c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1h-7V2H3zm4 16H3v-6h4v6zm0-8H3V4h4v6zm14 10H7c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2z"></path>
                         <path d="M0 0h24v24H0z" fill="none"></path>
                     </svg>
-                          
-                    
                 {%endif%}
             </div>
             <div class="details">

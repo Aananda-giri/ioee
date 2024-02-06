@@ -122,6 +122,12 @@ class MongoDBHandler:
         #     }
         # })
         # return list(result)
+    def get_by_ids(self, id_list):
+        """Retrieve documents by their IDs."""
+        # from bson.objectid import ObjectId
+        results = self.collection.find({"_id": {"$in": id_list}})
+        return [result['data'] for result in list(results) if 'data' in result]
+
     def count_entries(self):
         """
         Counts number of entries int the database
@@ -166,19 +172,27 @@ if __name__ == "__main__":
     # ------------------
     # Search
     # ------------------
-    start_time = time.time()
-    print("Results:")
-    import time
-    i=1
-    initial_time = time.time()
-    for result in mongo_handler.search("physics"):
-            if i==1:
-                start_time = time.time()
-                i+=1
-            print(result)
-    print(f"Search Results: \n time:{start_time - time.time()} \n total time: {time.time() - initial_time}")
-    # print(f"Search Results: {search_results} \n time:{start_time - time.time()}")
-
+    # start_time = time.time()
+    # print("Results:")
+    # import time
+    # i=1
+    # initial_time = time.time()
+    # for result in mongo_handler.search("physics"):
+    #         if i==1:
+    #             start_time = time.time()
+    #             i+=1
+    #         print(result)
+    # print(f"Search Results: \n time:{start_time - time.time()} \n total time: {time.time() - initial_time}")
+    # # print(f"Search Results: {search_results} \n time:{start_time - time.time()}")
+    # ------------------
+    # Get by ids
+    # ------------------
+    ids = ["1zESpo4jn7Q3OQ9N2EimtzAE05D7eJAnw" ,"12aaGB6Bj0Xggvq7RdIXrqpkEdH5xIy1O"]
+    results = mongo_handler.get_by_ids(ids)
+    print(results)
+    import json
+    with open('test_file.json', 'w') as file:
+        json.dump(results, file)
 
     # # ------------------
     # # Delete one
