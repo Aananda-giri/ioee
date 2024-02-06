@@ -10,7 +10,7 @@ def search(request):
     # print(f'\n\n query: {query} \n\n {request}')
     deep_search_enabled = 'deep_search' in request.GET
     # print(f'\n\n deep_search:{deep_search_enabled}\n\n')
-    query = query.strip()
+    query = query.strip().lower()
     
     documents_count = 51471   # Todo: display live count like pdfdrive; after implementing live_crawling
     # documents_count = mongo_handler.count_entries()   # Todo: display like pdfdrive
