@@ -30,4 +30,4 @@ def search(request):
             # Search entire query only
             search_results = RedisCache().get(query)
     # print(f'\n\n search_result: {search_result}')
-    return render(request, 'pdf_engine/search.html', {'search_result': search_results, 'query': query, 'documents_count': documents_count})
+    return render(request, 'pdf_engine/search.html', {'search_result': search_results, 'query': query, 'documents_count': documents_count, "deep_search_enabled":deep_search_enabled})
