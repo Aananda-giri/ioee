@@ -14,7 +14,7 @@ def search(request):
     
     documents_count = 51471   # Todo: display live count like pdfdrive; after implementing live_crawling
     # documents_count = mongo_handler.count_entries()   # Todo: display like pdfdrive
-    if len(query) < 3:
+    if len(query) < 3 and query != '':
         search_results = []
     elif query == '' or query == 'physics':
         # get the search results from the api
