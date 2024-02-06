@@ -52,10 +52,10 @@ class RedisCache:
             if results:
                 # Save if results are not empty
                 self.redis.set(key, json.dumps(results))
-                print(f'\n\n saved \'{key}\' in redis\n')
+                # print(f'\n\n saved \'{key}\' in redis\n')
         else:
             results = json.loads(results)
-            print(f'\n\n found \'{key}\' in redis\n')
+            # print(f'\n\n found \'{key}\' in redis\n')
         return results
 
 if __name__ == "__main__":
