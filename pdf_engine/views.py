@@ -15,7 +15,7 @@ def search(request):
     # documents_count = mongo_handler.count_entries()   # Todo: display like pdfdrive
     if query == '' or query == 'physics':
         # get the search results from the api
-        with open('/home/anon/ioee/pdf_engine_search_result_physics.json','r') as f:
+        with open('pdf_engine_search_result_physics.json','r') as f:
             search_results = json.load(f)
         query = 'physics'
     else:
