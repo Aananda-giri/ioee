@@ -61,8 +61,9 @@ class RedisCache:
         return results
 
     def parallel_search(self, query):
-        ignore_words = ['how', 'whatever', 'him', 'would', 'they', 'whichever', 'what', 'whysoever', 'have', 'why', 'can', 'our', 'whosoever', 'her', 'whatsoever', 'wherever', 'whyever', 'and', 'whoever', 'that', 'when', 'this', 'which', 'whenever', 'them', 'been', 'his', 'for', 'whensoever', 'the', 'their', 'was', 'but', 'one', 'whosesoever', 'whomsoever', 'whom', 'not', 'all', 'howsoever', 'will', 'you', 'your', 'were', 'with', 'has', 'she', 'from', 'are', 'wheresoever', 'whose', 'had', 'who', 'where', 'there', 'whomever', 'best']
-        query_parts = [word for word in list(set(query.split() + [query])) if ( (word not in ignore_words) and len(word)>=3)]   # ['Engineering', 'Physics', 'Engineering Physics']
+        ignore_words = ["engineering", 'how', 'whatever', 'him', 'would', 'they', 'whichever', 'what', 'whysoever', 'have', 'why', 'can', 'our', 'whosoever', 'her', 'whatsoever', 'wherever', 'whyever', 'and', 'whoever', 'that', 'when', 'this', 'which', 'whenever', 'them', 'been', 'his', 'for', 'whensoever', 'the', 'their', 'was', 'but', 'one', 'whosesoever', 'whomsoever', 'whom', 'not', 'all', 'howsoever', 'will', 'you', 'your', 'were', 'with', 'has', 'she', 'from', 'are', 'wheresoever', 'whose', 'had', 'who', 'where', 'there', 'whomever', 'best']
+        query_parts = [query]
+        query_parts = [word for word in list(set([query] + query.split())) if ( (word not in ignore_words) and len(word)>=3)]   # ['Engineering', 'Physics', 'Engineering Physics']
         print(query_parts)
         with ThreadPoolExecutor() as executor:
             # Use ThreadPoolExecutor to execute search function for each query part
