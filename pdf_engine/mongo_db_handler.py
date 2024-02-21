@@ -1,3 +1,4 @@
+import re
 import os
 import time
 import pymongo
@@ -89,13 +90,15 @@ class MongoDBHandler:
     #     # Use list comprehension to collect results in a list and return it
     #     return [result['data'] for result in query_result]
     
+
     def search(self, query):
-        """Perform a text search based on the given query."""
+        """Perform a case-insensitive text search based on the given query."""
         
         # Define a regex pattern with spaces between elements
         regex_pattern = f"{' '.join(query.split())}"
-        # Perform the search using $regex
-        query_result = self.collection.find({'data.children_list': {'$regex': regex_pattern}})
+        # Perform the case-insensitive search using $regex with re.IGNORECASE
+        # $options parameter is set to 'i' (case-insensitive)
+        query_result = self.collection.find({'data.children_list': {'$regex': regex_pattern, '$options': 'i'}})
         # Yield results as they are found
         for result in query_result:
             yield result['data']
