@@ -25,7 +25,7 @@ def search(request):
         
         # if deep_search_enabled:
         # search by breaking individual words of a multi-word sentence.
-        search_results = RedisCache().parallel_search(query)
+        search_results = RedisCache().search(query)
         # else:
         #     # Search entire query only
         #     search_results = RedisCache().get(query)

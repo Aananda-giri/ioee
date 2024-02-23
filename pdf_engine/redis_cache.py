@@ -13,11 +13,12 @@ class RedisCache:
         # port=os.environ.get('redis_port')
         # password=os.environ.get('redis_password')
         # print(f'\n\n host: {host}, port: {port}, password: {password} \n\n')
-        self.redis = redis.Redis(
+        self.redis_client = redis.Redis(
             host=os.environ.get('redis_host'),
             port=int(os.environ.get('redis_port')),
             password=os.environ.get('redis_password')
         )
+        self.threshold_num_keys = 15
 
     def search_mongo(self, query):
         # get results from mongo db
@@ -32,32 +33,55 @@ class RedisCache:
         # with open("pdf_engine_search_result_physics.json", 'w') as file:
         #     json.dump(list(search_result), file)
         return search_result
+    def redis_set(self, query, search_results):
+        
 
-    def get(self, key):
+        # Get the current number of keys
+        num_keys = self.redis_client.dbsize()
+
+        # Check if the number of keys exceeds the threshold
+        if num_keys > self.threshold_num_keys:
+            # Determine how many keys to deleteq
+            keys_to_delete = num_keys - self.threshold_num_keys
+            
+            print(f'\n Number of keys exceeds the threshold: {num_keys}')
+            print(f'\n\n keys_to_delete: {keys_to_delete}\n\n')
+            
+            # Get the oldest keys based on creation time (use appropriate key patterns if needed)
+            # oldest_keys = self.redis_client.zrange('custom_timestamps', 0, keys_to_delete - 1)
+
+            for n, key in enumerate(reversed(self.redis_client.keys('*'))):
+                # print(n, key)
+                if n < keys_to_delete:
+                    self.redis_client.delete(key)
+        self.redis_client.set(query, json.dumps(search_results))
+    
+    def search(self, query):
         '''
-        key -> str: search query
+        query -> str: search query
 
         # Pseudo Code:
         
-        if key in redis:
-            keys = redis.get(key)
-            data = get_db(keys)
+        if query in redis:
+            querys = redis.get(query)
+            data = get_db(querys)
         else:
             search_results = search_mongo()
-            redis.set(key, search_results, expire)
+            redis.set(query, search_results, expire)
             return search_result
 
         '''
-        results = self.redis.get(key)
+        results = self.redis_client.get(query)
         if results is None:
-            results = self.search_mongo(key)
+            print(f'\n\n no-found \'{query}\' in redis\n')
+            results = self.parallel_search(query)
             if results:
                 # Save if results are not empty
-                self.redis.set(key, json.dumps(results))
-                # print(f'\n\n saved \'{key}\' in redis\n')
+                self.redis_set(query, results)
+                # print(f'\n\n saved \'{query}\' in redis\n')
         else:
             results = json.loads(results)
-            # print(f'\n\n fouqnd \'{key}\' in redis\n')
+            print(f'\n\n fouqnd \'{query}\' in redis\n')
         return results
 
     def parallel_search(self, query):
@@ -67,7 +91,9 @@ class RedisCache:
         # print(query_parts)
         with ThreadPoolExecutor() as executor:
             # Use ThreadPoolExecutor to execute search function for each query part
-            results = [result for sublist in executor.map(self.get, query_parts) for result in sublist]
+            results = [result for sublist in executor.map(self.search_mongo, query_parts) for result in sublist]
+        with open('the_results.json','w') as f:
+            json.dump(results, f)
         return results
 
 if __name__ == "__main__":
