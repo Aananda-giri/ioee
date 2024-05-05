@@ -31,7 +31,7 @@ class MongoDBHandler:
         # Provide the mongodb atlas url to connect python to mongodb using pymongo
         # CONNECTION_STRING = "mongodb+srv://user:pass@cluster.mongodb.net/myFirstDatabase"
         import os
-        uri = f"mongodb+srv://{os.environ.get('user_heroku')}:{os.environ.get('pass_heroku')}@cluster0.dgeujbs.mongodb.net/?retryWrites=true&w=majority"
+        uri = f"mongodb+srv://{os.environ.get('user_heroku')}:{os.environ.get('pass_heroku')}@cluster0.mtiz1sj.mongodb.net/?retryWrites=true&w=majority"
         
         # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
         client = MongoClient(uri, server_api=ServerApi('1'))
