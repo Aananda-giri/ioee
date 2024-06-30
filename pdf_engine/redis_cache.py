@@ -1,7 +1,8 @@
 import os
 import json
 import redis
-from pdf_engine.mongo_db_handler import MongoDBHandler
+# from pdf_engine.mongo_db_handler import MongoDBHandler
+from pdf_engine.monogo_v2 import MongoDBHandler
 from concurrent.futures import ThreadPoolExecutor
 import time
 import dotenv
@@ -71,17 +72,32 @@ class RedisCache:
             return search_result
 
         '''
-        results = self.redis_client.get(query)
-        if results is None:
-            print(f'\n\n no-found \'{query}\' in redis\n')
+        try:
+
+            results = self.redis_client.get(query)
+            if results is None:
+                print(f'\n\n no-found \'{query}\' in redis\n')
+                results = self.parallel_search(query)
+                if results:
+                    try:
+                        # Save if results are not empty
+                        self.redis_set(query, results)
+                        # print(f'\n\n saved \'{query}\' in redis\n')
+                    except Exception as e:
+                        print(f'\n\n Error: {e} \n\n')
+            else:
+                results = json.loads(results)
+                print(f'\n\n fouqnd \'{query}\' in redis\n')
+        except Exception as e:
+            print(f'\n\n Error: {e} \n\n')
             results = self.parallel_search(query)
             if results:
-                # Save if results are not empty
-                self.redis_set(query, results)
-                # print(f'\n\n saved \'{query}\' in redis\n')
-        else:
-            results = json.loads(results)
-            print(f'\n\n fouqnd \'{query}\' in redis\n')
+                try:
+                    # Save if results are not empty
+                    self.redis_set(query, results)
+                    # print(f'\n\n saved \'{query}\' in redis\n')
+                except Exception as e:
+                    print(f'\n\n Error: {e} \n\n')
         return results
 
     def parallel_search(self, query):
@@ -92,8 +108,7 @@ class RedisCache:
         with ThreadPoolExecutor() as executor:
             # Use ThreadPoolExecutor to execute search function for each query part
             results = [result for sublist in executor.map(self.search_mongo, query_parts) for result in sublist]
-        with open('the_results.json','w') as f:
-            json.dump(results, f)
+        
         return results
 
 if __name__ == "__main__":
@@ -101,3 +116,20 @@ if __name__ == "__main__":
     redis_cache = RedisCache()
     result = redis_cache.get("math")
     print(result)
+
+if __name__ == "__main__":
+
+    data = list(mongo_handler.collection.find(
+        {'$text': {'$search': query}},
+        {
+            'score': {'$meta': 'textScore'}, 
+            'id': 1,
+            '_id': 0,  # This excludes _id from the results
+            'mimeType': 1, 
+            'title': 1, 
+            'quotaBytesUsed': 1, 
+            'owners': 1, 
+            'children_list': 1
+        }
+    ).sort([('score', {'$meta': 'textScore'})]))
+    print(data[0])
